@@ -1,6 +1,10 @@
 CC = qcc
-OUT = packager
 TARGET = gcc_ntoaarch64le
+CSTD = c11
+
+### ARTIFACTS ###
+OUT = packager
+OBJDIR = obj
 
 ### SHELL SETTINGS ###
 ifeq ($(OS), Windows_NT)
@@ -17,13 +21,13 @@ endif
 
 ### NECESSARY QNX LIBRARIES ###
 # Contains QNX specific libraries for hardware interaction
-INCLUDE_DIRS += $(QNX_HOST)usr/lib/gcc/aarch64-unknown-nto-qnx7.1.0/8.3.0/include
+INCLUDE_DIRS += $(QNX_HOST)/usr/lib/gcc/aarch64-unknown-nto-qnx7.1.0/8.3.0/include
+INCLUDE_DIRS += $(QNX_TARGET)/usr/include
 
 ### COMPILER OPTIONS ###
 CLFAGS += -V $(TARGET)
 CFLAGS += $(patsubst %,-I%,$(INCLUDE_DIRS))
-# Include directory specified by QNX environment (see ENV_CMD)
-CFLAGS += $(MAKEFLAGS)
+CFLAGS += -std=$(CSTD)
 
 ### WARNINGS ###
 # (see https://gcc.gnu.org/onlinedocs/gcc-6.3.0/gcc/Warning-Options.html)
@@ -39,9 +43,12 @@ CFLAGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 CLFAGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 ### RULES ###
-%.o: %.c
-	$(CC) -c -o $@ $< $(CFLAGS)
+$(OBJDIR):
+	@mkdir -p $@
+
+%.o: %.c $(OBJDIR)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
+	rm -r $(OBJDIR)
 	rm $(OUT)
-	rm *.o

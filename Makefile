@@ -1,17 +1,20 @@
 CC = qcc
 TARGET = gcc_ntoaarch64le
 CSTD = c11
-
-### ARTIFACTS ###
 OUT = packager
-OBJDIR = obj
 
 ### SHELL SETTINGS ###
 ifeq ($(OS), Windows_NT)
-SHELL = powershell.exe
+SHELL = cmd.exe
 else
 SHELL = bash
 endif
+
+### SOURCE FILES ###
+SRCDIR = ./src
+SRC = $(wildcard $(SRCDIR)/*.c)
+OBJDIR = obj
+OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 
 ### DETECT PROPER ENVIRONMENT ###
 ENV_FILES = ~/qnx710/qnxsdp-env.bat, ~/qnx710/qnxsdp-env.sh, ./env.ps1
@@ -23,6 +26,7 @@ endif
 # Contains QNX specific libraries for hardware interaction
 INCLUDE_DIRS += $(QNX_HOST)/usr/lib/gcc/aarch64-unknown-nto-qnx7.1.0/8.3.0/include
 INCLUDE_DIRS += $(QNX_TARGET)/usr/include
+INCLUDE_DIRS += $(SRCDIR)/include
 
 ### COMPILER OPTIONS ###
 CLFAGS += -V $(TARGET)
@@ -43,12 +47,15 @@ CFLAGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 CLFAGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 ### RULES ###
-$(OBJDIR):
-	@mkdir -p $@
+all: $(OBJ)
+	$(CC) $^ -o $(OUT) $(CFLAGS)
 
-%.o: %.c $(OBJDIR)
+$(OBJDIR):
+	@mkdir $@
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(OBJDIR)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	rm -r $(OBJDIR)
-	rm $(OUT)
+	@rm -r $(OBJDIR)
+	@rm $(OUT)

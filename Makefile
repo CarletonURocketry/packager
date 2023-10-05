@@ -2,12 +2,17 @@ CC = qcc
 OUT = packager
 TARGET = gcc_ntoaarch64le
 
+### SHELL SETTINGS ###
 ifeq ($(OS), Windows_NT)
 SHELL = powershell.exe
-ENV_FILE = ~/qnx710/qnxsdp-env.bat
 else
 SHELL = bash
-ENV_FILE = ~/qnx710/qnxsdp-env.sh
+endif
+
+### DETECT PROPER ENVIRONMENT ###
+ENV_FILES = ~/qnx710/qnxsdp-env.bat, ~/qnx710/qnxsdp-env.sh, ./env.ps1
+ifeq ($(QNX_CONFIGURATION),)
+$(error Please make sure you run one of the following environment files: $(ENV_FILES) )
 endif
 
 ### NECESSARY QNX LIBRARIES ###
@@ -34,14 +39,7 @@ CFLAGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 CLFAGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 ### RULES ###
-env:
-	@echo Initializing environment with $(ENV_FILE)
-ifeq ($(OS), Windows_NT)
-else
-	source $(ENV_FILE)
-endif
-
-%.o: env %.c
+%.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 clean:

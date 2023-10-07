@@ -1,7 +1,6 @@
 CC = qcc
-TARGET = gcc_ntoaarch64le
 CSTD = c11
-OUT = packager
+OUT = packager.exe
 
 ### SHELL SETTINGS ###
 ifeq ($(OS), Windows_NT)
@@ -29,7 +28,6 @@ INCLUDE_DIRS += $(QNX_TARGET)/usr/include
 INCLUDE_DIRS += $(SRCDIR)/include
 
 ### COMPILER OPTIONS ###
-CLFAGS += -V $(TARGET)
 CFLAGS += $(patsubst %,-I%,$(INCLUDE_DIRS))
 CFLAGS += -std=$(CSTD)
 
@@ -44,7 +42,7 @@ CFLAGS += -Wnested-externs -Wcast-align -Wredundant-decls
 CFLAGS += -Werror=implicit-function-declaration -Wlogical-not-parentheses
 CFLAGS += -Wlogical-op -Wold-style-definition -Wcast-qual -Wdouble-promotion
 CFLAGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
-CLFAGS += -Wdisabled-optimization -Wsuggest-attribute=const
+CFLAGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 ### RULES ###
 all: $(OBJ)

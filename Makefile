@@ -1,35 +1,36 @@
+# As an aside, the 'make' command binary included with QNX is able to run the Makefile as though it is being run on a
+# POSIX system. This even works on Windows, as QNX also includes binaries for common utilities (echo, mkdir, etc.) that
+# run exactly like their Linux counterparts. As such, this Makefile is not specifically designed to be OS agnostic, but
+# rather is by the simple fact that users have access to this QNX binary for 'make' and other utilities it needs.
 CC = qcc
 CSTD = c11
 OUT = packager.exe
 
-### SHELL SETTINGS ###
-ifeq ($(OS), Windows_NT)
-SHELL = cmd.exe
-else
-SHELL = bash
-endif
-
 ### SOURCE FILES ###
-SRCDIR = ./src
-SRC = $(wildcard $(SRCDIR)/*.c)
-OBJDIR = obj
-OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
+SRCDIRS = src
+SRCFILES = $(foreach D,$(SRCDIRS),$(wildcard $(D)/*.c))
+OBJFILES = $(patsubst %.c,%.o,$(SRCFILES))
 
 ### DETECT PROPER ENVIRONMENT ###
-ENV_FILES = ~/qnx710/qnxsdp-env.bat, ~/qnx710/qnxsdp-env.sh, ./env.ps1
+ifeq ($(OS), Windows_NT)
+ENV_FILE = ~/qnx710/qnxsdp-env.bat
+else
+ENV_FILE = ~/qnx710/qnxsdp-env.sh
+endif
+
 ifeq ($(QNX_CONFIGURATION),)
-$(error Please make sure you run one of the following environment files: $(ENV_FILES) )
+$(error Please make sure you run '$(ENV_FILE)' in order to properly set up the QNX development environment.)
 endif
 
 ### NECESSARY QNX LIBRARIES ###
-# Contains QNX specific libraries for hardware interaction
-INCLUDE_DIRS += $(QNX_HOST)/usr/lib/gcc/aarch64-unknown-nto-qnx7.1.0/8.3.0/include
-INCLUDE_DIRS += $(QNX_TARGET)/usr/include
-INCLUDE_DIRS += $(SRCDIR)/include
+INCLUDE_DIRS += src/include
 
 ### COMPILER OPTIONS ###
 CFLAGS += $(patsubst %,-I%,$(INCLUDE_DIRS))
+# Have to do annoying subst because there is a "- " artifact for some reason.
+CFLAGS += $(subst - ,,$(MAKEFLAGS))
 CFLAGS += -std=$(CSTD)
+CFLAGS += $(DEPENDENCY_FLAGS)
 
 ### WARNINGS ###
 # (see https://gcc.gnu.org/onlinedocs/gcc-6.3.0/gcc/Warning-Options.html)
@@ -45,15 +46,12 @@ CFLAGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 CFLAGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 ### RULES ###
-all: $(OBJ)
-	$(CC) $^ -o $(OUT) $(CFLAGS)
+all: $(OBJFILES)
+	$(CC) $^ -o $(OUT)
 
-$(OBJDIR):
-	@mkdir $@
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(OBJDIR)
+%.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	@rm -r $(OBJDIR)
 	@rm $(OUT)
+	@rm $(OBJFILES)

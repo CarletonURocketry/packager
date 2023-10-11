@@ -10,20 +10,22 @@ endef
 
 NAME=packager
 
+#include $(MKFILES_ROOT)/qtargets.mk
+
+#### PROJECT SPECIFIC ####
+
 # Project includes
 EXTRA_INCVPATH+= $(PROJECT_ROOT)/src/include
-# EXCLUDE_OBJS= exclude objects
+# EXCLUDE_OBJS+= Exclude objects
 
-### Source files
+### SOURCE FILES ###
 EXTRA_SRCVPATH+= $(PROJECT_ROOT)/src
 
-$(info VAR='$(EXTRA_INCVPATH)')
-$(info VAR='$(SRCVPATH)')
-$(info VAR='$(EXTRA_SRCVPATH)')
-$(info VAR='$(PROJECT)')
-$(info VAR='$(PROJECT_ROOT)')
-
 ### COMPILER OPTIONS ###
-CCFLAGS+= -std cc11 -02 -Wall
+CCFLAGS+= -std=c11 -O2 -Wall
 
 include $(MKFILES_ROOT)/qtargets.mk
+
+$(info VAR='$(SRCVPATH)')
+$(info VAR='$(EXTRA_SRCVPATH)')
+$(info VAR='$(SRCVPATH)')

@@ -4,21 +4,27 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/* Possible devices from which a packet could originate from. */
+/**
+ * Possible devices from which a packet could originate from.
+ */
 typedef enum device_address {
     GROUNDSTATION = 0x0,
     ROCKET = 0x1,
     MULTICAST = 0xF,
 } DeviceAddress;
 
-/* Possible types of radio packet blocks that could be sent. */
+/**
+ * Possible types of radio packet blocks that could be sent.
+ */
 typedef enum block_type {
     TYPE_CTRL = 0x0,
     TYPE_CMD = 0x1,
     TYPE_DATA = 0x2,
 } BlockType;
 
-/* Possible sub-types of control blocks that can be sent. */
+/**
+ * Possible sub-types of control blocks that can be sent.
+ */
 typedef enum control_block_type {
     CTRL_SIGNAL_REPORT = 0x0,
     CTRL_CMD_ACK = 0x1,
@@ -28,6 +34,9 @@ typedef enum control_block_type {
     CTRL_BEACON_RESPONSE = 0x5,
 } CtrlBlockType;
 
+/**
+ * Possible sub-types of command blocks that can be sent.
+ */
 typedef enum command_block_type {
     CMD_RST_ROCKET_AV = 0X0,
     CMD_RQST_TELEM_DATA = 0X1,
@@ -35,6 +44,9 @@ typedef enum command_block_type {
     CMD_TARE_SENSORS = 0X3,
 } CmdBlockType;
 
+/**
+ * Possible sub-types of data blocks that can be sent.
+ */
 typedef enum data_block_type {
     DATA_DBG_MSG = 0x0,
     DATA_STATUS = 0x1,
@@ -50,10 +62,14 @@ typedef enum data_block_type {
     DATA_KX134_1211_ACCEL = 0xA,
 } DataBlockType;
 
-/* Allow any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
+/**
+ * Allow any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType.
+ */
 typedef uint8_t BlockSubtype;
 
-/* Each radio packet will have a header in this format. Any attribute labelled as dead space should be zero filled. */
+/**
+ * Each radio packet will have a header in this format. Any attribute labelled as dead space should be zero filled.
+ */
 typedef union packet_header {
     uint8_t bytes[12]; // Each packet header is 12 bytes
     uint32_t words[3]; // Each packet header is 3 32-bit words
@@ -68,13 +84,16 @@ typedef union packet_header {
     } __attribute__((packed, aligned(1))) contents;
 } PacketHeader;
 
-/* Casts the 8-bit ASCII call sign value to a null-terminated string. */
+/**
+ * Casts the 8-bit ASCII call sign value to a null-terminated string.
+ */
 #define packet_callsign(p) ((char *)p.contents.callsign)
 
 void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number);
 
-/* Each block in the radio packet will have a header in this format. Any attribute labelled as dead space should be
+/**
+ * Each block in the radio packet will have a header in this format. Any attribute labelled as dead space should be
  * zero-filled.
  */
 typedef union block_header {

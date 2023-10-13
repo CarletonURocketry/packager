@@ -2,7 +2,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/* Initializes a packet header with the provided information.
+/**
+ * Initializes a packet header with the provided information.
  *
  * @param p The packet header to be initialized
  * @param callsign The HAM radio call sign to be included in the packet header
@@ -34,13 +35,14 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
     }
 }
 
-/*  Initializes a block header with the provided information.
+/**
+ * Initializes a block header with the provided information.
  *
- *  @param b The block header to be initialized
- *  @param has_sig Whether or not the block will have a cryptographic signature
- *  @param type The type of the block to follow the header
- *  @param subtype The sub type of the block to follow the header
- *  @param dest The device address of the destination device
+ * @param b The block header to be initialized
+ * @param has_sig Whether or not the block will have a cryptographic signature
+ * @param type The type of the block to follow the header
+ * @param subtype The sub type of the block to follow the header
+ * @param dest The device address of the destination device
  */
 void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {

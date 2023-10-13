@@ -5,15 +5,9 @@
 
 int main(int argc, char **argv) {
 
-    PacketHeader h = {.contents = {
-                          .callsign = {'V', 'A', '3', 'I', 'N', 'I'},
-                          .length = 0,
-                          .version = 0,
-                          .dead_space = 0,
-                          .dead_space_2 = 0,
-                          .src_addr = ROCKET,
-                      }};
+    PacketHeader h;
+    packet_header_init(&h, "VA3INI", 0, 0, ROCKET, 1);
 
-    printf("Using callsign %s\n", CALLSIGN(h));
+    printf("Using callsign %s\n", packet_callsign(h));
     return 0;
 }

@@ -1,4 +1,4 @@
-#include "arguments.h"
+#include "packet_types.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
         puts("Expected callsign.");
     }
 
-    const char *CALLSIGN = callsign(argv);
+    const char *CALLSIGN = "VA3INI";
     printf("Using callsign %s\n", CALLSIGN);
 
     // Read from stdin constantly for new data

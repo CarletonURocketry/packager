@@ -5,19 +5,15 @@
 
 int main(int argc, char **argv) {
 
-    // Parse command line arguments
-    if (argc != 2) {
-        puts("Expected callsign.");
-    }
+    PacketHeader h = {.contents = {
+                          .callsign = {'V', 'A', '3', 'I', 'N', 'I'},
+                          .length = 0,
+                          .version = 0,
+                          .dead_space = 0,
+                          .dead_space_2 = 0,
+                          .src_addr = ROCKET,
+                      }};
 
-    const char *CALLSIGN = "VA3INI";
-    printf("Using callsign %s\n", CALLSIGN);
-
-    // Read from stdin constantly for new data
-    uint8_t buffer;
-    for (;;) {
-        fread(&buffer, sizeof(uint8_t), 1, stdin);
-    }
-
+    printf("Using callsign %s\n", CALLSIGN(h));
     return 0;
 }

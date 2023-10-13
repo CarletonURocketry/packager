@@ -1,3 +1,7 @@
+# Documentation
+/docs/html/
+*.pinfo
+
 # Object files
 *.o
 *.ko
@@ -42,7 +46,6 @@ packager
 *.pdb
 compile_commands.json
 .cache
-*.pinfo
 
 # Kernel Module Compile Results
 *.mod*

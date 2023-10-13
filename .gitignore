@@ -42,6 +42,7 @@ packager
 *.pdb
 compile_commands.json
 .cache
+*.pinfo
 
 # Kernel Module Compile Results
 *.mod*

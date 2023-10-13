@@ -1,7 +1,7 @@
 #include "packet_types.h"
 #include <stdint.h>
 #include <stdio.h>
-#include <string.h>
+#include <getopt.h>
 
 int main(int argc, char **argv) {
 

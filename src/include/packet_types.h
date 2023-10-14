@@ -1,3 +1,14 @@
+/**
+ * @file packet_types.h
+ * @brief Contains the types and functions required for constructing packets.
+ *
+ * This header file contains all function prototypes for packet_types.c, as well as the enums specified in the CUInSpace
+ * packet encoding spec for device addresses, block types and sub-types.
+ *
+ * All packet types are tightly packed in order to fit in their exact specified byte size. Contents of the packet types
+ * can be accessed individually or as a byte array.
+ */
+
 #ifndef _PACKET_TYPES_H
 #define _PACKET_TYPES_H
 
@@ -8,75 +19,62 @@
 #if __DOXYGEN__
 #define TIGHTLY_PACKED
 #else
+/** Makes a struct/unions members be aligned as tightly as possible. */
 #define TIGHTLY_PACKED __attribute__((packed, aligned(1)))
 #endif
 
-/**
- * Possible devices from which a packet could originate from.
- */
+/** Possible devices from which a packet could originate or be sent to. */
 typedef enum device_address {
-    GROUNDSTATION = 0x0,
-    ROCKET = 0x1,
-    MULTICAST = 0xF,
+    GROUNDSTATION = 0x0, /**< Ground station */
+    ROCKET = 0x1,        /**< The rocket */
+    MULTICAST = 0xF,     /**< Any device which is listening */
 } DeviceAddress;
 
-/**
- * Possible types of radio packet blocks that could be sent.
- */
+/** Possible types of radio packet blocks that could be sent. */
 typedef enum block_type {
-    TYPE_CTRL = 0x0,
-    TYPE_CMD = 0x1,
-    TYPE_DATA = 0x2,
+    TYPE_CTRL = 0x0, /**< Control block */
+    TYPE_CMD = 0x1,  /**< Command block */
+    TYPE_DATA = 0x2, /**< Data block */
 } BlockType;
 
-/**
- * Possible sub-types of control blocks that can be sent.
- */
+/** Possible sub-types of control blocks that can be sent. */
 typedef enum control_block_type {
-    CTRL_SIGNAL_REPORT = 0x0,
-    CTRL_CMD_ACK = 0x1,
-    CTRL_CMD_NONCE_RQST = 0x2,
-    CTRL_CMD_NONCE = 0x3,
-    CTRL_BEACON = 0x4,
-    CTRL_BEACON_RESPONSE = 0x5,
+    CTRL_SIGNAL_REPORT = 0x0,   /**< Signal report block */
+    CTRL_CMD_ACK = 0x1,         /**< Command acknowledgement block */
+    CTRL_CMD_NONCE_RQST = 0x2,  /**< Command nonce request block */
+    CTRL_CMD_NONCE = 0x3,       /**< Command nonce block */
+    CTRL_BEACON = 0x4,          /**< Beacon block (searching for peer device) */
+    CTRL_BEACON_RESPONSE = 0x5, /**< Beacon response block (response from peer device) */
 } CtrlBlockType;
 
-/**
- * Possible sub-types of command blocks that can be sent.
- */
+/** Possible sub-types of command blocks that can be sent. */
 typedef enum command_block_type {
-    CMD_RST_ROCKET_AV = 0X0,
-    CMD_RQST_TELEM_DATA = 0X1,
-    CMD_DEPLOY_CHUTE = 0X2,
-    CMD_TARE_SENSORS = 0X3,
+    CMD_RST_ROCKET_AV = 0X0,   /**< Reset rocket avionics */
+    CMD_RQST_TELEM_DATA = 0X1, /**< Request for telemetry data */
+    CMD_DEPLOY_CHUTE = 0X2,    /**< Deploy parachutes */
+    CMD_TARE_SENSORS = 0X3,    /**< Tare sensors */
 } CmdBlockType;
 
-/**
- * Possible sub-types of data blocks that can be sent.
- */
+/** Possible sub-types of data blocks that can be sent. */
 typedef enum data_block_type {
-    DATA_DBG_MSG = 0x0,
-    DATA_STATUS = 0x1,
-    DATA_STARTUP_MSG = 0x2,
-    DATA_ALT = 0x3,
-    DATA_ACCEL = 0x3,
-    DATA_ANGULAR_VEL = 0x4,
-    DATA_GNSS_LOC = 0x5,
-    DATA_GNSS_META = 0x6,
-    DATA_PWR_INFO = 0x7,
-    DATA_TEMP = 0x8,
-    DATA_MPU9250_IMU = 0x9,
-    DATA_KX134_1211_ACCEL = 0xA,
+    DATA_DBG_MSG = 0x0,          /**< Debug message */
+    DATA_STATUS = 0x1,           /**< Debug status */
+    DATA_STARTUP_MSG = 0x2,      /**< Startup message */
+    DATA_ALT = 0x3,              /**< Altitude data */
+    DATA_ACCEL = 0x3,            /**< Acceleration data */
+    DATA_ANGULAR_VEL = 0x4,      /**< Angular velocity data */
+    DATA_GNSS_LOC = 0x5,         /**< GNSS location data */
+    DATA_GNSS_META = 0x6,        /**< GNSS metadata */
+    DATA_PWR_INFO = 0x7,         /**< Power info */
+    DATA_TEMP = 0x8,             /**< Temperature data */
+    DATA_MPU9250_IMU = 0x9,      /**< MPU9250-IMU data */
+    DATA_KX134_1211_ACCEL = 0xA, /**< KX134-1211 accelerometer data */
 } DataBlockType;
 
-/**
- * Allow any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType.
- */
+/** Any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
 typedef uint8_t BlockSubtype;
 
-/**
- * Each radio packet will have a header in this format. Any attribute labelled as dead space should be zero filled.
- */
+/** Each radio packet will have a header in this format. */
 typedef union packet_header {
     /** The packet header accessed as a bytes array. */
     uint8_t bytes[12];
@@ -97,18 +95,13 @@ typedef union packet_header {
     } TIGHTLY_PACKED contents;
 } PacketHeader;
 
-/**
- * Casts the 8-bit ASCII call sign value to a null-terminated string.
- */
+/** Casts the 8-bit ASCII call sign value to a null-terminated string. */
 #define packet_callsign(p) ((char *)p.contents.callsign)
 
 void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number);
 
-/**
- * Each block in the radio packet will have a header in this format. Any attribute labelled as dead space should be
- * zero-filled.
- */
+/** Each block in the radio packet will have a header in this format. */
 typedef union block_header {
     /** The block header accessed as a bytes array. */
     uint8_t bytes[4];

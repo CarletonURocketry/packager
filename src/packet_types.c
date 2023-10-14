@@ -1,3 +1,9 @@
+/**
+ * @file packet_types.c
+ * @brief Contains the definitions for all functions required to create and manipulate packet types.
+ *
+ * Packet types should be created using their initialization functions.
+ */
 #include "packet_types.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -10,6 +16,7 @@
  * @param length The length of the packet this header is associated with (in bytes)
  * @param version The version of the packet encoding format being used
  * @param source The source of the packet this header is associated with
+ * @param packet_number The number of this packet (how many were sent before it)
  */
 void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
@@ -39,6 +46,7 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
  * Initializes a block header with the provided information.
  *
  * @param b The block header to be initialized
+ * @param length The length of the block this header is associated with
  * @param has_sig Whether or not the block will have a cryptographic signature
  * @param type The type of the block to follow the header
  * @param subtype The sub type of the block to follow the header

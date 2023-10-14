@@ -71,17 +71,23 @@ typedef uint8_t BlockSubtype;
  * Each radio packet will have a header in this format. Any attribute labelled as dead space should be zero filled.
  */
 typedef union packet_header {
-    uint8_t bytes[12]; // Each packet header is 12 bytes
-    uint32_t words[3]; // Each packet header is 3 32-bit words
+    /** The packet header accessed as a bytes array. */
+    uint8_t bytes[12];
+    /** Individually accessible components of the block header's contents. */
     struct {
-        uint8_t callsign[6]; // Amateur radio call sign of the operator.
-        uint8_t length : 6;  // The length of the packet in bytes (including the header).
-        uint8_t version : 5; // The version of the radio packet format being used.
+        /** Amateur radio call sign of the operator. */
+        uint8_t callsign[6];
+        /** The length of the packet in bytes (including the header). */
+        uint8_t length : 6;
+        /** The version of the radio packet format being used. */
+        uint8_t version : 5;
         uint8_t _dead_space : 5;
-        DeviceAddress src_addr : 4;  // The source address of the packet.
-        uint16_t packet_number : 12; // Which packet number the packet is in the stream being sent over radio.
+        /** The source address of the packet. */
+        DeviceAddress src_addr : 4;
+        /** Which packet number the packet is in the stream being sent over radio. */
+        uint16_t packet_number : 12;
         uint16_t _dead_space_2 : 16;
-    } __attribute__((packed, aligned(1))) contents;
+    } contents __attribute__((packed, aligned(1)));
 } PacketHeader;
 
 /**
@@ -97,16 +103,22 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
  * zero-filled.
  */
 typedef union block_header {
+    /** The block header accessed as a bytes array. */
     uint8_t bytes[4];
-    uint32_t words[1];
+    /** Individually accessible components of the packet header. */
     struct {
-        uint8_t length : 5;       // The length of the block in bytes.
-        bool has_sig : 1;         // Whether or not the block has a cryptographic signature.
-        BlockType type : 4;       // The type of block.
-        BlockSubtype subtype : 6; // The block type's subtype.
-        DeviceAddress dest : 4;   // The device address of the destination.
+        /** The length of the block in bytes. */
+        uint8_t length : 5;
+        /** Whether or not the block has a cryptographic signature. */
+        bool has_sig : 1;
+        /** The type of block. */
+        BlockType type : 4;
+        /** The block type's subtype. */
+        BlockSubtype subtype : 6;
+        /** The device address of the destination. */
+        DeviceAddress dest : 4;
         uint16_t _dead_space : 12;
-    } __attribute__((packed, aligned(1))) contents;
+    } contents __attribute__((packed, aligned(1)));
 } BlockHeader;
 
 void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,

@@ -4,6 +4,13 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+// Don't confuse Doxygen documenting with the attribute macro
+#if __DOXYGEN__
+#define TIGHTLY_PACKED
+#else
+#define TIGHTLY_PACKED __attribute__((packed, aligned(1)))
+#endif
+
 /**
  * Possible devices from which a packet could originate from.
  */
@@ -87,7 +94,7 @@ typedef union packet_header {
         /** Which packet number the packet is in the stream being sent over radio. */
         uint16_t packet_number : 12;
         uint16_t _dead_space_2 : 16;
-    } contents __attribute__((packed, aligned(1)));
+    } TIGHTLY_PACKED contents;
 } PacketHeader;
 
 /**
@@ -118,7 +125,7 @@ typedef union block_header {
         /** The device address of the destination. */
         DeviceAddress dest : 4;
         uint16_t _dead_space : 12;
-    } contents __attribute__((packed, aligned(1)));
+    } TIGHTLY_PACKED contents;
 } BlockHeader;
 
 void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,

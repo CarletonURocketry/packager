@@ -170,6 +170,12 @@ If your pull request is a work in progress, you can mark it as a draft until it'
 
 **Code**
 
+All functions must be documented using the [JavaDoc convention](https://www.doxygen.nl/manual/docblocks.html#cppblock).
+Check the existing code for examples if you're unsure after reading the aforementioned Doxygen page.
+
+None of the libraries should make assumptions about how the calling code allocates memory (like the C standard libraries
+do). Ensure that you do not use `malloc` in any library functions.
+
 - Adhere to the existing code format when possible.
 - Avoid pushing any files that are not necessary (i.e. metafiles, config files).
 - If linting or formatting is enforced for the repository, run the checks locally and fix errors before opening a PR

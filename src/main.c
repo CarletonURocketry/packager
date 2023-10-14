@@ -1,23 +1,28 @@
-#include "arguments.h"
+#include "packet_types.h"
 #include <stdint.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+
+static char *callsign = NULL;
 
 int main(int argc, char **argv) {
 
-    // Parse command line arguments
-    if (argc != 2) {
-        puts("Expected callsign.");
-    }
+    /* Fetch command line arguments. */
+    /* int c; */
+    /* while ((c = getopt(argc, argv, "c:")) != -1) { */
+    /*     switch (c) { */
+    /*     case 'c': */
+    /*         callsign = optarg; */
+    /*         break; */
+    /*     default: */
+    /*         fputs("Please see the 'use' page for usage.", stderr); */
+    /*         return EXIT_FAILURE; */
+    /*     } */
+    /* } */
 
-    const char *CALLSIGN = callsign(argv);
-    printf("Using callsign %s\n", CALLSIGN);
+    PacketHeader h;
+    packet_header_init(&h, "VA3INI", 0, 0, ROCKET, 1);
 
-    // Read from stdin constantly for new data
-    uint8_t buffer;
-    for (;;) {
-        fread(&buffer, sizeof(uint8_t), 1, stdin);
-    }
-
-    return 0;
+    printf("Using callsign %s\n", packet_callsign(h));
+    return EXIT_SUCCESS;
 }

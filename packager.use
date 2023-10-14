@@ -1,1 +1,15 @@
-This is a use file!
+packager v0.0.0
+Copyright (C) 2023  Carleton University InSpace Rocketry Design Team
+
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. Please see the GNUGPLv3
+license for more details: https://www.gnu.org/licenses/
+
+DESCRIPTION:
+    A command line utility for packaging sensor data into radio format.
+
+SYNTAX:
+    packager [-c callsign] [file or pipe]
+
+OPTIONS:
+    -c callsign     The call sign to include with every radio packet.

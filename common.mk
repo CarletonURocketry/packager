@@ -14,7 +14,7 @@ endef
 NAME=packager
 
 ### COMPILER OPTIONS ###
-CSTD = c11
+CSTD = gnu11
 OPTIMIZATION = -O2
 
 ### WARNINGS ###

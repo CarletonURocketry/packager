@@ -124,4 +124,27 @@ typedef union block_header {
 void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest);
 
+/** Signal report for the last block that was sent by the block's destination device */
+typedef union signal_report_block {
+    /** The signal block report accessed as a bytes array */
+    uint8_t bytes[4];
+    /** Individually accessible components of the signal report */
+    struct {
+        /** The signal to noise ratio, in units of 1dB/LSB */
+        int8_t snr : 8;
+        /** The recieved signal strength indication, in units of 1dB/LSB */
+        int8_t rssi : 8;
+        /** The index of the radio that sends the request for a report*/
+        uint8_t radio : 8;
+        /** Transmit power with which this report was sent in units of 1dB/LSB */
+        int8_t tx_power : 6;
+        /** Reserved bits */
+        uint8_t _dead_space : 7;
+        /** When set, indicates this block is a request, reciever should respond*/
+        uint8_t request : 1;
+    } TIGHTLY_PACKED contents;
+} SignalReportBlock;
+
+void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio, 
+                        const int8_t tx_power, const uint8_t request);
 #endif // _PACKET_TYPES_H

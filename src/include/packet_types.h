@@ -145,6 +145,6 @@ typedef union signal_report_block {
     } TIGHTLY_PACKED contents;
 } SignalReportBlock;
 
-void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio, 
+void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
                         const int8_t tx_power, const uint8_t request);
 #endif // _PACKET_TYPES_H

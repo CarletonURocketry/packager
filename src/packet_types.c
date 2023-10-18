@@ -61,3 +61,21 @@ void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig,
     b->contents.dest = dest;
     b->contents._dead_space = 0;
 }
+/**
+ * Initializes a signal report block with the provided information.
+ * @param b the signal report to be initialized
+ * @param snr the signal to noise ratio, in units of 1dB/LSB
+ * @param rssi the recieved signal strength indication, in units of 1dB/LSB
+ * @param radio the index of the radio that is making a request for the signal report
+ * @param tx_power the power with which a signal report is sent
+ * @param request 1 if this is a request for a report, 0 if this is a report
+ */
+void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
+                        const int8_t tx_power, const uint8_t request) {
+    b->contents.snr = snr;
+    b->contents.rssi = rssi;
+    b->contents.radio = radio;
+    b->contents.tx_power = tx_power;
+    b->contents.request = request;
+    b->contents._dead_space = 0;
+}

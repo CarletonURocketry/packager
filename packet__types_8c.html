@@ -92,6 +92,8 @@ Functions</h2></td></tr>
 <tr class="separator:aeada265de24e1e477825b6b5b0d3c886"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd7a645c3babcbf572e6d357bb0ba158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#abd7a645c3babcbf572e6d357bb0ba158">block_header_init</a> (<a class="el" href="unionBlockHeader.html">BlockHeader</a> *b, const uint8_t length, const bool has_sig, const <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> type, const <a class="el" href="packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97">BlockSubtype</a> subtype, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> dest)</td></tr>
 <tr class="separator:abd7a645c3babcbf572e6d357bb0ba158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bfae12fee48eb73f871f3443fa3f055"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a6bfae12fee48eb73f871f3443fa3f055">signal_report_init</a> (<a class="el" href="unionSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const uint8_t request)</td></tr>
+<tr class="separator:a6bfae12fee48eb73f871f3443fa3f055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains the definitions for all functions required to create and manipulate packet types. </p>
@@ -219,6 +221,69 @@ Functions</h2></td></tr>
     <tr><td class="paramname">version</td><td>The version of the packet encoding format being used </td></tr>
     <tr><td class="paramname">source</td><td>The source of the packet this header is associated with </td></tr>
     <tr><td class="paramname">packet_number</td><td>The number of this packet (how many were sent before it) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6bfae12fee48eb73f871f3443fa3f055" name="a6bfae12fee48eb73f871f3443fa3f055"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bfae12fee48eb73f871f3443fa3f055">&#9670;&#160;</a></span>signal_report_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void signal_report_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="unionSignalReportBlock.html">SignalReportBlock</a> *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int8_t&#160;</td>
+          <td class="paramname"><em>snr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int8_t&#160;</td>
+          <td class="paramname"><em>rssi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>radio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int8_t&#160;</td>
+          <td class="paramname"><em>tx_power</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>request</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Initializes a signal report block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>the signal report to be initialized </td></tr>
+    <tr><td class="paramname">snr</td><td>the signal to noise ratio, in units of 1dB/LSB </td></tr>
+    <tr><td class="paramname">rssi</td><td>the recieved signal strength indication, in units of 1dB/LSB </td></tr>
+    <tr><td class="paramname">radio</td><td>the index of the radio that is making a request for the signal report </td></tr>
+    <tr><td class="paramname">tx_power</td><td>the power with which a signal report is sent </td></tr>
+    <tr><td class="paramname">request</td><td>1 if this is a request for a report, 0 if this is a report </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['src_5faddr_0',['src_addr',['../unionPacketHeader.html#a009d3532942da2c05e3a20db60e029f9',1,'PacketHeader']]],
-  ['subtype_1',['subtype',['../unionBlockHeader.html#ad4a2b6f182ccbcd4a877705f8b91b57c',1,'BlockHeader']]]
+  ['radio_0',['radio',['../unionSignalReportBlock.html#afb074f3393072e2d7da569ed9f7f84e9',1,'SignalReportBlock']]],
+  ['request_1',['request',['../unionSignalReportBlock.html#ac37cf50c42b09d63cff29319e1a10526',1,'SignalReportBlock']]],
+  ['rssi_2',['rssi',['../unionSignalReportBlock.html#a0e2d067ac5514ecd9078de35a4c45161',1,'SignalReportBlock']]]
 ];

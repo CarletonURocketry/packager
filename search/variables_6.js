@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['packet_5fnumber_0',['packet_number',['../unionPacketHeader.html#a4025b0d2688555b91f2c1edc9bd53c6b',1,'PacketHeader']]]
+  ['length_0',['length',['../unionPacketHeader.html#a0ba497486bef53cfb41e245201315506',1,'PacketHeader::length()'],['../unionBlockHeader.html#a00f98c9c6002c55152758f8ec2339211',1,'BlockHeader::length()']]]
 ];

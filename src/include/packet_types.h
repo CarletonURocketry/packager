@@ -159,8 +159,7 @@ typedef struct altitude_data_block {
     int8_t temperature : 32;
     /**The measured altitude*/
     int8_t altitude : 32;
-} TIGHTLY_PACKED AltitudeDataBlock; 
+} TIGHTLY_PACKED AltitudeDataBlock;
 
-void altitude_data_block_init(AltitudeDataBlock *b, const int8_t measurment_type, const uint8_t pressure, const uint8_t temperature,
-                              const uint8_t altitude);
+void altitude_data_block_init(AltitudeDataBlock *b, const int8_t measurment_type, const uint8_t pressure, const uint8_t temperature, const uint8_t altitude);
 #endif // _PACKET_TYPES_H

@@ -148,7 +148,7 @@ typedef union signal_report_block {
 void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
                         const int8_t tx_power, const bool request);
 
-typedef struct altitude_data_block{
+typedef struct altitude_data_block {
     /**The altitude data block accessed as a bytes array*/
     uint8_t bytes[4];
     /**The time at which the altitude was measured*/

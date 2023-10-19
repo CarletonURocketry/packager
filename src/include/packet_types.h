@@ -147,4 +147,12 @@ typedef union signal_report_block {
 
 void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
                         const int8_t tx_power, const bool request);
+
+typedef struct altitude_data_block {
+    /**The altitude data block accessed as a bytes array*/
+    uint8_t bytes[16];
+} TIGHTLY_PACKED AltitudeDataBlock;
+
+void altitude_data_block_init(AltitudeDataBlock *b, const int8_t measurment_type, const uint8_t pressure,
+                              const uint8_t temperature, const uint8_t altitude);
 #endif // _PACKET_TYPES_H

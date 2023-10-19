@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blockheader_0',['BlockHeader',['../unionBlockHeader.html',1,'']]]
+  ['packetheader_0',['PacketHeader',['../unionPacketHeader.html',1,'']]]
 ];

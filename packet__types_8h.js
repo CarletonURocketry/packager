@@ -3,7 +3,6 @@ var packet__types_8h =
     [ "PacketHeader", "unionPacketHeader.html", "unionPacketHeader" ],
     [ "BlockHeader", "unionBlockHeader.html", "unionBlockHeader" ],
     [ "SignalReportBlock", "unionSignalReportBlock.html", "unionSignalReportBlock" ],
-    [ "AltitudeDataBlock", "structAltitudeDataBlock.html", "structAltitudeDataBlock" ],
     [ "packet_callsign", "packet__types_8h.html#ace52f836fe5bf70a065f0fef12397d80", null ],
     [ "TIGHTLY_PACKED", "packet__types_8h.html#a89837ed22f4c4f6dfdbac0cdbc5de57d", null ],
     [ "BlockSubtype", "packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97", null ],
@@ -45,7 +44,6 @@ var packet__types_8h =
       [ "ROCKET", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630afafc201536271f745d3923b7efb6d375", null ],
       [ "MULTICAST", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a607d700b2c0a01c54bdadde074a7cb12", null ]
     ] ],
-    [ "altitude_data_block_init", "packet__types_8h.html#a9ed098253e7e9c0410e1ddd49b9316e0", null ],
     [ "block_header_init", "packet__types_8h.html#abd7a645c3babcbf572e6d357bb0ba158", null ],
     [ "packet_header_init", "packet__types_8h.html#aeada265de24e1e477825b6b5b0d3c886", null ],
     [ "signal_report_init", "packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada", null ]

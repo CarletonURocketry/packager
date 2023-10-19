@@ -544,6 +544,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >Initializes a signal report block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>the signal report to be initialized </td></tr>
+    <tr><td class="paramname">snr</td><td>the signal to noise ratio, in units of 1dB/LSB </td></tr>
+    <tr><td class="paramname">rssi</td><td>the recieved signal strength indication, in units of 1dB/LSB </td></tr>
+    <tr><td class="paramname">radio</td><td>the index of the radio that is making a request for the signal report </td></tr>
+    <tr><td class="paramname">tx_power</td><td>the power with which a signal report is sent </td></tr>
+    <tr><td class="paramname">request</td><td>1 if this is a request for a report, 0 if this is a report </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -92,8 +92,8 @@ Functions</h2></td></tr>
 <tr class="separator:aeada265de24e1e477825b6b5b0d3c886"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd7a645c3babcbf572e6d357bb0ba158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#abd7a645c3babcbf572e6d357bb0ba158">block_header_init</a> (<a class="el" href="unionBlockHeader.html">BlockHeader</a> *b, const uint8_t length, const bool has_sig, const <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> type, const <a class="el" href="packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97">BlockSubtype</a> subtype, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> dest)</td></tr>
 <tr class="separator:abd7a645c3babcbf572e6d357bb0ba158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bfae12fee48eb73f871f3443fa3f055"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a6bfae12fee48eb73f871f3443fa3f055">signal_report_init</a> (<a class="el" href="unionSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const uint8_t request)</td></tr>
-<tr class="separator:a6bfae12fee48eb73f871f3443fa3f055"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a0b521ef6a3e32e6040a68a6a82d67ada">signal_report_init</a> (<a class="el" href="unionSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const bool request)</td></tr>
+<tr class="separator:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains the definitions for all functions required to create and manipulate packet types. </p>
@@ -227,8 +227,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6bfae12fee48eb73f871f3443fa3f055" name="a6bfae12fee48eb73f871f3443fa3f055"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bfae12fee48eb73f871f3443fa3f055">&#9670;&#160;</a></span>signal_report_init()</h2>
+<a id="a0b521ef6a3e32e6040a68a6a82d67ada" name="a0b521ef6a3e32e6040a68a6a82d67ada"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b521ef6a3e32e6040a68a6a82d67ada">&#9670;&#160;</a></span>signal_report_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,7 +266,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>request</em>&#160;</td>
         </tr>
         <tr>

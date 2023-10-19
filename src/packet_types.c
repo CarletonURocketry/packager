@@ -71,7 +71,7 @@ void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig,
  * @param request 1 if this is a request for a report, 0 if this is a report
  */
 void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
-                        const int8_t tx_power, const uint8_t request) {
+                        const int8_t tx_power, const bool request) {
     b->contents.snr = snr;
     b->contents.rssi = rssi;
     b->contents.radio = radio;

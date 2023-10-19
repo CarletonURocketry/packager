@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['packet_5fnumber_0',['packet_number',['../unionPacketHeader.html#a4025b0d2688555b91f2c1edc9bd53c6b',1,'PacketHeader']]],
-  ['pressure_1',['pressure',['../structAltitudeDataBlock.html#a362f785372f570afb25ffd3636c5b0fb',1,'AltitudeDataBlock']]]
+  ['snr_0',['snr',['../unionSignalReportBlock.html#a1d04dad012bd061e199faa725058c5a3',1,'SignalReportBlock']]],
+  ['src_5faddr_1',['src_addr',['../unionPacketHeader.html#a009d3532942da2c05e3a20db60e029f9',1,'PacketHeader']]],
+  ['subtype_2',['subtype',['../unionBlockHeader.html#ad4a2b6f182ccbcd4a877705f8b91b57c',1,'BlockHeader']]]
 ];

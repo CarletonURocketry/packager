@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['radio_0',['radio',['../unionSignalReportBlock.html#afb074f3393072e2d7da569ed9f7f84e9',1,'SignalReportBlock']]],
-  ['request_1',['request',['../unionSignalReportBlock.html#a86ff2dd180c6aa2f0e1ad0d4dc71e2d7',1,'SignalReportBlock']]],
-  ['rssi_2',['rssi',['../unionSignalReportBlock.html#a0e2d067ac5514ecd9078de35a4c45161',1,'SignalReportBlock']]]
+  ['tx_5fpower_0',['tx_power',['../unionSignalReportBlock.html#a715e1d84028fe30b3f67d8e1fd0f217b',1,'SignalReportBlock']]],
+  ['type_1',['type',['../unionBlockHeader.html#a21856c04aeb85807733e465f72e6ea93',1,'BlockHeader']]]
 ];

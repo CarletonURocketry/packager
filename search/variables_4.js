@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dest_0',['dest',['../unionBlockHeader.html#adfb1d746ac202f64a2fa716b0b685b3e',1,'BlockHeader']]]
+  ['has_5fsig_0',['has_sig',['../unionBlockHeader.html#a4d904db012f3e843a9b5d1002789a0e2',1,'BlockHeader']]]
 ];

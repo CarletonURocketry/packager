@@ -150,15 +150,7 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
 
 typedef struct altitude_data_block {
     /**The altitude data block accessed as a bytes array*/
-    uint8_t bytes[4];
-    /**The time at which the altitude was measured*/
-    int8_t measurment_type : 32;
-    /**The pressure at the measured atltitude*/
-    int8_t pressure : 32;
-    /**The temperature at the measured altitude*/
-    int8_t temperature : 32;
-    /**The measured altitude*/
-    int8_t altitude : 32;
+    uint8_t bytes[16];
 } TIGHTLY_PACKED AltitudeDataBlock;
 
 void altitude_data_block_init(AltitudeDataBlock *b, const int8_t measurment_type, const uint8_t pressure,

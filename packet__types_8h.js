@@ -46,8 +46,8 @@ var packet__types_8h =
       [ "ROCKET", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630afafc201536271f745d3923b7efb6d375", null ],
       [ "MULTICAST", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a607d700b2c0a01c54bdadde074a7cb12", null ]
     ] ],
-    [ "altitude_data_block_init", "packet__types_8h.html#ab08f971e9c30e60542b8b9025a6f94aa", null ],
-    [ "angular_velocity_block", "packet__types_8h.html#ae5ff4a4067a46fea347d55d661f93d01", null ],
+    [ "altitude_data_block_init", "packet__types_8h.html#af4d6a4e3f7e1ecb4720813d35305e209", null ],
+    [ "angular_velocity_block", "packet__types_8h.html#a96a8b0f02f6b327d567fb406af9139f3", null ],
     [ "block_header_init", "packet__types_8h.html#abd7a645c3babcbf572e6d357bb0ba158", null ],
     [ "packet_header_init", "packet__types_8h.html#aeada265de24e1e477825b6b5b0d3c886", null ],
     [ "signal_report_init", "packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada", null ]

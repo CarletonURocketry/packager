@@ -181,10 +181,10 @@ Functions</h2></td></tr>
 <tr class="separator:abd7a645c3babcbf572e6d357bb0ba158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada">signal_report_init</a> (<a class="el" href="unionSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const bool request)</td></tr>
 <tr class="separator:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ed098253e7e9c0410e1ddd49b9316e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a9ed098253e7e9c0410e1ddd49b9316e0">altitude_data_block_init</a> (<a class="el" href="structAltitudeDataBlock.html">AltitudeDataBlock</a> *b, const int8_t measurment_type, const uint8_t pressure, const uint8_t temperature, const uint8_t altitude)</td></tr>
-<tr class="separator:a9ed098253e7e9c0410e1ddd49b9316e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3918fb4eb2bf1c297c05eae47bbce292"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a3918fb4eb2bf1c297c05eae47bbce292">angular_velocity_block</a> (<a class="el" href="structAngularVelocityBlock.html">AngularVelocityBlock</a> *b, const int8_t measurment_time, const int8_t full_scale_range, const int8_t x_axis, const int8_t y_axis, const int8_t z_axis)</td></tr>
-<tr class="separator:a3918fb4eb2bf1c297c05eae47bbce292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bb4da346f3f612a6a5e8a7bef941c20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a5bb4da346f3f612a6a5e8a7bef941c20">altitude_data_block_init</a> (<a class="el" href="structAltitudeDataBlock.html">AltitudeDataBlock</a> *b, const int8_t measurment_time, const uint8_t pressure, const uint8_t temperature, const uint8_t altitude)</td></tr>
+<tr class="separator:a5bb4da346f3f612a6a5e8a7bef941c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef3533262aab3bf816a50583ef326511"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aef3533262aab3bf816a50583ef326511">angular_velocity_block</a> (<a class="el" href="structAngularVelocityBlock.html">AngularVelocityBlock</a> *b, const uint8_t measurment_time, const uint8_t full_scale_range, const int8_t x_axis, const int8_t y_axis, const int8_t z_axis)</td></tr>
+<tr class="separator:aef3533262aab3bf816a50583ef326511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains the types and functions required for constructing packets. </p>
@@ -384,8 +384,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a9ed098253e7e9c0410e1ddd49b9316e0" name="a9ed098253e7e9c0410e1ddd49b9316e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ed098253e7e9c0410e1ddd49b9316e0">&#9670;&nbsp;</a></span>altitude_data_block_init()</h2>
+<a id="a5bb4da346f3f612a6a5e8a7bef941c20" name="a5bb4da346f3f612a6a5e8a7bef941c20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bb4da346f3f612a6a5e8a7bef941c20">&#9670;&nbsp;</a></span>altitude_data_block_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -400,7 +400,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const int8_t&#160;</td>
-          <td class="paramname"><em>measurment_type</em>, </td>
+          <td class="paramname"><em>measurment_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -430,8 +430,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3918fb4eb2bf1c297c05eae47bbce292" name="a3918fb4eb2bf1c297c05eae47bbce292"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3918fb4eb2bf1c297c05eae47bbce292">&#9670;&nbsp;</a></span>angular_velocity_block()</h2>
+<a id="aef3533262aab3bf816a50583ef326511" name="aef3533262aab3bf816a50583ef326511"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef3533262aab3bf816a50583ef326511">&#9670;&nbsp;</a></span>angular_velocity_block()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -445,13 +445,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const int8_t&#160;</td>
+          <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>measurment_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const int8_t&#160;</td>
+          <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>full_scale_range</em>, </td>
         </tr>
         <tr>
@@ -661,11 +661,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >Initializes a signal report block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b</td><td>the signal report to be initialized </td></tr>
-    <tr><td class="paramname">snr</td><td>the signal to noise ratio, in units of 1dB/LSB </td></tr>
-    <tr><td class="paramname">rssi</td><td>the recieved signal strength indication, in units of 1dB/LSB </td></tr>
-    <tr><td class="paramname">radio</td><td>the index of the radio that is making a request for the signal report </td></tr>
-    <tr><td class="paramname">tx_power</td><td>the power with which a signal report is sent </td></tr>
+    <tr><td class="paramname">b</td><td>The signal report to be initialized </td></tr>
+    <tr><td class="paramname">snr</td><td>The signal to noise ratio, in units of 1dB/LSB </td></tr>
+    <tr><td class="paramname">rssi</td><td>The recieved signal strength indication, in units of 1dB/LSB </td></tr>
+    <tr><td class="paramname">radio</td><td>The index of the radio that is making a request for the signal report </td></tr>
+    <tr><td class="paramname">tx_power</td><td>The power with which a signal report is sent </td></tr>
     <tr><td class="paramname">request</td><td>1 if this is a request for a report, 0 if this is a report </td></tr>
   </table>
   </dd>

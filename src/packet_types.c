@@ -90,11 +90,14 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  * @param altitude The calculated altitude in units of 1 mm/LSB. This field is a signed 32 bit integer in two’s
  * complement format.
  */
-void altidude_data_block_init(AltitudeDataBlock *b, const int32_t measurment_time, const uint32_t pressure,
+void altidude_data_block_init(AltitudeDataBlock *b, const int32_t measurement_time, const uint32_t pressure,
                               const uint32_t temperature, const uint32_t altitude) {
     memcpy(b->bytes, &measurment_time, sizeof(uint32_t));
+    b += 8;
     memcpy(b->bytes, &pressure, sizeof(uint32_t));
+    b += 8;
     memcpy(b->bytes, &temperature, sizeof(uint32_t));
+    b += 8;
     memcpy(b->bytes, &altitude, sizeof(uint32_t));
 }
 /**
@@ -107,11 +110,15 @@ void altidude_data_block_init(AltitudeDataBlock *b, const int32_t measurment_tim
  * @param y_axis The angular velocity measurment for the y axis.
  * @param z_axis The angular velocity measurment for the z axis.
  */
-void angular_velocity_block_init(AngularVelocityBlock *b, const int32_t measurment_time, const int8_t full_scale_range,
+void angular_velocity_block_init(AngularVelocityBlock *b, const int32_t measurement_time, const int8_t full_scale_range,
                                  const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
     memcpy(b->bytes, &measurment_time, sizeof(uint32_t));
-    memcpy(b->bytes, &full_scale_range, sizeof(uint32_t));
-    memcpy(b->bytes, &x_axis, sizeof(uint32_t));
-    memcpy(b->bytes, &y_axis, sizeof(uint32_t));
-    memcpy(b->bytes, &z_axis, sizeof(uint32_t));
+    b += 8;
+    memcpy(b->bytes, &full_scale_range, sizeof(uint8_t));
+    b += 2;
+    memcpy(b->bytes, &x_axis, sizeof(uint16_t));
+    b += 4;
+    memcpy(b->bytes, &y_axis, sizeof(uint16_t));
+    b += 4;
+    memcpy(b->bytes, &z_axis, sizeof(uint16_t));
 }

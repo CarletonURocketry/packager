@@ -103,8 +103,8 @@ Functions</h2></td></tr>
 <tr class="separator:abd7a645c3babcbf572e6d357bb0ba158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a0b521ef6a3e32e6040a68a6a82d67ada">signal_report_init</a> (<a class="el" href="unionSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const bool request)</td></tr>
 <tr class="separator:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7356754ebed9a0f89effac864358fb86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a7356754ebed9a0f89effac864358fb86">altidude_data_block_init</a> (<a class="el" href="structAltitudeDataBlock.html">AltitudeDataBlock</a> *b, const int32_t measurement_time, const uint32_t pressure, const uint32_t temperature, const uint32_t altitude)</td></tr>
-<tr class="separator:a7356754ebed9a0f89effac864358fb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a530e3d6a3a39af559f17a2a282cf0558"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a530e3d6a3a39af559f17a2a282cf0558">altidude_data_block_init</a> (<a class="el" href="structAltitudeDataBlock.html">AltitudeDataBlock</a> *b, const int32_t measurement_time, const int32_t pressure, const uint32_t temperature, const uint32_t altitude)</td></tr>
+<tr class="separator:a530e3d6a3a39af559f17a2a282cf0558"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dc849026f7f5f76ac968743ba18efe4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a4dc849026f7f5f76ac968743ba18efe4">angular_velocity_block_init</a> (<a class="el" href="structAngularVelocityBlock.html">AngularVelocityBlock</a> *b, const int32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis)</td></tr>
 <tr class="separator:a4dc849026f7f5f76ac968743ba18efe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -112,8 +112,8 @@ Functions</h2></td></tr>
 <div class="textblock"><p >Contains the definitions for all functions required to create and manipulate packet types. </p>
 <p >Packet types should be created using their initialization functions. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a7356754ebed9a0f89effac864358fb86" name="a7356754ebed9a0f89effac864358fb86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7356754ebed9a0f89effac864358fb86">&#9670;&nbsp;</a></span>altidude_data_block_init()</h2>
+<a id="a530e3d6a3a39af559f17a2a282cf0558" name="a530e3d6a3a39af559f17a2a282cf0558"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a530e3d6a3a39af559f17a2a282cf0558">&#9670;&nbsp;</a></span>altidude_data_block_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +133,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramtype">const int32_t&#160;</td>
           <td class="paramname"><em>pressure</em>, </td>
         </tr>
         <tr>

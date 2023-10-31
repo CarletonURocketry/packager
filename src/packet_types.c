@@ -111,7 +111,7 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const int32_t measurem
                                  const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
     memcpy(b->bytes, &measurment_time, sizeof(uint32_t));
     memcpy(b->bytes + 4, &full_scale_range, sizeof(uint16_t)); // Skip 4 bytes where data is already stored
-    memcpy(b->bytes + 6, &x_axis, sizeof(uint16_t)); // Skip 6 bytes where data is already stored
-    memcpy(b->bytes + 8, &y_axis, sizeof(uint16_t)); // Skip 8 bytes where data is already stored
-    memcpy(b->bytes + 10, &z_axis, sizeof(uint16_t)); // Skip 10 bytes where data is already stored
+    memcpy(b->bytes + 6, &x_axis, sizeof(uint16_t));           // Skip 6 bytes where data is already stored
+    memcpy(b->bytes + 8, &y_axis, sizeof(uint16_t));           // Skip 8 bytes where data is already stored
+    memcpy(b->bytes + 10, &z_axis, sizeof(uint16_t));          // Skip 10 bytes where data is already stored
 }

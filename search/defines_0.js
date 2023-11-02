@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['packet_5fcallsign_0',['packet_callsign',['../packet__types_8h.html#ace52f836fe5bf70a065f0fef12397d80',1,'packet_types.h']]]
+  ['buffer_5fsize_0',['BUFFER_SIZE',['../main_8c.html#a6b20d41d6252e9871430c242cb1a56e7',1,'main.c']]]
 ];

@@ -1,6 +1,11 @@
 name: Doxygen
 
-on: [pull_request]
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
 
 jobs:
   build:

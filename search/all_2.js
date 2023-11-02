@@ -4,5 +4,5 @@ var searchData=
   ['blockheader_1',['BlockHeader',['../unionBlockHeader.html',1,'']]],
   ['blocksubtype_2',['BlockSubtype',['../packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97',1,'packet_types.h']]],
   ['blocktype_3',['BlockType',['../packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3',1,'packet_types.h']]],
-  ['bytes_4',['bytes',['../unionPacketHeader.html#a3c880dfe2f942b78ed8e780e357d917a',1,'PacketHeader::bytes()'],['../unionBlockHeader.html#a1c9330b02d2ae7e3a603be0e47e7e822',1,'BlockHeader::bytes()'],['../unionSignalReportBlock.html#aea344c4569b80f2de96ce262a052ccaa',1,'SignalReportBlock::bytes()'],['../structAltitudeDataBlock.html#aabf13f2fd458568f578ee3db78bf9bc8',1,'AltitudeDataBlock::bytes()'],['../structAngularVelocityBlock.html#a246e296a6dd22f169fc7a889f3b0954a',1,'AngularVelocityBlock::bytes()']]]
+  ['bytes_4',['bytes',['../unionPacketHeader.html#a3c880dfe2f942b78ed8e780e357d917a',1,'PacketHeader::bytes()'],['../unionBlockHeader.html#a1c9330b02d2ae7e3a603be0e47e7e822',1,'BlockHeader::bytes()'],['../unionSignalReportBlock.html#aea344c4569b80f2de96ce262a052ccaa',1,'SignalReportBlock::bytes()'],['../structAltitudeDataBlock.html#aabf13f2fd458568f578ee3db78bf9bc8',1,'AltitudeDataBlock::bytes()']]]
 ];

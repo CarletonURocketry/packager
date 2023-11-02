@@ -91,7 +91,7 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  * @param altitude The calculated altitude in units of 1 mm/LSB. This field is a signed 32 bit integer in two’s
  * complement format.
  */
-void altidude_data_block_init(AltitudeDataBlock *b, const int32_t measurement_time, const int32_t pressure,
+void altidude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
                               const uint32_t temperature, const uint32_t altitude) {
     memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
     memcpy(b->bytes + 4, &pressure, sizeof(uint32_t));

@@ -10,11 +10,17 @@ int main(int argc, char **argv) {
 
     /* Fetch command line arguments. */
     int c;
-    while ((c = getopt(argc, argv, "c:")) != -1) {
+    while ((c = getopt(argc, argv, ":c:")) != -1) {
         switch (c) {
         case 'c':
             callsign = optarg;
             break;
+        case ':':
+            fprintf(stderr, "Option -%c requires an argument.\n", optopt);
+            exit(EXIT_FAILURE);
+        case '?':
+            fprintf(stderr, "Unkown option -%c.\n", optopt);
+            exit(EXIT_FAILURE);
         default:
             fputs("Please see the 'use' page for usage.", stderr);
             return EXIT_FAILURE;

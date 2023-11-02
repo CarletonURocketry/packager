@@ -33,16 +33,19 @@ int main(int argc, char **argv) {
 
     /* Check for positional arguments. */
     if (optind >= argc) {
-        fputs("Call sign is required.", stderr);
+        fprintf(stderr, "Call sign is required.\n");
         exit(EXIT_FAILURE);
     }
     callsign = argv[optind];
-    printf("Using callsign %s\n", callsign);
 
     /* Open input stream. */
     FILE *input;
     if (file != NULL) {
         input = fopen(file, "r");
+        if (input == NULL) {
+            fprintf(stderr, "File '%s' could not be opened.\n", file);
+            exit(EXIT_FAILURE);
+        }
     } else {
         input = stdin;
     }

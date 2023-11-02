@@ -7,6 +7,7 @@
 #include "packet_types.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 /**
  * Initializes a packet header with the provided information.
@@ -82,7 +83,7 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
 /**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
- * @param measurment_time The mission time at the taking of the measurment
+ * @param measurement_time The mission time at the taking of the measurment
  * @param pressure The measured pressure in terms of Pascals. This field is a signed 32 bit integer in two's complement
  * format.
  * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB. This field is a signed 32 bit
@@ -92,7 +93,7 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  */
 void altidude_data_block_init(AltitudeDataBlock *b, const int32_t measurement_time, const int32_t pressure,
                               const uint32_t temperature, const uint32_t altitude) {
-    memcpy(b->bytes, &measurment_time, sizeof(uint32_t));
+    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
     memcpy(b->bytes + 4, &pressure, sizeof(uint32_t));
     memcpy(b->bytes + 8, &temperature, sizeof(uint32_t));
     memcpy(b->bytes + 12, &altitude, sizeof(uint32_t));
@@ -100,7 +101,7 @@ void altidude_data_block_init(AltitudeDataBlock *b, const int32_t measurement_ti
 /**
  * Initializes an angular velocity block with the provided information.
  * @param b The angular velocity block to be initialized.
- * @param measurment_time The mission time when the measurement was taken.
+ * @param measurement_time The mission time when the measurement was taken.
  * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
  * maximum and minimum angular velocity that can be measured.
  * @param x_axis The angular velocity measurment for the x axis.
@@ -109,7 +110,7 @@ void altidude_data_block_init(AltitudeDataBlock *b, const int32_t measurement_ti
  */
 void angular_velocity_block_init(AngularVelocityBlock *b, const int32_t measurement_time, const int8_t full_scale_range,
                                  const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
-    memcpy(b->bytes, &measurment_time, sizeof(uint32_t));
+    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
     memcpy(b->bytes + 4, &full_scale_range, sizeof(uint16_t)); // Skip 4 bytes where data is already stored
     memcpy(b->bytes + 6, &x_axis, sizeof(uint16_t));           // Skip 6 bytes where data is already stored
     memcpy(b->bytes + 8, &y_axis, sizeof(uint16_t));           // Skip 8 bytes where data is already stored

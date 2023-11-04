@@ -153,8 +153,17 @@ typedef struct altitude_data_block {
     uint8_t bytes[16];
 } TIGHTLY_PACKED AltitudeDataBlock;
 
-void altitude_data_block_init(AltitudeDataBlock *b, const int8_t measurment_type, const uint8_t pressure,
-                              const uint8_t temperature, const uint8_t altitude);
+void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
+                              const uint32_t temperature, const uint32_t altitude);
+
+typedef struct angular_velocity_block {
+    /**The angular velocity block accessed as a bytes array*/
+    uint8_t bytes[12];
+} TIGHTLY_PACKED AngularVelocityBlock;
+
+void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
+                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                 const int16_t z_axis);
 
 
 typedef struct debug_message_data_block {

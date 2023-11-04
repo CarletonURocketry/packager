@@ -7,6 +7,7 @@
 #include "packet_types.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 /**
  * Initializes a packet header with the provided information.
@@ -63,11 +64,11 @@ void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig,
 }
 /**
  * Initializes a signal report block with the provided information.
- * @param b the signal report to be initialized
- * @param snr the signal to noise ratio, in units of 1dB/LSB
- * @param rssi the recieved signal strength indication, in units of 1dB/LSB
- * @param radio the index of the radio that is making a request for the signal report
- * @param tx_power the power with which a signal report is sent
+ * @param b The signal report to be initialized
+ * @param snr The signal to noise ratio, in units of 1dB/LSB
+ * @param rssi The recieved signal strength indication, in units of 1dB/LSB
+ * @param radio The index of the radio that is making a request for the signal report
+ * @param tx_power The power with which a signal report is sent
  * @param request 1 if this is a request for a report, 0 if this is a report
  */
 void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
@@ -78,4 +79,41 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
     b->contents.tx_power = tx_power;
     b->contents.request = request;
     b->contents._dead_space = 0;
+}
+/**
+ * Initializes an altitude data block with the provided information.
+ * @param b The altitude data to be initialized
+ * @param measurement_time The mission time at the taking of the measurment
+ * @param pressure The measured pressure in terms of Pascals. This field is a signed 32 bit integer in two's complement
+ * format.
+ * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB. This field is a signed 32 bit
+ * integer in two's complement format.
+ * @param altitude The calculated altitude in units of 1 mm/LSB. This field is a signed 32 bit integer in two’s
+ * complement format.
+ */
+void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
+                              const uint32_t temperature, const uint32_t altitude) {
+    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
+    memcpy(b->bytes + 4, &pressure, sizeof(uint32_t));
+    memcpy(b->bytes + 8, &temperature, sizeof(uint32_t));
+    memcpy(b->bytes + 12, &altitude, sizeof(uint32_t));
+}
+/**
+ * Initializes an angular velocity block with the provided information.
+ * @param b The angular velocity block to be initialized.
+ * @param measurement_time The mission time when the measurement was taken.
+ * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
+ * maximum and minimum angular velocity that can be measured.
+ * @param x_axis The angular velocity measurment for the x axis.
+ * @param y_axis The angular velocity measurment for the y axis.
+ * @param z_axis The angular velocity measurment for the z axis.
+ */
+void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
+                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                 const int16_t z_axis) {
+    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
+    memcpy(b->bytes + 4, &full_scale_range, sizeof(uint8_t));
+    memcpy(b->bytes + 5, &x_axis, sizeof(uint16_t));
+    memcpy(b->bytes + 7, &y_axis, sizeof(uint16_t));
+    memcpy(b->bytes + 9, &z_axis, sizeof(uint16_t));
 }

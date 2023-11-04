@@ -79,3 +79,13 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
     b->contents.request = request;
     b->contents._dead_space = 0;
 }
+
+/**
+ * Initializes a debug message block with the provided information.
+ * 
+ * @param d the debug message block to be initialized
+ * @param debug_message the debug message to be initialized
+ */
+void debug_message_block_init(DebugMessageDataBlock *d, char *debug_message, const uint32_t time) {
+    d->debug_message = debug_message;
+}

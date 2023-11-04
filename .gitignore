@@ -46,6 +46,7 @@ packager
 *.pdb
 compile_commands.json
 .cache
+.vscode
 
 # Kernel Module Compile Results
 *.mod*

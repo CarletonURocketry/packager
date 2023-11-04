@@ -155,4 +155,13 @@ typedef struct altitude_data_block {
 
 void altitude_data_block_init(AltitudeDataBlock *b, const int8_t measurment_type, const uint8_t pressure,
                               const uint8_t temperature, const uint8_t altitude);
+
+
+typedef struct debug_message_data_block {
+    char *debug_message;
+    uint32_t time;
+    
+} TIGHTLY_PACKED DebugMessageDataBlock;
+
+void debug_message_block_init(DebugMessageDataBlock *d, char *debug_message, const uint32_t time);
 #endif // _PACKET_TYPES_H

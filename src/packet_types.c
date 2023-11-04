@@ -108,11 +108,12 @@ void altidude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
  * @param y_axis The angular velocity measurment for the y axis.
  * @param z_axis The angular velocity measurment for the z axis.
  */
-void angular_velocity_block_init(AngularVelocityBlock *b, const int32_t measurement_time, const int8_t full_scale_range,
-                                 const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
+void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
+                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                 const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy(b->bytes + 4, &full_scale_range, sizeof(uint16_t)); // Skip 4 bytes where data is already stored
-    memcpy(b->bytes + 6, &x_axis, sizeof(uint16_t));           // Skip 6 bytes where data is already stored
-    memcpy(b->bytes + 8, &y_axis, sizeof(uint16_t));           // Skip 8 bytes where data is already stored
-    memcpy(b->bytes + 10, &z_axis, sizeof(uint16_t));          // Skip 10 bytes where data is already stored
+    memcpy(b->bytes + 4, &full_scale_range, sizeof(uint8_t)); // Skip 4 bytes where data is already stored
+    memcpy(b->bytes + 5, &x_axis, sizeof(uint16_t));          // Skip 6 bytes where data is already stored
+    memcpy(b->bytes + 7, &y_axis, sizeof(uint16_t));          // Skip 8 bytes where data is already stored
+    memcpy(b->bytes + 9, &z_axis, sizeof(uint16_t));          // Skip 10 bytes where data is already stored
 }

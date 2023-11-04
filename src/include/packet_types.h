@@ -161,6 +161,7 @@ typedef struct angular_velocity_block {
     uint8_t bytes[12];
 } TIGHTLY_PACKED AngularVelocityBlock;
 
-void angular_velocity_block(AngularVelocityBlock *b, const uint32_t measurement_time, const int8_t full_scale_range,
-                            const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
+void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
+                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                 const int16_t z_axis);
 #endif // _PACKET_TYPES_H

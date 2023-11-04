@@ -157,7 +157,7 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
                               const uint32_t temperature, const uint32_t altitude);
 
 typedef struct angular_velocity_block {
-    /**The angular velocity block accessef as a bytes array*/
+    /**The angular velocity block accessed as a bytes array*/
     uint8_t bytes[12];
 } TIGHTLY_PACKED AngularVelocityBlock;
 

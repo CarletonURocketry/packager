@@ -117,3 +117,12 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
     memcpy(b->bytes + 7, &y_axis, sizeof(uint16_t));
     memcpy(b->bytes + 9, &z_axis, sizeof(uint16_t));
 }
+/**
+ * Initializes a debug message block with the provided information.
+ * 
+ * @param d the debug message block to be initialized
+ * @param debug_message the debug message to be initialized
+ */
+void debug_message_block_init(DebugMessageDataBlock *d, char *debug_message, const uint32_t time) {
+    d->debug_message = debug_message;
+}

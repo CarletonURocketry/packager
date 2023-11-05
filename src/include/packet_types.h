@@ -164,4 +164,13 @@ typedef struct angular_velocity_block {
 void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis);
+
+
+typedef struct debug_message_data_block {
+    char *debug_message;
+    uint32_t time;
+    
+} TIGHTLY_PACKED DebugMessageDataBlock;
+
+void debug_message_block_init(DebugMessageDataBlock *d, char *debug_message, const uint32_t time);
 #endif // _PACKET_TYPES_H

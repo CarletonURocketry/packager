@@ -66,7 +66,7 @@ void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig,
  * Initializes a signal report block with the provided information.
  * @param b The signal report to be initialized
  * @param snr The signal to noise ratio, in units of 1dB/LSB
- * @param rssi The recieved signal strength indication, in units of 1dB/LSB
+ * @param rssi The received signal strength indication, in units of 1dB/LSB
  * @param radio The index of the radio that is making a request for the signal report
  * @param tx_power The power with which a signal report is sent
  * @param request 1 if this is a request for a report, 0 if this is a report
@@ -83,7 +83,7 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
 /**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
- * @param measurement_time The mission time at the taking of the measurment
+ * @param measurement_time The mission time at the taking of the measurement
  * @param pressure The measured pressure in terms of Pascals. This field is a signed 32 bit integer in two's complement
  * format.
  * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB. This field is a signed 32 bit
@@ -104,16 +104,36 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
  * @param measurement_time The mission time when the measurement was taken.
  * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
  * maximum and minimum angular velocity that can be measured.
- * @param x_axis The angular velocity measurment for the x axis.
- * @param y_axis The angular velocity measurment for the y axis.
- * @param z_axis The angular velocity measurment for the z axis.
+ * @param x_axis The angular velocity measurement for the x axis.
+ * @param y_axis The angular velocity measurement for the y axis.
+ * @param z_axis The angular velocity measurement for the z axis.
  */
-void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
-                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                 const int16_t z_axis) {
+void angular_velocity_data_block_init(AngularVelocityDataBlock *b, const uint32_t measurement_time,
+                                      const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                      const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
     memcpy(b->bytes + 4, &full_scale_range, sizeof(uint8_t));
     memcpy(b->bytes + 5, &x_axis, sizeof(uint16_t));
     memcpy(b->bytes + 7, &y_axis, sizeof(uint16_t));
     memcpy(b->bytes + 9, &z_axis, sizeof(uint16_t));
+}
+
+/**
+ * Initializes an acceleration data block with the provided information.
+ * @param b The acceleration data block to be initialized.
+ * @param measurement_time The mission time when the measurement was taken.
+ * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
+ * maximum and minimum acceleration that can be measured.
+ * @param x_axis The acceleration measurement for the x axis.
+ * @param y_axis The acceleration measurement for the y axis.
+ * @param z_axis The acceleration measurement for the z axis.
+ * */
+void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
+                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                  const int16_t z_axis) {
+    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
+    memcpy(b->bytes + 4, &full_scale_range, sizeof(int8_t));
+    memcpy(b->bytes + 5, &x_axis, sizeof(int16_t));
+    memcpy(b->bytes + 7, &y_axis, sizeof(int16_t));
+    memcpy(b->bytes + 9, &z_axis, sizeof(int16_t));
 }

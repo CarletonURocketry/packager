@@ -5,21 +5,25 @@
  * Packet types should be created using their initialization functions.
  */
 #include "packet_types.h"
+#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+
+/** The maximum size of a packet in bytes. */
+static const uint16_t PACKET_MAX_SIZE = 256;
 
 /**
  * Initializes a packet header with the provided information.
  *
  * @param p The packet header to be initialized
  * @param callsign The HAM radio call sign to be included in the packet header
- * @param length The length of the packet this header is associated with (in bytes)
+ * @param length The length of the packet this header is associated with, in bytes, not including the header itself
  * @param version The version of the packet encoding format being used
  * @param source The source of the packet this header is associated with
  * @param packet_number The number of this packet (how many were sent before it)
  */
-void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
+void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
     /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
      * the packet header will be the null terminator. This will not cause any issues since the null terminator is
@@ -44,42 +48,63 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
 }
 
 /**
- * Sets the length of the packet header.
+ * Sets the length of the packet the header is associated with.
  * @param p The packet header to store the length in.
- * @param length The length of the packet header.
+ * @param length The length of the packet in bytes, not including the packet header itself.
  */
-inline void packet_header_set_length(PacketHeader *p, uint8_t length) {
-    p->bytes[6] = (uint8_t)((length & 0x3F) << 2); // Last 6 bits only, but shifted to start of byte
+inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
+    assert(length % 4 == 0);
+    uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
+    p->bytes[6] = (uint8_t)((encoded_length & 0x3F) << 2); // Last 6 bits only, but shifted to start of byte
 }
 
 /**
- * Gets the length stored in the packet header.
+ * Gets the length of the packet header.
  * @param p The packet header to read the length from.
- * @return The length stored in the packet header.
+ * @return The length of the packet header in bytes, including itself.
  */
-inline uint8_t packet_header_get_length(PacketHeader *p) { return (p->bytes[6] & 0xFC) >> 2; }
+inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
 
 /**
  * Initializes a block header with the provided information.
  *
  * @param b The block header to be initialized
- * @param length The length of the block this header is associated with
+ * @param length The length of the block this header is associated with, in 4 byte increments
  * @param has_sig Whether or not the block will have a cryptographic signature
  * @param type The type of the block to follow the header
  * @param subtype The sub type of the block to follow the header
  * @param dest The device address of the destination device
  */
-void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,
+void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
 
-    b->bytes[0] = (uint8_t)((length & 0x1F) << 2); // Last five bits shifted to start of byte
-    b->bytes[0] |= (uint8_t)(has_sig << 1);        // One bit, shifted to the end of length
-    b->bytes[0] |= (uint8_t)((type & 0xC) >> 2);   // First two bits at end of byte
-    b->bytes[1] = (uint8_t)(type & 0x3) << 6;      // Last two bits of type at beginning of byte
-    b->bytes[1] |= (uint8_t)(subtype & 0x3F);      // Sub type fills out byte
-    b->bytes[2] |= (uint8_t)(dest & 0xF) << 4;     // Destination starts at next byte
-    b->bytes[3] = 0;                               // Dead space
+    block_header_set_length(b, length);
+    b->bytes[0] |= (uint8_t)(has_sig << 1);      // One bit, shifted to the end of length
+    b->bytes[0] |= (uint8_t)((type & 0xC) >> 2); // First two bits at end of byte
+    b->bytes[1] = (uint8_t)(type & 0x3) << 6;    // Last two bits of type at beginning of byte
+    b->bytes[1] |= (uint8_t)(subtype & 0x3F);    // Sub type fills out byte
+    b->bytes[2] |= (uint8_t)(dest & 0xF) << 4;   // Destination starts at next byte
+    b->bytes[3] = 0;                             // Dead space
 }
+
+/**
+ * Sets the length of the block the block header is associated with.
+ * @param b The block header to store the length in.
+ * @param length The length of the block in bytes, not including the header itself.
+ */
+inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
+    assert(length % 4 == 0);
+    uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
+    b->bytes[0] = (uint8_t)((encoded_length & 0x1F) << 2);             // Last five bits shifted to start of byte
+}
+
+/**
+ * Gets the length of the block header.
+ * @param p The block header to read the length from.
+ * @return The length of the block header in bytes, including itself.
+ */
+inline uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
+
 /**
  * Initializes a signal report block with the provided information.
  * @param b The signal report to be initialized
@@ -134,4 +159,26 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
     memcpy(b->bytes + 5, &x_axis, sizeof(uint16_t));
     memcpy(b->bytes + 7, &y_axis, sizeof(uint16_t));
     memcpy(b->bytes + 9, &z_axis, sizeof(uint16_t));
+}
+
+/**
+ * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
+ * the block.
+ * @param p The packet to be appended to.
+ * @param b The block to append.
+ * @return True if the append succeeded, false if there was no space to append the block.
+ */
+bool packet_append_block(Packet *p, Block *b) {
+
+    uint16_t p_len = packet_header_get_length(&p->header);
+    BlockHeader h = b->header; // Copy to stack to avoid misaligned pointer
+    uint16_t b_len = block_header_get_length(&h);
+
+    // Ensure that there is enough space for the block to be added to the packet
+    if (p_len + b_len > PACKET_MAX_SIZE) return false;
+
+    // Necessary to cast blocks to uint8_t pointer so that offset is computed in bytes rather than sizeof(Block)
+    uint8_t *end_of_blocks = ((uint8_t *)p->blocks) + (p_len + sizeof(PacketHeader));
+    memcpy(end_of_blocks, b, b_len);
+    return true;
 }

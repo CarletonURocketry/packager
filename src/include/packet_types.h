@@ -80,19 +80,21 @@ typedef struct packet_header {
     uint8_t bytes[12];
 } PacketHeader;
 
-void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
+void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number);
-inline uint8_t packet_header_get_length(PacketHeader *p);
-inline void packet_header_set_length(PacketHeader *p, uint8_t length);
+inline uint16_t packet_header_get_length(const PacketHeader *p);
+inline void packet_header_set_length(PacketHeader *p, uint16_t length);
 
 /** Each block in the radio packet will have a header in this format. */
 typedef struct block_header {
     /** The block header accessed as a bytes array. */
-    uint8_t bytes[4];
+    uint16_t bytes[4];
 } BlockHeader;
 
-void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,
+void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest);
+inline uint16_t block_header_get_length(const BlockHeader *p);
+inline void block_header_set_length(BlockHeader *p, const uint16_t length);
 
 /** Signal report for the last block that was sent by the block's destination device */
 typedef union signal_report_block {
@@ -150,5 +152,7 @@ typedef struct {
     /** Packet contents in blocks, up to 256 bytes long. */
     Block *blocks;
 } TIGHTLY_PACKED Packet;
+
+bool packet_append_block(Packet *p, Block *b);
 
 #endif // _PACKET_TYPES_H

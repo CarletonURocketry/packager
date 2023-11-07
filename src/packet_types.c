@@ -5,31 +5,39 @@
  * Packet types should be created using their initialization functions.
  */
 #include "packet_types.h"
+#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
+
+/** The maximum size of a packet in bytes. */
+static const uint16_t PACKET_MAX_SIZE = 256;
+
+/* Copies memory from source to destination in big endian format.
+ * @param dest The destination buffer.
+ * @param src The source buffer.
+ * @param n_bytes The size of the source buffer in bytes.
+ */
+void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
+    for (unsigned long i = n_bytes; i > 0; i--) {
+        ((uint8_t *)dest)[n_bytes - i] = ((const uint8_t *)src)[i - 1];
+    }
+}
 
 /**
  * Initializes a packet header with the provided information.
  *
  * @param p The packet header to be initialized
  * @param callsign The HAM radio call sign to be included in the packet header
- * @param length The length of the packet this header is associated with (in bytes)
+ * @param length The length of the packet this header is associated with, in bytes, not including the header itself
  * @param version The version of the packet encoding format being used
  * @param source The source of the packet this header is associated with
  * @param packet_number The number of this packet (how many were sent before it)
  */
-void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
+void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
-    // Initialize with required parameters
-    p->contents.length = length;
-    p->contents.version = version;
-    p->contents.src_addr = source;
-    p->contents.packet_number = packet_number;
-
-    // Zero all dead space
-    p->contents._dead_space = 0;
-    p->contents._dead_space_2 = 0;
+    memset(p, 0, sizeof(PacketHeader)); // Make sure no garbage
 
     /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
      * the packet header will be the null terminator. This will not cause any issues since the null terminator is
@@ -39,29 +47,78 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
      * equally fine and follows the packet encoding format for 6 character call signs.
      */
     for (uint8_t i = 0; i < 6; i++) {
-        p->contents.callsign[i] = callsign[i];
+        p->bytes[i] = callsign[i];
     }
+
+    packet_header_set_length(p, length);
+    p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
+    p->bytes[7] = (uint8_t)((version & 0x07) << 5);  // Last three bits of version at start of byte
+    // Remaining 5 bits in byte 8 are dead space
+    p->bytes[8] = (uint8_t)((source & 0x0F) << 4);           // Last four bits are source
+    p->bytes[8] |= (uint8_t)((packet_number & 0x0F00) >> 8); // First four bits of packet_number fill out rest of byte
+    p->bytes[9] = (uint8_t)(packet_number & 0x00FF);         // Last 8 bits fill out byte
+    p->bytes[10] = 0;                                        // Dead space
+    p->bytes[11] = 0;                                        // Dead space
 }
+
+/**
+ * Sets the length of the packet the header is associated with.
+ * @param p The packet header to store the length in.
+ * @param length The length of the packet in bytes, not including the packet header itself.
+ */
+void packet_header_set_length(PacketHeader *p, const uint16_t length) {
+    assert(length % 4 == 0);
+    uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
+    p->bytes[6] = (uint8_t)((encoded_length & 0x3F) << 2); // Last 6 bits only, but shifted to start of byte
+}
+
+/**
+ * Gets the length of the packet header.
+ * @param p The packet header to read the length from.
+ * @return The length of the packet header in bytes, including itself.
+ */
+uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
 
 /**
  * Initializes a block header with the provided information.
  *
  * @param b The block header to be initialized
- * @param length The length of the block this header is associated with
+ * @param length The length of the block this header is associated with, in 4 byte increments
  * @param has_sig Whether or not the block will have a cryptographic signature
  * @param type The type of the block to follow the header
  * @param subtype The sub type of the block to follow the header
  * @param dest The device address of the destination device
  */
-void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,
+void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
-    b->contents.length = length;
-    b->contents.has_sig = has_sig;
-    b->contents.type = type;
-    b->contents.subtype = subtype;
-    b->contents.dest = dest;
-    b->contents._dead_space = 0;
+    memset(b, 0, sizeof(BlockHeader)); // Make sure no garbage
+    block_header_set_length(b, length);
+    b->bytes[0] |= (uint8_t)(has_sig & 0x1) << 2; // One bit, shifted to the end of length
+    b->bytes[0] |= (uint8_t)(type & 0x0C) >> 2;   // First two bits at end of byte
+    b->bytes[1] = (uint8_t)(type & 0x03) << 6;    // Last two bits of type at beginning of byte
+    b->bytes[1] |= (uint8_t)(subtype & 0x3F);     // Sub type fills out byte
+    b->bytes[2] |= (uint8_t)((dest & 0x0F) << 4); // Destination starts at next byte
+    b->bytes[3] = 0;                              // Dead space
 }
+
+/**
+ * Sets the length of the block the block header is associated with.
+ * @param b The block header to store the length in.
+ * @param length The length of the block in bytes, not including the header itself.
+ */
+void block_header_set_length(BlockHeader *b, const uint16_t length) {
+    assert(length % 4 == 0);
+    uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
+    b->bytes[0] = (uint8_t)((encoded_length & 0x1F) << 3);             // Last five bits shifted to start of byte
+}
+
+/**
+ * Gets the length of the block header.
+ * @param p The block header to read the length from.
+ * @return The length of the block header in bytes, including itself.
+ */
+uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
+
 /**
  * Initializes a signal report block with the provided information.
  * @param b The signal report to be initialized
@@ -83,20 +140,18 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
 /**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
- * @param measurement_time The mission time at the taking of the measurment
- * @param pressure The measured pressure in terms of Pascals. This field is a signed 32 bit integer in two's complement
- * format.
- * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB. This field is a signed 32 bit
- * integer in two's complement format.
- * @param altitude The calculated altitude in units of 1 mm/LSB. This field is a signed 32 bit integer in two’s
- * complement format.
+ * @param measurement_time The mission time at the taking of the measurement
+ * @param pressure The measured pressure in terms of Pascals.
+ * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB.
+ * @param altitude The calculated altitude in units of 1 mm/LSB.
  */
 void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
-                              const uint32_t temperature, const uint32_t altitude) {
-    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy(b->bytes + 4, &pressure, sizeof(uint32_t));
-    memcpy(b->bytes + 8, &temperature, sizeof(uint32_t));
-    memcpy(b->bytes + 12, &altitude, sizeof(uint32_t));
+                              const int32_t temperature, const int32_t altitude) {
+    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy_be(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude,
+              sizeof(altitude));
 }
 /**
  * Initializes an angular velocity block with the provided information.
@@ -111,9 +166,47 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
 void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis) {
-    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy(b->bytes + 4, &full_scale_range, sizeof(uint8_t));
-    memcpy(b->bytes + 5, &x_axis, sizeof(uint16_t));
-    memcpy(b->bytes + 7, &y_axis, sizeof(uint16_t));
-    memcpy(b->bytes + 9, &z_axis, sizeof(uint16_t));
+    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy_be(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
+              sizeof(z_axis));
+}
+
+/**
+ * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
+ * the block.
+ * @param p The packet to be appended to.
+ * @param b The block to append.
+ * @return True if the append succeeded, false if there was no space to append the block.
+ */
+bool packet_append_block(Packet *p, const Block b) {
+
+    const uint16_t p_len = packet_header_get_length(&p->header);
+    const uint16_t b_len = block_header_get_length(&b.header);
+
+    // Ensure that there is enough space for the block to be added to the packet
+    if (p_len + b_len > PACKET_MAX_SIZE) return false;
+
+    // If packet is just a header, first block goes in slot 0
+    if (p_len == sizeof(PacketHeader)) {
+        p->blocks[0] = b;
+        packet_header_set_length(&p->header, b_len); // The packet is now the length of the first block
+        return true;
+    }
+
+    uint16_t remaining_len = p_len;
+    remaining_len -= sizeof(PacketHeader);                          // Subtract packet header length
+    remaining_len -= block_header_get_length(&p->blocks[0].header); // Subtract length of first block
+
+    // While there is still content left in the packet, get the next block
+    uint16_t i = 1;
+    for (; remaining_len > 0; i++) {
+        remaining_len -= block_header_get_length(&p->blocks[i].header);
+    }
+    p->blocks[i] = b; // Add block at correct spot
+    // Packet length is now equal to its previous length + the new block
+    packet_header_set_length(&p->header, p_len - sizeof(PacketHeader) + b_len);
+    return true;
 }

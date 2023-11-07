@@ -10,6 +10,8 @@ static char *callsign = NULL;
 static char *file = NULL;
 static char buffer[BUFFER_SIZE] = {0};
 
+void debug_print_bytes(uint8_t *bytes, size_t n_bytes);
+
 int main(int argc, char **argv) {
 
     /* Fetch command line arguments. */
@@ -56,4 +58,11 @@ int main(int argc, char **argv) {
     }
 
     return EXIT_SUCCESS;
+}
+
+void debug_print_bytes(uint8_t *bytes, size_t n_bytes) {
+    for (size_t i = 0; i < n_bytes; i++) {
+        printf("%02x ", bytes[i]);
+    }
+    putchar('\n');
 }

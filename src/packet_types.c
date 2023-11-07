@@ -25,6 +25,8 @@ static const uint16_t PACKET_MAX_SIZE = 256;
  */
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
+    memset(p, 0, sizeof(PacketHeader)); // Make sure no garbage
+
     /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
      * the packet header will be the null terminator. This will not cause any issues since the null terminator is
      * effectively zero-padding, which is what's expected by the packet encoding format.
@@ -52,7 +54,7 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t le
  * @param p The packet header to store the length in.
  * @param length The length of the packet in bytes, not including the packet header itself.
  */
-inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
+void packet_header_set_length(PacketHeader *p, const uint16_t length) {
     assert(length % 4 == 0);
     uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
     p->bytes[6] = (uint8_t)((encoded_length & 0x3F) << 2); // Last 6 bits only, but shifted to start of byte
@@ -63,7 +65,7 @@ inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
  * @param p The packet header to read the length from.
  * @return The length of the packet header in bytes, including itself.
  */
-inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
+uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
 
 /**
  * Initializes a block header with the provided information.
@@ -77,14 +79,14 @@ inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->b
  */
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
-
+    memset(b, 0, sizeof(BlockHeader)); // Make sure no garbage
     block_header_set_length(b, length);
-    b->bytes[0] |= (uint8_t)(has_sig << 1);      // One bit, shifted to the end of length
-    b->bytes[0] |= (uint8_t)((type & 0xC) >> 2); // First two bits at end of byte
-    b->bytes[1] = (uint8_t)(type & 0x3) << 6;    // Last two bits of type at beginning of byte
-    b->bytes[1] |= (uint8_t)(subtype & 0x3F);    // Sub type fills out byte
-    b->bytes[2] |= (uint8_t)(dest & 0xF) << 4;   // Destination starts at next byte
-    b->bytes[3] = 0;                             // Dead space
+    b->bytes[0] |= (uint8_t)(has_sig & 0x1) << 2; // One bit, shifted to the end of length
+    b->bytes[0] |= (uint8_t)(type & 0x0C) >> 2;   // First two bits at end of byte
+    b->bytes[1] = (uint8_t)(type & 0x03) << 6;    // Last two bits of type at beginning of byte
+    b->bytes[1] |= (uint8_t)(subtype & 0x3F);     // Sub type fills out byte
+    b->bytes[2] |= (uint8_t)((dest & 0x0F) << 4); // Destination starts at next byte
+    b->bytes[3] = 0;                              // Dead space
 }
 
 /**
@@ -92,10 +94,10 @@ void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig
  * @param b The block header to store the length in.
  * @param length The length of the block in bytes, not including the header itself.
  */
-inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
+void block_header_set_length(BlockHeader *b, const uint16_t length) {
     assert(length % 4 == 0);
     uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
-    b->bytes[0] = (uint8_t)((encoded_length & 0x1F) << 2);             // Last five bits shifted to start of byte
+    b->bytes[0] = (uint8_t)((encoded_length & 0x1F) << 3);             // Last five bits shifted to start of byte
 }
 
 /**
@@ -103,7 +105,7 @@ inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
  * @param p The block header to read the length from.
  * @return The length of the block header in bytes, including itself.
  */
-inline uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
+uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
 
 /**
  * Initializes a signal report block with the provided information.

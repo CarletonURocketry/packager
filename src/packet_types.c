@@ -21,16 +21,6 @@
  */
 void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
-    // Initialize with required parameters
-    p->contents.length = length;
-    p->contents.version = version;
-    p->contents.src_addr = source;
-    p->contents.packet_number = packet_number;
-
-    // Zero all dead space
-    p->contents._dead_space = 0;
-    p->contents._dead_space_2 = 0;
-
     /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
      * the packet header will be the null terminator. This will not cause any issues since the null terminator is
      * effectively zero-padding, which is what's expected by the packet encoding format.
@@ -39,8 +29,18 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
      * equally fine and follows the packet encoding format for 6 character call signs.
      */
     for (uint8_t i = 0; i < 6; i++) {
-        p->contents.callsign[i] = callsign[i];
+        p->bytes[i] = callsign[i];
     }
+
+    p->bytes[6] = (uint8_t)((length & 0x3F) << 2);   // Last 6 bits only, but shifted to start of byte
+    p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
+    p->bytes[7] = (uint8_t)((version & 0x07) << 5);  // Last three bits of version at start of byte
+    // Remaining 5 bits in byte 8 are dead space
+    p->bytes[8] = (uint8_t)((source & 0x0F) << 4);           // Last four bits are source
+    p->bytes[8] |= (uint8_t)((packet_number & 0x0F00) >> 8); // First four bits of packet_number fill out rest of byte
+    p->bytes[9] = (uint8_t)(packet_number & 0x00FF);         // Last 8 bits fill out byte
+    p->bytes[10] = 0;                                        // Dead space
+    p->bytes[11] = 0;                                        // Dead space
 }
 
 /**
@@ -55,12 +55,14 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
  */
 void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
-    b->contents.length = length;
-    b->contents.has_sig = has_sig;
-    b->contents.type = type;
-    b->contents.subtype = subtype;
-    b->contents.dest = dest;
-    b->contents._dead_space = 0;
+
+    b->bytes[0] = (uint8_t)((length & 0x1F) << 2); // Last five bits shifted to start of byte
+    b->bytes[0] |= (uint8_t)(has_sig << 1);        // One bit, shifted to the end of length
+    b->bytes[0] |= (uint8_t)((type & 0xC) >> 2);   // First two bits at end of byte
+    b->bytes[1] = (uint8_t)(type & 0x3) << 6;      // Last two bits of type at beginning of byte
+    b->bytes[1] |= (uint8_t)(subtype & 0x3F);      // Sub type fills out byte
+    b->bytes[2] |= (uint8_t)(dest & 0xF) << 4;     // Destination starts at next byte
+    b->bytes[3] = 0;                               // Dead space
 }
 /**
  * Initializes a signal report block with the provided information.

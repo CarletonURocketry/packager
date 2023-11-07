@@ -13,6 +13,17 @@
 /** The maximum size of a packet in bytes. */
 static const uint16_t PACKET_MAX_SIZE = 256;
 
+/* Copies memory from source to destination in big endian format.
+ * @param dest The destination buffer.
+ * @param src The source buffer.
+ * @param n_bytes The size of the source buffer in bytes.
+ */
+void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
+    for (unsigned long i = n_bytes; i > 0; i--) {
+        ((uint8_t *)dest)[n_bytes - i] = ((const uint8_t *)src)[i];
+    }
+}
+
 /**
  * Initializes a packet header with the provided information.
  *
@@ -138,10 +149,10 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  */
 void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
                               const uint32_t temperature, const uint32_t altitude) {
-    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy(b->bytes + 4, &pressure, sizeof(uint32_t));
-    memcpy(b->bytes + 8, &temperature, sizeof(uint32_t));
-    memcpy(b->bytes + 12, &altitude, sizeof(uint32_t));
+    memcpy_be(b->bytes, &measurement_time, sizeof(uint32_t));
+    memcpy_be(b->bytes + 4, &pressure, sizeof(uint32_t));
+    memcpy_be(b->bytes + 8, &temperature, sizeof(uint32_t));
+    memcpy_be(b->bytes + 12, &altitude, sizeof(uint32_t));
 }
 /**
  * Initializes an angular velocity block with the provided information.
@@ -156,11 +167,11 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
 void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis) {
-    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy(b->bytes + 4, &full_scale_range, sizeof(uint8_t));
-    memcpy(b->bytes + 5, &x_axis, sizeof(uint16_t));
-    memcpy(b->bytes + 7, &y_axis, sizeof(uint16_t));
-    memcpy(b->bytes + 9, &z_axis, sizeof(uint16_t));
+    memcpy_be(b->bytes, &measurement_time, sizeof(uint32_t));
+    memcpy_be(b->bytes + 4, &full_scale_range, sizeof(uint8_t));
+    memcpy_be(b->bytes + 5, &x_axis, sizeof(uint16_t));
+    memcpy_be(b->bytes + 7, &y_axis, sizeof(uint16_t));
+    memcpy_be(b->bytes + 9, &z_axis, sizeof(uint16_t));
 }
 
 /**
@@ -181,6 +192,6 @@ bool packet_append_block(Packet *p, Block *b) {
 
     // Necessary to cast blocks to uint8_t pointer so that offset is computed in bytes rather than sizeof(Block)
     uint8_t *end_of_blocks = ((uint8_t *)p->blocks) + (p_len + sizeof(PacketHeader));
-    memcpy(end_of_blocks, b, b_len);
+    memcpy_be(end_of_blocks, b, b_len);
     return true;
 }

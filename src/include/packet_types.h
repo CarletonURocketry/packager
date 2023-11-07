@@ -82,6 +82,8 @@ typedef struct packet_header {
 
 void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number);
+inline uint8_t packet_header_get_length(PacketHeader *p);
+inline void packet_header_set_length(PacketHeader *p, uint8_t length);
 
 /** Each block in the radio packet will have a header in this format. */
 typedef struct block_header {

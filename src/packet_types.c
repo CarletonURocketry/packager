@@ -32,7 +32,7 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
         p->bytes[i] = callsign[i];
     }
 
-    p->bytes[6] = (uint8_t)((length & 0x3F) << 2);   // Last 6 bits only, but shifted to start of byte
+    packet_header_set_length(p, length);
     p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
     p->bytes[7] = (uint8_t)((version & 0x07) << 5);  // Last three bits of version at start of byte
     // Remaining 5 bits in byte 8 are dead space
@@ -42,6 +42,22 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t len
     p->bytes[10] = 0;                                        // Dead space
     p->bytes[11] = 0;                                        // Dead space
 }
+
+/**
+ * Sets the length of the packet header.
+ * @param p The packet header to store the length in.
+ * @param length The length of the packet header.
+ */
+inline void packet_header_set_length(PacketHeader *p, uint8_t length) {
+    p->bytes[6] = (uint8_t)((length & 0x3F) << 2); // Last 6 bits only, but shifted to start of byte
+}
+
+/**
+ * Gets the length stored in the packet header.
+ * @param p The packet header to read the length from.
+ * @return The length stored in the packet header.
+ */
+inline uint8_t packet_header_get_length(PacketHeader *p) { return (p->bytes[6] & 0xFC) >> 2; }
 
 /**
  * Initializes a block header with the provided information.

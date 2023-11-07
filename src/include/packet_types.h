@@ -128,7 +128,7 @@ typedef struct altitude_data_block {
 } AltitudeDataBlock;
 
 void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
-                              const uint32_t temperature, const uint32_t altitude);
+                              const int32_t temperature, const int32_t altitude);
 
 typedef struct angular_velocity_block {
     /**The angular velocity block accessed as a bytes array*/

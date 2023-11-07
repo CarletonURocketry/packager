@@ -8,7 +8,6 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <string.h>
 
 /** The maximum size of a packet in bytes. */
@@ -21,7 +20,7 @@ static const uint16_t PACKET_MAX_SIZE = 256;
  */
 void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
     for (unsigned long i = n_bytes; i > 0; i--) {
-        ((uint8_t *)dest)[n_bytes - i - 1] = ((const uint8_t *)src)[i];
+        ((uint8_t *)dest)[n_bytes - i] = ((const uint8_t *)src)[i - 1];
     }
 }
 
@@ -140,18 +139,13 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
 /**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
- * @param measurement_time The mission time at the taking of the measurment
- * @param pressure The measured pressure in terms of Pascals. This field is a signed 32 bit integer in two's complement
- * format.
- * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB. This field is a signed 32 bit
- * integer in two's complement format.
- * @param altitude The calculated altitude in units of 1 mm/LSB. This field is a signed 32 bit integer in two’s
- * complement format.
+ * @param measurement_time The mission time at the taking of the measurement
+ * @param pressure The measured pressure in terms of Pascals.
+ * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB.
+ * @param altitude The calculated altitude in units of 1 mm/LSB.
  */
 void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
-                              const uint32_t temperature, const uint32_t altitude) {
-    printf("%u\n", altitude);
-    printf("%lu\n", sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature));
+                              const int32_t temperature, const int32_t altitude) {
     memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy_be(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
     memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));

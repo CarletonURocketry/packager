@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['packet_5fnumber_0',['packet_number',['../unionPacketHeader.html#a4025b0d2688555b91f2c1edc9bd53c6b',1,'PacketHeader']]]
+  ['tx_5fpower_0',['tx_power',['../unionSignalReportBlock.html#a715e1d84028fe30b3f67d8e1fd0f217b',1,'SignalReportBlock']]]
 ];

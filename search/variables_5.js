@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['length_0',['length',['../unionPacketHeader.html#a0ba497486bef53cfb41e245201315506',1,'PacketHeader::length()'],['../unionBlockHeader.html#a00f98c9c6002c55152758f8ec2339211',1,'BlockHeader::length()']]]
+  ['snr_0',['snr',['../unionSignalReportBlock.html#a1d04dad012bd061e199faa725058c5a3',1,'SignalReportBlock']]]
 ];

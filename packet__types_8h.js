@@ -1,11 +1,11 @@
 var packet__types_8h =
 [
-    [ "PacketHeader", "unionPacketHeader.html", "unionPacketHeader" ],
-    [ "BlockHeader", "unionBlockHeader.html", "unionBlockHeader" ],
+    [ "PacketHeader", "structPacketHeader.html", "structPacketHeader" ],
+    [ "BlockHeader", "structBlockHeader.html", "structBlockHeader" ],
     [ "SignalReportBlock", "unionSignalReportBlock.html", "unionSignalReportBlock" ],
     [ "AltitudeDataBlock", "structAltitudeDataBlock.html", "structAltitudeDataBlock" ],
     [ "AngularVelocityBlock", "structAngularVelocityBlock.html", "structAngularVelocityBlock" ],
-    [ "packet_callsign", "packet__types_8h.html#ace52f836fe5bf70a065f0fef12397d80", null ],
+    [ "TIGHTLY_PACKED", "structTIGHTLY__PACKED.html", "structTIGHTLY__PACKED" ],
     [ "TIGHTLY_PACKED", "packet__types_8h.html#a89837ed22f4c4f6dfdbac0cdbc5de57d", null ],
     [ "BlockSubtype", "packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97", null ],
     [ "BlockType", "packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3", [
@@ -46,9 +46,15 @@ var packet__types_8h =
       [ "ROCKET", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630afafc201536271f745d3923b7efb6d375", null ],
       [ "MULTICAST", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a607d700b2c0a01c54bdadde074a7cb12", null ]
     ] ],
-    [ "altitude_data_block_init", "packet__types_8h.html#af4d6a4e3f7e1ecb4720813d35305e209", null ],
+    [ "altitude_data_block_init", "packet__types_8h.html#a53a0207767b9583ec28be4902f75f690", null ],
     [ "angular_velocity_block_init", "packet__types_8h.html#a32db71d086e85e48ea86a56b79ef5af2", null ],
-    [ "block_header_init", "packet__types_8h.html#abd7a645c3babcbf572e6d357bb0ba158", null ],
-    [ "packet_header_init", "packet__types_8h.html#aeada265de24e1e477825b6b5b0d3c886", null ],
+    [ "block_header_get_length", "packet__types_8h.html#a0a504cf56639a33c718d6bf4e4b05505", null ],
+    [ "block_header_init", "packet__types_8h.html#aae2e56890427e8cd7f3aef4144fdf3bc", null ],
+    [ "block_header_set_length", "packet__types_8h.html#a2fc924541ef4d5fba04a4de0faad6858", null ],
+    [ "memcpy_be", "packet__types_8h.html#aba679592b86f02a1e165463d32f103f8", null ],
+    [ "packet_append_block", "packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec", null ],
+    [ "packet_header_get_length", "packet__types_8h.html#a458cb5abef8a8a04b26c5b31cebcdbc9", null ],
+    [ "packet_header_init", "packet__types_8h.html#ac5862f04a01edd6d42896f795bd6ef5c", null ],
+    [ "packet_header_set_length", "packet__types_8h.html#ae5475025bd142a3d86b9322c98ebd1ae", null ],
     [ "signal_report_init", "packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada", null ]
 ];

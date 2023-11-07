@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 /** The maximum size of a packet in bytes. */
@@ -182,8 +183,8 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
  */
 bool packet_append_block(Packet *p, const Block b) {
 
-    uint16_t p_len = packet_header_get_length(&p->header);
-    uint16_t b_len = block_header_get_length(&b.header);
+    const uint16_t p_len = packet_header_get_length(&p->header);
+    const uint16_t b_len = block_header_get_length(&b.header);
 
     // Ensure that there is enough space for the block to be added to the packet
     if (p_len + b_len > PACKET_MAX_SIZE) return false;
@@ -191,17 +192,21 @@ bool packet_append_block(Packet *p, const Block b) {
     // If packet is just a header, first block goes in slot 0
     if (p_len == sizeof(PacketHeader)) {
         p->blocks[0] = b;
+        packet_header_set_length(&p->header, b_len); // The packet is now the length of the first block
         return true;
     }
 
-    p_len -= sizeof(PacketHeader);                          // Subtract packet header length
-    p_len -= block_header_get_length(&p->blocks[0].header); // Subtract length of first block
+    uint16_t remaining_len = p_len;
+    remaining_len -= sizeof(PacketHeader);                          // Subtract packet header length
+    remaining_len -= block_header_get_length(&p->blocks[0].header); // Subtract length of first block
 
     // While there is still content left in the packet, get the next block
     uint16_t i = 1;
-    for (; p_len > 0; i++) {
-        p_len -= block_header_get_length(&p->blocks[i].header);
+    for (; remaining_len > 0; i++) {
+        remaining_len -= block_header_get_length(&p->blocks[i].header);
     }
-    p->blocks[i] = b;
+    p->blocks[i] = b; // Add block at correct spot
+    // Packet length is now equal to its previous length + the new block
+    packet_header_set_length(&p->header, p_len - sizeof(PacketHeader) + b_len);
     return true;
 }

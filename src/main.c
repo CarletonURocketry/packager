@@ -40,24 +40,6 @@ int main(int argc, char **argv) {
     }
     callsign = argv[optind];
 
-    PacketHeader header;
-    packet_header_init(&header, callsign, 0, 0, ROCKET, 256);
-
-    BlockHeader header_b;
-    block_header_init(&header_b, sizeof(AltitudeDataBlock), true, TYPE_DATA, DATA_ALT, ROCKET);
-
-    AltitudeDataBlock a;
-    altitude_data_block_init(&a, 1, 12, 18, 17);
-    debug_print_bytes(a.bytes, sizeof(AltitudeDataBlock));
-
-    Block b = {.header = header_b, .contents = (uint8_t *)&a};
-    Block blocks[2] = {0};
-    Packet p = {.header = header, .blocks = blocks};
-    packet_append_block(&p, b);
-
-    printf("Block contents\n");
-    debug_print_bytes(p.blocks[0].contents, block_header_get_length(&p.blocks[0].header) - sizeof(BlockHeader));
-
     /* Open input stream. */
     FILE *input;
     if (file != NULL) {

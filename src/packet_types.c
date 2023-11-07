@@ -187,11 +187,14 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
 void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
                                   const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                   const int16_t z_axis) {
-    memcpy(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy(b->bytes + 4, &full_scale_range, sizeof(int8_t));
-    memcpy(b->bytes + 5, &x_axis, sizeof(int16_t));
-    memcpy(b->bytes + 7, &y_axis, sizeof(int16_t));
-    memcpy(b->bytes + 9, &z_axis, sizeof(int16_t));
+    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy_be(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    // One byte of dead space after FSR
+    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
+              sizeof(y_axis));
+    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
+              &z_axis, sizeof(z_axis));
 }
 
 /**

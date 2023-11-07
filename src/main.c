@@ -42,23 +42,21 @@ int main(int argc, char **argv) {
 
     PacketHeader header;
     packet_header_init(&header, callsign, 0, 0, ROCKET, 256);
-    printf("Packet header\n");
-    debug_print_bytes(header.bytes, sizeof(PacketHeader));
 
     BlockHeader header_b;
-    block_header_init(&header_b, 0, true, TYPE_DATA, DATA_ALT, ROCKET);
-    printf("Block header\n");
-    debug_print_bytes(header_b.bytes, sizeof(BlockHeader));
+    block_header_init(&header_b, sizeof(AltitudeDataBlock), true, TYPE_DATA, DATA_ALT, ROCKET);
 
     AltitudeDataBlock a;
     altitude_data_block_init(&a, 1, 12, 18, 17);
-    printf("Altitude data block\n");
     debug_print_bytes(a.bytes, sizeof(AltitudeDataBlock));
 
     Block b = {.header = header_b, .contents = (uint8_t *)&a};
-    uint8_t blocks[sizeof(Block)] = {0};
-    Packet p = {.header = header, .blocks = (Block *)blocks};
-    packet_append_block(&p, &b);
+    Block blocks[2] = {0};
+    Packet p = {.header = header, .blocks = blocks};
+    packet_append_block(&p, b);
+
+    printf("Block contents\n");
+    debug_print_bytes(p.blocks[0].contents, block_header_get_length(&p.blocks[0].header) - sizeof(BlockHeader));
 
     /* Open input stream. */
     FILE *input;

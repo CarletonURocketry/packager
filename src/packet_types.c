@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 /** The maximum size of a packet in bytes. */
@@ -20,7 +21,7 @@ static const uint16_t PACKET_MAX_SIZE = 256;
  */
 void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
     for (unsigned long i = n_bytes; i > 0; i--) {
-        ((uint8_t *)dest)[n_bytes - i] = ((const uint8_t *)src)[i];
+        ((uint8_t *)dest)[n_bytes - i - 1] = ((const uint8_t *)src)[i];
     }
 }
 
@@ -149,10 +150,13 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  */
 void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
                               const uint32_t temperature, const uint32_t altitude) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy_be(b->bytes + 4, &pressure, sizeof(uint32_t));
-    memcpy_be(b->bytes + 8, &temperature, sizeof(uint32_t));
-    memcpy_be(b->bytes + 12, &altitude, sizeof(uint32_t));
+    printf("%u\n", altitude);
+    printf("%lu\n", sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature));
+    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy_be(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude,
+              sizeof(altitude));
 }
 /**
  * Initializes an angular velocity block with the provided information.
@@ -167,11 +171,12 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
 void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(uint32_t));
-    memcpy_be(b->bytes + 4, &full_scale_range, sizeof(uint8_t));
-    memcpy_be(b->bytes + 5, &x_axis, sizeof(uint16_t));
-    memcpy_be(b->bytes + 7, &y_axis, sizeof(uint16_t));
-    memcpy_be(b->bytes + 9, &z_axis, sizeof(uint16_t));
+    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy_be(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
+    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
+              sizeof(z_axis));
 }
 
 /**
@@ -181,17 +186,28 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
  * @param b The block to append.
  * @return True if the append succeeded, false if there was no space to append the block.
  */
-bool packet_append_block(Packet *p, Block *b) {
+bool packet_append_block(Packet *p, const Block b) {
 
     uint16_t p_len = packet_header_get_length(&p->header);
-    BlockHeader h = b->header; // Copy to stack to avoid misaligned pointer
-    uint16_t b_len = block_header_get_length(&h);
+    uint16_t b_len = block_header_get_length(&b.header);
 
     // Ensure that there is enough space for the block to be added to the packet
     if (p_len + b_len > PACKET_MAX_SIZE) return false;
 
-    // Necessary to cast blocks to uint8_t pointer so that offset is computed in bytes rather than sizeof(Block)
-    uint8_t *end_of_blocks = ((uint8_t *)p->blocks) + (p_len + sizeof(PacketHeader));
-    memcpy_be(end_of_blocks, b, b_len);
+    // If packet is just a header, first block goes in slot 0
+    if (p_len == sizeof(PacketHeader)) {
+        p->blocks[0] = b;
+        return true;
+    }
+
+    p_len -= sizeof(PacketHeader);                          // Subtract packet header length
+    p_len -= block_header_get_length(&p->blocks[0].header); // Subtract length of first block
+
+    // While there is still content left in the packet, get the next block
+    uint16_t i = 1;
+    for (; p_len > 0; i++) {
+        p_len -= block_header_get_length(&p->blocks[i].header);
+    }
+    p->blocks[i] = b;
     return true;
 }

@@ -155,6 +155,6 @@ typedef struct {
     Block *blocks;
 } TIGHTLY_PACKED Packet;
 
-bool packet_append_block(Packet *p, Block *b);
+bool packet_append_block(Packet *p, const Block b);
 
 #endif // _PACKET_TYPES_H

@@ -23,8 +23,6 @@
 #define TIGHTLY_PACKED __attribute__((packed, aligned(1)))
 #endif
 
-void memcpy_be(void *dest, const void *src, unsigned long n_bytes);
-
 /** Possible devices from which a packet could originate or be sent to. */
 typedef enum device_address {
     GROUNDSTATION = 0x0, /**< Ground station */

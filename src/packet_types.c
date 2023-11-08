@@ -14,17 +14,6 @@
 /** The maximum size of a packet in bytes. */
 static const uint16_t PACKET_MAX_SIZE = 256;
 
-/* Copies memory from source to destination in big endian format.
- * @param dest The destination buffer.
- * @param src The source buffer.
- * @param n_bytes The size of the source buffer in bytes.
- */
-void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
-    for (unsigned long i = n_bytes; i > 0; i--) {
-        ((uint8_t *)dest)[n_bytes - i] = ((const uint8_t *)src)[i - 1];
-    }
-}
-
 /**
  * Initializes a packet header with the provided information.
  *
@@ -50,6 +39,7 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t le
         p->bytes[i] = callsign[i];
     }
 
+    // TODO This needs to be little endian
     packet_header_set_length(p, length);
     p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
     p->bytes[7] = (uint8_t)((version & 0x07) << 5);  // Last three bits of version at start of byte
@@ -92,6 +82,7 @@ uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6]
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
     memset(b, 0, sizeof(BlockHeader)); // Make sure no garbage
+    // TODO This needs to be little endian
     block_header_set_length(b, length);
     b->bytes[0] |= (uint8_t)(has_sig & 0x1) << 2; // One bit, shifted to the end of length
     b->bytes[0] |= (uint8_t)(type & 0x0C) >> 2;   // First two bits at end of byte
@@ -147,10 +138,10 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  */
 void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
                               const int32_t temperature, const int32_t altitude) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy_be(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude,
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude,
               sizeof(altitude));
 }
 /**
@@ -166,11 +157,11 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
 void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy_be(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
               sizeof(z_axis));
 }
 
@@ -187,13 +178,13 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
 void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
                                   const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                   const int16_t z_axis) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy_be(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
     // One byte of dead space after FSR
-    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
+    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
               sizeof(y_axis));
-    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
+    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
               &z_axis, sizeof(z_axis));
 }
 

@@ -1,5 +1,6 @@
 var packet__types_8c =
 [
+    [ "acceleration_data_block_init", "packet__types_8c.html#a34e642c0ccb44093cda0bf821381fde1", null ],
     [ "altitude_data_block_init", "packet__types_8c.html#a53a0207767b9583ec28be4902f75f690", null ],
     [ "angular_velocity_block_init", "packet__types_8c.html#a32db71d086e85e48ea86a56b79ef5af2", null ],
     [ "block_header_get_length", "packet__types_8c.html#a83e46b37d266d623868283fa3fe29e2a", null ],

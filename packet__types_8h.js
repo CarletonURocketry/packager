@@ -5,6 +5,7 @@ var packet__types_8h =
     [ "SignalReportBlock", "unionSignalReportBlock.html", "unionSignalReportBlock" ],
     [ "AltitudeDataBlock", "structAltitudeDataBlock.html", "structAltitudeDataBlock" ],
     [ "AngularVelocityBlock", "structAngularVelocityBlock.html", "structAngularVelocityBlock" ],
+    [ "AccelerationDataBlock", "structAccelerationDataBlock.html", "structAccelerationDataBlock" ],
     [ "TIGHTLY_PACKED", "structTIGHTLY__PACKED.html", "structTIGHTLY__PACKED" ],
     [ "TIGHTLY_PACKED", "packet__types_8h.html#a89837ed22f4c4f6dfdbac0cdbc5de57d", null ],
     [ "BlockSubtype", "packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97", null ],
@@ -46,6 +47,7 @@ var packet__types_8h =
       [ "ROCKET", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630afafc201536271f745d3923b7efb6d375", null ],
       [ "MULTICAST", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a607d700b2c0a01c54bdadde074a7cb12", null ]
     ] ],
+    [ "acceleration_data_block_init", "packet__types_8h.html#a34e642c0ccb44093cda0bf821381fde1", null ],
     [ "altitude_data_block_init", "packet__types_8h.html#a53a0207767b9583ec28be4902f75f690", null ],
     [ "angular_velocity_block_init", "packet__types_8h.html#a32db71d086e85e48ea86a56b79ef5af2", null ],
     [ "block_header_get_length", "packet__types_8h.html#a0a504cf56639a33c718d6bf4e4b05505", null ],

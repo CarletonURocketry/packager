@@ -1,5 +1,6 @@
 var annotated_dup =
 [
+    [ "AccelerationDataBlock", "structAccelerationDataBlock.html", "structAccelerationDataBlock" ],
     [ "AltitudeDataBlock", "structAltitudeDataBlock.html", "structAltitudeDataBlock" ],
     [ "AngularVelocityBlock", "structAngularVelocityBlock.html", "structAngularVelocityBlock" ],
     [ "BlockHeader", "structBlockHeader.html", "structBlockHeader" ],

@@ -8,7 +8,6 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <string.h>
 
 /** The maximum size of a packet in bytes. */
@@ -37,7 +36,6 @@ void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
  */
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
-    memset(p, 0, sizeof(PacketHeader)); // Make sure no garbage
 
     /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
      * the packet header will be the null terminator. This will not cause any issues since the null terminator is
@@ -46,9 +44,7 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t le
      * In the case of a 6 character call sign, the null terminator will not be included in the packet header, which is
      * equally fine and follows the packet encoding format for 6 character call signs.
      */
-    for (uint8_t i = 0; i < 6; i++) {
-        p->bytes[i] = callsign[i];
-    }
+    memcpy(p->bytes, callsign, 6);
 
     packet_header_set_length(p, length);
     p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
@@ -67,9 +63,9 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t le
  * @param length The length of the packet in bytes, not including the packet header itself.
  */
 void packet_header_set_length(PacketHeader *p, const uint16_t length) {
-    assert(length % 4 == 0);
     uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
-    p->bytes[6] = (uint8_t)((encoded_length & 0x3F) << 2); // Last 6 bits only, but shifted to start of byte
+    p->bytes[6] &= ~0xFC;                                               // Clear top 6 bits
+    p->bytes[6] |= (encoded_length & 0x3F) << 2;                        // OR in bottom 6 bits of length, shifted left
 }
 
 /**
@@ -91,25 +87,26 @@ uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6]
  */
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
-    memset(b, 0, sizeof(BlockHeader)); // Make sure no garbage
+
+    b->bytes[0] = (uint8_t)(has_sig & 0x1) << 3; // Shift in signature indicator
+    b->bytes[0] |= (uint8_t)(type & 0xC) >> 2; // First two bits of type at end of byte
     block_header_set_length(b, length);
-    b->bytes[0] |= (uint8_t)(has_sig & 0x1) << 2; // One bit, shifted to the end of length
-    b->bytes[0] |= (uint8_t)(type & 0x0C) >> 2;   // First two bits at end of byte
-    b->bytes[1] = (uint8_t)(type & 0x03) << 6;    // Last two bits of type at beginning of byte
-    b->bytes[1] |= (uint8_t)(subtype & 0x3F);     // Sub type fills out byte
-    b->bytes[2] |= (uint8_t)((dest & 0x0F) << 4); // Destination starts at next byte
-    b->bytes[3] = 0;                              // Dead space
+    b->bytes[1] = (uint8_t)(type & 0x3) << 6; // Last two bits of type at start of byte
+    b->bytes[1] |= (uint8_t)(subtype & 0x3F); // 6 bits of sub type fill out byte
+    b->bytes[2] = (uint8_t)(dest & 0xF) << 4; // Destination in top of byte
+    b->bytes[3] = 0; // Dead space
 }
 
 /**
  * Sets the length of the block the block header is associated with.
  * @param b The block header to store the length in.
- * @param length The length of the block in bytes, not including the header itself.
+ * @param length The length of the block in bytes, not including the header itself. Must be a multiple of 4.
  */
 void block_header_set_length(BlockHeader *b, const uint16_t length) {
-    assert(length % 4 == 0);
     uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
-    b->bytes[0] = (uint8_t)((encoded_length & 0x1F) << 3);             // Last five bits shifted to start of byte
+    encoded_length &= 0x1F;                                            // Last 5 bits are length
+    b->bytes[0] &= ~0xF8;                                              // Clear the first 5 bits
+    b->bytes[0] |= (encoded_length << 3);                              // Length shifted to start of byte
 }
 
 /**
@@ -147,11 +144,10 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  */
 void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
                               const int32_t temperature, const int32_t altitude) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy_be(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude,
-              sizeof(altitude));
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude, sizeof(altitude));
 }
 /**
  * Initializes an angular velocity block with the provided information.
@@ -166,12 +162,12 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
 void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy_be(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
-    memcpy_be(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
-              sizeof(z_axis));
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
+    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
+           sizeof(z_axis));
 }
 
 /**
@@ -187,14 +183,14 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
 void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
                                   const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                   const int16_t z_axis) {
-    memcpy_be(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy_be(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
     // One byte of dead space after FSR
-    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
-              sizeof(y_axis));
-    memcpy_be(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
-              &z_axis, sizeof(z_axis));
+    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
+           sizeof(y_axis));
+    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
+           &z_axis, sizeof(z_axis));
 }
 
 /**

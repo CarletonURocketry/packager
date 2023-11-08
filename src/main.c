@@ -1,4 +1,5 @@
 #include "packet_types.h"
+#include <assert.h>
 #include <getopt.h>
 #include <stdint.h>
 #include <stdio.h>

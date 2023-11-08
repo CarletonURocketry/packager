@@ -95,8 +95,8 @@ typedef struct block_header {
 
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest);
-uint16_t block_header_get_length(const BlockHeader *p);
-void block_header_set_length(BlockHeader *p, const uint16_t length);
+uint16_t block_header_get_length(const BlockHeader *b);
+void block_header_set_length(BlockHeader *b, const uint16_t length);
 
 /** Signal report for the last block that was sent by the block's destination device */
 typedef union signal_report_block {

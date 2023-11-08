@@ -41,6 +41,11 @@ int main(int argc, char **argv) {
     }
     callsign = argv[optind];
 
+    BlockHeader b;
+    block_header_init(&b, 4, true, TYPE_DATA, DATA_ALT, GROUNDSTATION);
+    debug_print_bytes(b.bytes, sizeof(b));
+    printf("%u\n", block_header_get_length(&b));
+
     /* Open input stream. */
     FILE *input;
     if (file != NULL) {

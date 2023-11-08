@@ -13,6 +13,17 @@
 /** The maximum size of a packet in bytes. */
 static const uint16_t PACKET_MAX_SIZE = 256;
 
+/* Copies memory from source to destination in big endian format.
+ * @param dest The destination buffer.
+ * @param src The source buffer.
+ * @param n_bytes The size of the source buffer in bytes.
+ */
+void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
+    for (unsigned long i = n_bytes; i > 0; i--) {
+        ((uint8_t *)dest)[n_bytes - i] = ((const uint8_t *)src)[i - 1];
+    }
+}
+
 /**
  * Initializes a packet header with the provided information.
  *
@@ -25,7 +36,6 @@ static const uint16_t PACKET_MAX_SIZE = 256;
  */
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
-    memset(p, 0, sizeof(PacketHeader)); // Make sure no garbage
 
     /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
      * the packet header will be the null terminator. This will not cause any issues since the null terminator is
@@ -34,11 +44,8 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t le
      * In the case of a 6 character call sign, the null terminator will not be included in the packet header, which is
      * equally fine and follows the packet encoding format for 6 character call signs.
      */
-    for (uint8_t i = 0; i < 6; i++) {
-        p->bytes[i] = callsign[i];
-    }
+    memcpy(p->bytes, callsign, 6);
 
-    // TODO This needs to be little endian
     packet_header_set_length(p, length);
     p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
     p->bytes[7] = (uint8_t)((version & 0x07) << 5);  // Last three bits of version at start of byte
@@ -56,9 +63,9 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t le
  * @param length The length of the packet in bytes, not including the packet header itself.
  */
 void packet_header_set_length(PacketHeader *p, const uint16_t length) {
-    assert(length % 4 == 0);
     uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
-    p->bytes[3] = (uint8_t)((encoded_length & 0x3F) << 2); // Last 6 bits only, but shifted to start of byte
+    p->bytes[6] &= ~0xFC;                                               // Clear top 6 bits
+    p->bytes[6] |= (encoded_length & 0x3F) << 2;                        // OR in bottom 6 bits of length, shifted left
 }
 
 /**
@@ -66,7 +73,7 @@ void packet_header_set_length(PacketHeader *p, const uint16_t length) {
  * @param p The packet header to read the length from.
  * @return The length of the packet header in bytes, including itself.
  */
-uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[3] & 0xFC) >> 2) + 1) * 4; }
+uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
 
 /**
  * Initializes a block header with the provided information.
@@ -98,8 +105,8 @@ void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig
 void block_header_set_length(BlockHeader *b, const uint16_t length) {
     uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
     encoded_length &= 0x1F;                                            // Last 5 bits are length
-    b->bytes[3] &= ~0xF8;                 // Clear the first 5 bits
-    b->bytes[3] |= (encoded_length << 3); // Last five bits shifted to start of byte
+    b->bytes[3] &= ~0xF8;                                              // Clear the first 5 bits
+    b->bytes[3] |= (encoded_length << 3);                              // Last five bits shifted to start of byte
 }
 
 /**

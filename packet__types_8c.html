@@ -95,7 +95,6 @@ $(document).ready(function(){initNavTree('packet__types_8c.html',''); initResiza
 <code>#include &lt;assert.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -428,7 +427,7 @@ Functions</h2></td></tr>
 <p >Sets the length of the block the block header is associated with. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The block header to store the length in. </td></tr>
-    <tr><td class="paramname">length</td><td>The length of the block in bytes, not including the header itself. </td></tr>
+    <tr><td class="paramname">length</td><td>The length of the block in bytes, not including the header itself. Must be a multiple of 4. </td></tr>
   </table>
   </dd>
 </dl>

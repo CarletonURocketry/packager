@@ -187,10 +187,10 @@ Functions</h2></td></tr>
 <tr class="separator:ae5475025bd142a3d86b9322c98ebd1ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae2e56890427e8cd7f3aef4144fdf3bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aae2e56890427e8cd7f3aef4144fdf3bc">block_header_init</a> (<a class="el" href="structBlockHeader.html">BlockHeader</a> *b, const uint16_t length, const bool has_sig, const <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> type, const <a class="el" href="packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97">BlockSubtype</a> subtype, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> dest)</td></tr>
 <tr class="separator:aae2e56890427e8cd7f3aef4144fdf3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a504cf56639a33c718d6bf4e4b05505"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a0a504cf56639a33c718d6bf4e4b05505">block_header_get_length</a> (const <a class="el" href="structBlockHeader.html">BlockHeader</a> *p)</td></tr>
-<tr class="separator:a0a504cf56639a33c718d6bf4e4b05505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fc924541ef4d5fba04a4de0faad6858"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a2fc924541ef4d5fba04a4de0faad6858">block_header_set_length</a> (<a class="el" href="structBlockHeader.html">BlockHeader</a> *p, const uint16_t length)</td></tr>
-<tr class="separator:a2fc924541ef4d5fba04a4de0faad6858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83e46b37d266d623868283fa3fe29e2a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a83e46b37d266d623868283fa3fe29e2a">block_header_get_length</a> (const <a class="el" href="structBlockHeader.html">BlockHeader</a> *b)</td></tr>
+<tr class="separator:a83e46b37d266d623868283fa3fe29e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a092456471f9ac5f601a615d65be8c95f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a092456471f9ac5f601a615d65be8c95f">block_header_set_length</a> (<a class="el" href="structBlockHeader.html">BlockHeader</a> *b, const uint16_t length)</td></tr>
+<tr class="separator:a092456471f9ac5f601a615d65be8c95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada">signal_report_init</a> (<a class="el" href="unionSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const bool request)</td></tr>
 <tr class="separator:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53a0207767b9583ec28be4902f75f690"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a53a0207767b9583ec28be4902f75f690">altitude_data_block_init</a> (<a class="el" href="structAltitudeDataBlock.html">AltitudeDataBlock</a> *b, const uint32_t measurement_time, const int32_t pressure, const int32_t temperature, const int32_t altitude)</td></tr>
@@ -563,8 +563,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0a504cf56639a33c718d6bf4e4b05505" name="a0a504cf56639a33c718d6bf4e4b05505"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a504cf56639a33c718d6bf4e4b05505">&#9670;&nbsp;</a></span>block_header_get_length()</h2>
+<a id="a83e46b37d266d623868283fa3fe29e2a" name="a83e46b37d266d623868283fa3fe29e2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83e46b37d266d623868283fa3fe29e2a">&#9670;&nbsp;</a></span>block_header_get_length()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -652,8 +652,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2fc924541ef4d5fba04a4de0faad6858" name="a2fc924541ef4d5fba04a4de0faad6858"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fc924541ef4d5fba04a4de0faad6858">&#9670;&nbsp;</a></span>block_header_set_length()</h2>
+<a id="a092456471f9ac5f601a615d65be8c95f" name="a092456471f9ac5f601a615d65be8c95f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a092456471f9ac5f601a615d65be8c95f">&#9670;&nbsp;</a></span>block_header_set_length()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -680,7 +680,7 @@ Functions</h2></td></tr>
 <p >Sets the length of the block the block header is associated with. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The block header to store the length in. </td></tr>
-    <tr><td class="paramname">length</td><td>The length of the block in bytes, not including the header itself. </td></tr>
+    <tr><td class="paramname">length</td><td>The length of the block in bytes, not including the header itself. Must be a multiple of 4. </td></tr>
   </table>
   </dd>
 </dl>

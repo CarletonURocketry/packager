@@ -88,13 +88,13 @@ uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6]
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
 
-    uint32_t header = 0;
-    header |= (has_sig & 0x1) << 26;
-    header |= (type & 0xF) << 22;
-    header |= (subtype & 0x3F) << 16;
-    header |= (dest & 0xF) << 12;
-    memcpy(b->bytes, &header, sizeof(header));
+    b->bytes[0] = (uint8_t)(has_sig & 0x1) << 3; // Shift in signature indicator
+    b->bytes[0] |= (uint8_t)(type & 0xC) >> 2; // First two bits of type at end of byte
     block_header_set_length(b, length);
+    b->bytes[1] = (uint8_t)(type & 0x3) << 6; // Last two bits of type at start of byte
+    b->bytes[1] |= (uint8_t)(subtype & 0x3F); // 6 bits of sub type fill out byte
+    b->bytes[2] = (uint8_t)(dest & 0xF) << 4; // Destination in top of byte
+    b->bytes[3] = 0; // Dead space
 }
 
 /**
@@ -105,8 +105,8 @@ void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig
 void block_header_set_length(BlockHeader *b, const uint16_t length) {
     uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
     encoded_length &= 0x1F;                                            // Last 5 bits are length
-    b->bytes[3] &= ~0xF8;                                              // Clear the first 5 bits
-    b->bytes[3] |= (encoded_length << 3);                              // Last five bits shifted to start of byte
+    b->bytes[0] &= ~0xF8;                                              // Clear the first 5 bits
+    b->bytes[0] |= (encoded_length << 3);                              // Length shifted to start of byte
 }
 
 /**
@@ -114,7 +114,7 @@ void block_header_set_length(BlockHeader *b, const uint16_t length) {
  * @param p The block header to read the length from.
  * @return The length of the block header in bytes, including itself.
  */
-uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[3] & 0xF8) >> 3) + 1) * 4; }
+uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
 
 /**
  * Initializes a signal report block with the provided information.

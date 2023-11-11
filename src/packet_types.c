@@ -89,12 +89,12 @@ void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig
                        const BlockSubtype subtype, const DeviceAddress dest) {
 
     b->bytes[0] = (uint8_t)(has_sig & 0x1) << 3; // Shift in signature indicator
-    b->bytes[0] |= (uint8_t)(type & 0xC) >> 2; // First two bits of type at end of byte
+    b->bytes[0] |= (uint8_t)(type & 0xC) >> 2;   // First two bits of type at end of byte
     block_header_set_length(b, length);
     b->bytes[1] = (uint8_t)(type & 0x3) << 6; // Last two bits of type at start of byte
     b->bytes[1] |= (uint8_t)(subtype & 0x3F); // 6 bits of sub type fill out byte
     b->bytes[2] = (uint8_t)(dest & 0xF) << 4; // Destination in top of byte
-    b->bytes[3] = 0; // Dead space
+    b->bytes[3] = 0;                          // Dead space
 }
 
 /**

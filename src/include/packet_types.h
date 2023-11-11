@@ -23,6 +23,8 @@
 #define TIGHTLY_PACKED __attribute__((packed, aligned(1)))
 #endif
 
+void memcpy_be(void *dest, const void *src, unsigned long n_bytes);
+
 /** Possible devices from which a packet could originate or be sent to. */
 typedef enum device_address {
     GROUNDSTATION = 0x0, /**< Ground station */
@@ -75,54 +77,26 @@ typedef enum data_block_type {
 typedef uint8_t BlockSubtype;
 
 /** Each radio packet will have a header in this format. */
-typedef union packet_header {
+typedef struct packet_header {
     /** The packet header accessed as a bytes array. */
     uint8_t bytes[12];
-    /** Individually accessible components of the block header's contents. */
-    struct {
-        /** Amateur radio call sign of the operator. */
-        uint8_t callsign[6];
-        /** The length of the packet in bytes (including the header). */
-        uint8_t length : 6;
-        /** The version of the radio packet format being used. */
-        uint8_t version : 5;
-        uint8_t _dead_space : 5;
-        /** The source address of the packet. */
-        DeviceAddress src_addr : 4;
-        /** Which packet number the packet is in the stream being sent over radio. */
-        uint16_t packet_number : 12;
-        uint16_t _dead_space_2 : 16;
-    } TIGHTLY_PACKED contents;
 } PacketHeader;
 
-/** Casts the 8-bit ASCII call sign value to a null-terminated string. */
-#define packet_callsign(p) ((char *)p.contents.callsign)
-
-void packet_header_init(PacketHeader *p, const char *callsign, const uint8_t length, const uint8_t version,
+void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number);
+uint16_t packet_header_get_length(const PacketHeader *p);
+void packet_header_set_length(PacketHeader *p, uint16_t length);
 
 /** Each block in the radio packet will have a header in this format. */
-typedef union block_header {
+typedef struct block_header {
     /** The block header accessed as a bytes array. */
     uint8_t bytes[4];
-    /** Individually accessible components of the packet header. */
-    struct {
-        /** The length of the block in bytes. */
-        uint8_t length : 5;
-        /** Whether or not the block has a cryptographic signature. */
-        bool has_sig : 1;
-        /** The type of block. */
-        BlockType type : 4;
-        /** The block type's subtype. */
-        BlockSubtype subtype : 6;
-        /** The device address of the destination. */
-        DeviceAddress dest : 4;
-        uint16_t _dead_space : 12;
-    } TIGHTLY_PACKED contents;
 } BlockHeader;
 
-void block_header_init(BlockHeader *b, const uint8_t length, const bool has_sig, const BlockType type,
+void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest);
+uint16_t block_header_get_length(const BlockHeader *b);
+void block_header_set_length(BlockHeader *b, const uint16_t length);
 
 /** Signal report for the last block that was sent by the block's destination device */
 typedef union signal_report_block {
@@ -134,13 +108,13 @@ typedef union signal_report_block {
         int8_t snr : 8;
         /** The recieved signal strength indication, in units of 1dB/LSB */
         int8_t rssi : 8;
-        /** The index of the radio that sends the request for a report*/
+        /** The index of the radio that sends the request for a report */
         uint8_t radio : 2;
         /** Transmit power with which this report was sent in units of 1dB/LSB */
         int8_t tx_power : 6;
         /** Reserved bits */
         uint8_t _dead_space : 7;
-        /** When set, indicates this block is a request, reciever should respond*/
+        /** When set, indicates this block is a request, receiver should respond */
         bool request : 1;
     } TIGHTLY_PACKED contents;
 } SignalReportBlock;
@@ -148,11 +122,50 @@ typedef union signal_report_block {
 void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
                         const int8_t tx_power, const bool request);
 
+/** A data block containing information about altitude. */
 typedef struct altitude_data_block {
-    /**The altitude data block accessed as a bytes array*/
+    /** The altitude data block accessed as a bytes array */
     uint8_t bytes[16];
-} TIGHTLY_PACKED AltitudeDataBlock;
+} AltitudeDataBlock;
 
-void altitude_data_block_init(AltitudeDataBlock *b, const int8_t measurment_type, const uint8_t pressure,
-                              const uint8_t temperature, const uint8_t altitude);
+void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
+                              const int32_t temperature, const int32_t altitude);
+
+/** A data block containing information about angular velocity. */
+typedef struct angular_velocity_block {
+    /** The angular velocity block accessed as a bytes array */
+    uint8_t bytes[12];
+} AngularVelocityBlock;
+
+void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
+                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                 const int16_t z_axis);
+
+/** A data block containing information about acceleration. */
+typedef struct acceleration_data_block {
+    uint8_t bytes[12];
+} TIGHTLY_PACKED AccelerationDataBlock;
+
+void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
+                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
+                                  const int16_t z_axis);
+
+/** Represents a radio packet block with variable length contents. */
+typedef struct {
+    /** The block header. Block length is encoded here. */
+    BlockHeader header;
+    /** The block contents up to a length of 128 bytes. */
+    uint8_t *contents;
+} TIGHTLY_PACKED Block;
+
+/** Represents a packet with a variable number of blocks. Maximum of 256 bytes. */
+typedef struct {
+    /** The packet header. Packet length is encoded here. */
+    PacketHeader header;
+    /** Packet contents in blocks, up to 256 bytes long. */
+    Block *blocks;
+} TIGHTLY_PACKED Packet;
+
+bool packet_append_block(Packet *p, const Block b);
+
 #endif // _PACKET_TYPES_H

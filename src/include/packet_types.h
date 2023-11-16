@@ -150,6 +150,15 @@ void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measu
                                   const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                   const int16_t z_axis);
 
+typedef struct telemetry_request_block {
+    /**The telemetry request block accessed as a bytes array. */
+    uint8_t bytes[4];
+} TIGHTLY_PACKED TelemetryRequestBlock;
+
+void telemetry_request_block(TelemetryRequestBlock *b, const uint8_t data_subtype_1, const uint8_t used_1,
+                             const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
+                             const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4);
+
 /** Represents a radio packet block with variable length contents. */
 typedef struct {
     /** The block header. Block length is encoded here. */

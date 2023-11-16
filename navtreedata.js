@@ -25,6 +25,8 @@
 var NAVTREE =
 [
   [ "packager", "index.html", [
+    [ "Usage", "index.html#autotoc_md1", null ],
+    [ "Installation", "index.html#autotoc_md2", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],

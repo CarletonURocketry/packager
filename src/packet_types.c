@@ -36,7 +36,7 @@ void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
  */
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number) {
-
+    
     /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
      * the packet header will be the null terminator. This will not cause any issues since the null terminator is
      * effectively zero-padding, which is what's expected by the packet encoding format.
@@ -87,7 +87,7 @@ uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6]
  */
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest) {
-
+    
     b->bytes[0] = (uint8_t)(has_sig & 0x1) << 3; // Shift in signature indicator
     b->bytes[0] |= (uint8_t)(type & 0xC) >> 2; // First two bits of type at end of byte
     block_header_set_length(b, length);
@@ -193,6 +193,36 @@ void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measu
            &z_axis, sizeof(z_axis));
 }
 
+/**
+ * Initializes a telemetry data block with the provided information.
+ * @param b The telemetry request block to be initialized.
+ * @param data_subtype_1 The first requested data type.
+ * @param used_1 A boolean to determine if the first data request is valid.
+ * @param data_subtype_2 The second requested data type.
+ * @param used_2 A boolean to determine if the second data request is valid.
+ * @param data_subtype_3 The third requested data type.
+ * @param used_3 A boolean to determine if the third data request is valid.
+ * @param data_subtype_4 The fourth requested data type.
+ * @param used_4 A boolean to determine if the fourth data request is valid.
+ * */
+void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_subtype_1,
+                             const uint8_t used_1, const uint8_t data_subtype_2,
+                             const uint8_t used_2, const uint8_t data_subtype_3,
+                             const uint8_t used_3, const uint8_t data_subtype_4,
+                             const uint8_t used_4) { 
+    memcpy(b->bytes, &data_subtype_1, sizeof(data_subtype_1));
+    memcpy(b->bytes + 1 + sizeof(data_subtype_1), &used_1, sizeof(data_subtype_1)); // + 1 and all further incrementations account for the dead space after the data subtype.
+    memcpy(b->bytes + 1 + sizeof(data_subtype_1) + sizeof(used_1), &data_subtype_2, sizeof(data_subtype_2));
+    memcpy(b->bytes + 2 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2), &used_2, sizeof(used_2));
+    memcpy(b->bytes + 2 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2), &data_subtype_3, sizeof(data_subtype_3));
+    memcpy(b->bytes + 3 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2) + sizeof(data_subtype_3), &used_3, 
+          sizeof(used_3));
+    memcpy(b->bytes + 3 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2) + sizeof(data_subtype_3) + 
+          sizeof(used_3), &data_subtype_4, sizeof(data_subtype_4));
+    memcpy(b->bytes + 4 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2) + sizeof(data_subtype_3) + 
+          sizeof(used_3) + sizeof(data_subtype_4), &used_4, sizeof(used_4));
+    
+}
 /**
  * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
  * the block.

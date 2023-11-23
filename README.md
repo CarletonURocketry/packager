@@ -4,7 +4,7 @@ QNX C program for encoding sensor data into radio packets.
 
 ## Usage
 
-This software is distributed under the [GNUGPLv3 license](./LICENSE), which requires all source code in this repository
+This software is distributed under the [GNUGPLv3 license](https://github.com/CarletonURocketry/packager/blob/main/LICENSE), which requires all source code in this repository
 to be made publicly available if this software is distributed. Additionally, this license requires prominent attribution
 of the original author(s). It's encouraged to read the entire license for more information.
 

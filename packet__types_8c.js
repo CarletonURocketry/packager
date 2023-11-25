@@ -11,5 +11,6 @@ var packet__types_8c =
     [ "packet_header_get_length", "packet__types_8c.html#a458cb5abef8a8a04b26c5b31cebcdbc9", null ],
     [ "packet_header_init", "packet__types_8c.html#ac5862f04a01edd6d42896f795bd6ef5c", null ],
     [ "packet_header_set_length", "packet__types_8c.html#a99e62b51d80e999e6c8ef3da6dc5dd50", null ],
-    [ "signal_report_init", "packet__types_8c.html#a0b521ef6a3e32e6040a68a6a82d67ada", null ]
+    [ "signal_report_init", "packet__types_8c.html#a0b521ef6a3e32e6040a68a6a82d67ada", null ],
+    [ "telemetry_request_block_init", "packet__types_8c.html#aa32867ba87c9f3ab1dca3b61737969ee", null ]
 ];

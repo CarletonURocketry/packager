@@ -62,7 +62,7 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t le
  * @param p The packet header to store the length in.
  * @param length The length of the packet in bytes, not including the packet header itself.
  */
-void packet_header_set_length(PacketHeader *p, const uint16_t length) {
+static inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
     uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
     p->bytes[6] &= ~0xFC;                                               // Clear top 6 bits
     p->bytes[6] |= (encoded_length & 0x3F) << 2;                        // OR in bottom 6 bits of length, shifted left
@@ -73,7 +73,7 @@ void packet_header_set_length(PacketHeader *p, const uint16_t length) {
  * @param p The packet header to read the length from.
  * @return The length of the packet header in bytes, including itself.
  */
-uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
+static inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
 
 /**
  * Initializes a block header with the provided information.
@@ -102,7 +102,7 @@ void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig
  * @param b The block header to store the length in.
  * @param length The length of the block in bytes, not including the header itself. Must be a multiple of 4.
  */
-void block_header_set_length(BlockHeader *b, const uint16_t length) {
+static inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
     uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
     encoded_length &= 0x1F;                                            // Last 5 bits are length
     b->bytes[0] &= ~0xF8;                                              // Clear the first 5 bits
@@ -114,7 +114,7 @@ void block_header_set_length(BlockHeader *b, const uint16_t length) {
  * @param p The block header to read the length from.
  * @return The length of the block header in bytes, including itself.
  */
-uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
+static inline uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
 
 /**
  * Initializes a signal report block with the provided information.

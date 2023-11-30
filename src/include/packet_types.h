@@ -84,8 +84,6 @@ typedef struct packet_header {
 
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number);
-uint16_t packet_header_get_length(const PacketHeader *p);
-void packet_header_set_length(PacketHeader *p, uint16_t length);
 
 /** Each block in the radio packet will have a header in this format. */
 typedef struct block_header {
@@ -95,8 +93,6 @@ typedef struct block_header {
 
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest);
-uint16_t block_header_get_length(const BlockHeader *b);
-void block_header_set_length(BlockHeader *b, const uint16_t length);
 
 /** Signal report for the last block that was sent by the block's destination device */
 typedef struct signal_report_block {

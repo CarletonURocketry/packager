@@ -778,10 +778,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p >memcpy(b-&gt;bytes, &amp;data_subtype_1, sizeof(data_subtype_1)); memcpy(b-&gt;bytes + 1 + sizeof(data_subtype_1), &amp;used_1, sizeof(data_subtype_1)); // + 1 and all further incrementations account for the dead space after the data subtype. memcpy(b-&gt;bytes + 1 + sizeof(data_subtype_1) + sizeof(used_1), &amp;data_subtype_2, sizeof(data_subtype_2)); memcpy(b-&gt;bytes + 2 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2), &amp;used_2, sizeof(used_2)); memcpy(b-&gt;bytes + 2 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2), &amp;data_subtype_3, sizeof(data_subtype_3)); memcpy(b-&gt;bytes</p><ul>
-<li>3 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2) + sizeof(data_subtype_3), &amp;used_3, sizeof(used_3)); memcpy(b-&gt;bytes + 3 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2) + sizeof(data_subtype_3) + sizeof(used_3), &amp;data_subtype_4, sizeof(data_subtype_4)); memcpy(b-&gt;bytes</li>
-<li>4 + sizeof(data_subtype_1) + sizeof(used_1) + sizeof(data_subtype_2) + sizeof(used_2) + sizeof(data_subtype_3) + sizeof(used_3) + sizeof(data_subtype_4), &amp;used_4, sizeof(used_4));</li>
-</ul>
 
 </div>
 </div>

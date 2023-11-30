@@ -194,6 +194,31 @@ void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measu
 }
 
 /**
+ * Initializes a telemetry data block with the provided information.
+ * @param b The telemetry request block to be initialized.
+ * @param data_subtype_1 The first requested data type.
+ * @param used_1 A boolean to determine if the first data request is valid.
+ * @param data_subtype_2 The second requested data type.
+ * @param used_2 A boolean to determine if the second data request is valid.
+ * @param data_subtype_3 The third requested data type.
+ * @param used_3 A boolean to determine if the third data request is valid.
+ * @param data_subtype_4 The fourth requested data type.
+ * @param used_4 A boolean to determine if the fourth data request is valid.
+ * */
+void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_subtype_1, const uint8_t used_1,
+                                  const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
+                                  const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4) {
+
+    b->bytes[0] = data_subtype_1 << 2;
+    b->bytes[0] |= used_1 && 0x01;
+    b->bytes[1] = data_subtype_2 << 2;
+    b->bytes[1] |= used_2 && 0x01;
+    b->bytes[2] = data_subtype_3 << 2;
+    b->bytes[2] |= used_3 && 0x01;
+    b->bytes[3] = data_subtype_4 << 2;
+    b->bytes[3] |= used_4 && 0x01;
+}
+/**
  * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
  * the block.
  * @param p The packet to be appended to.

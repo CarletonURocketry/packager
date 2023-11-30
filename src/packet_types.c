@@ -127,13 +127,13 @@ uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] &
  */
 void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
                         const int8_t tx_power, const bool request) {
-    b->contents.snr = snr;
-    b->contents.rssi = rssi;
-    b->contents.radio = radio;
-    b->contents.tx_power = tx_power;
-    b->contents.request = request;
-    b->contents._dead_space = 0;
+    b->bytes[0] = snr;                         // SNR fills first byte completely
+    b->bytes[1] = rssi;                        // RSSI fills second byte completely
+    b->bytes[2] = (uint8_t)(radio & 0x3) << 6; // Last two bits at start of byte
+    b->bytes[2] |= (uint8_t)(tx_power & 0x3F); // Fill the rest of the six bits
+    b->bytes[3] = (uint8_t)(request & 0x1);    // Set dead space and request indicator
 }
+
 /**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized

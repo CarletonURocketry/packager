@@ -1,3 +1,4 @@
+ifndef $(GITHUB_WORKFLOW)
 LIST=OS CPU VARIANT
 ifndef QRECURSE
 QRECURSE=recurse.mk
@@ -6,3 +7,4 @@ QRDIR=$(dir $(QCONFIG))
 endif
 endif
 include $(QRDIR)$(QRECURSE)
+endif

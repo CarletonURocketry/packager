@@ -48,6 +48,7 @@ EXTRA_SRCVPATH += $(SRCDIRS)
 
 include $(MKFILES_ROOT)/qtargets.mk
 
+# Make optimized binary
 optimized: CCFLAGS += $(OPTIMIZATION)
 optimized: all
 

@@ -144,7 +144,7 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
 /** A data block containing information about acceleration. */
 typedef struct acceleration_data_block {
     uint8_t bytes[12];
-} TIGHTLY_PACKED AccelerationDataBlock;
+} AccelerationDataBlock;
 
 void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
                                   const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
@@ -153,11 +153,11 @@ void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measu
 typedef struct telemetry_request_block {
     /**The telemetry request block accessed as a bytes array. */
     uint8_t bytes[4];
-} TIGHTLY_PACKED TelemetryRequestBlock;
+} TelemetryRequestBlock;
 
-void telemetry_request_block(TelemetryRequestBlock *b, const uint8_t data_subtype_1, const uint8_t used_1,
-                             const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
-                             const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4);
+void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_subtype_1, const uint8_t used_1,
+                                  const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
+                                  const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4);
 
 /** Represents a radio packet block with variable length contents. */
 typedef struct {

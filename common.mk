@@ -15,7 +15,7 @@ NAME=packager
 
 ### COMPILER OPTIONS ###
 CSTD = gnu11
-OPTIMIZATION = -O2
+OPTIMIZATION = -O3
 
 ### WARNINGS ###
 # (see https://gcc.gnu.org/onlinedocs/gcc-6.3.0/gcc/Warning-Options.html)
@@ -31,11 +31,11 @@ WARNINGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 WARNINGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 ### UPDATE CFLAGS ###
-CCFLAGS += -std=$(CSTD) $(OPTIMIZATION) $(WARNINGS)
+CCFLAGS += -std=$(CSTD) $(WARNINGS)
 
 #### PROJECT SPECIFIC ####
 
-# Project includes
+### PROJECT INCLUDES ###
 EXTRA_INCVPATH += $(PROJECT_ROOT)/src/include
 
 ### SOURCE FILES ###
@@ -43,6 +43,6 @@ EXTRA_SRCVPATH += $(PROJECT_ROOT)/src
 
 include $(MKFILES_ROOT)/qtargets.mk
 
-$(info VAR='$(SRCVPATH)')
-$(info VAR='$(EXTRA_SRCVPATH)')
-$(info VAR='$(SRCVPATH)')
+# Make optimized binary
+optimized: CCFLAGS += $(OPTIMIZATION)
+optimized: all

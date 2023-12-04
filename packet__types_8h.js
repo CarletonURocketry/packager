@@ -60,5 +60,5 @@ var packet__types_8h =
     [ "packet_header_init", "packet__types_8h.html#ac5862f04a01edd6d42896f795bd6ef5c", null ],
     [ "packet_header_set_length", "packet__types_8h.html#ae5475025bd142a3d86b9322c98ebd1ae", null ],
     [ "signal_report_init", "packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada", null ],
-    [ "telemetry_request_block", "packet__types_8h.html#adfbccd8055ee85d43c7d2a237f0b4d95", null ]
+    [ "telemetry_request_block_init", "packet__types_8h.html#aa32867ba87c9f3ab1dca3b61737969ee", null ]
 ];

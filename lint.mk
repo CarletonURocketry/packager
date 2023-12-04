@@ -10,6 +10,9 @@ WARNINGS += -Wlogical-op -Wold-style-definition -Wcast-qual -Wdouble-promotion
 WARNINGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 WARNINGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
+STD = gnu11
+CFLAGS = -std=$(STD) $(WARNINGS)
+
 ### INFORMATION FOR LINTING ###
 PROJECT_ROOT = $(abspath .)
 SRCDIRS += $(PROJECT_ROOT)/src
@@ -24,6 +27,6 @@ LINT_OUTPUT=deleteme
 # __DOXYGEN__ is defined as 0 to avoid undef errors but still compile regularly without special treatment for doc
 # generation
 lint:
-	gcc -D__DOXYGEN__=0 $(WARNINGS) $(INCLUDE) $(SRCFILES) -o $(LINT_OUTPUT)
+	gcc -D__DOXYGEN__=0 $(CFLAGS) $(INCLUDE) $(SRCFILES) -o $(LINT_OUTPUT)
 	@rm $(LINT_OUTPUT)
 

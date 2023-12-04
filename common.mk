@@ -12,10 +12,11 @@ endef
 
 ### OUTPUT BINARY ###
 NAME=packager
+LINT_OUTPUT=deleteme
 
 ### COMPILER OPTIONS ###
 CSTD = gnu11
-OPTIMIZATION = -O2
+OPTIMIZATION = -O3
 
 ### WARNINGS ###
 # (see https://gcc.gnu.org/onlinedocs/gcc-6.3.0/gcc/Warning-Options.html)
@@ -31,18 +32,28 @@ WARNINGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 WARNINGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 ### UPDATE CFLAGS ###
-CCFLAGS += -std=$(CSTD) $(OPTIMIZATION) $(WARNINGS)
+CCFLAGS += -std=$(CSTD) $(WARNINGS)
 
 #### PROJECT SPECIFIC ####
 
-# Project includes
-EXTRA_INCVPATH += $(PROJECT_ROOT)/src/include
+### PROJECT INCLUDES ###
+INCLUDE_DIRS += $(PROJECT_ROOT)/src/include
+INCLUDE = $(patsubst %,-I%,$(INCLUDE_DIRS))
+EXTRA_INCVPATH += $(INCLUDE_DIRS)
 
 ### SOURCE FILES ###
-EXTRA_SRCVPATH += $(PROJECT_ROOT)/src
+SRCDIRS += $(PROJECT_ROOT)/src
+SRCFILES = $(wildcard $(SRCDIRS)/*.c)
+EXTRA_SRCVPATH += $(SRCDIRS)
 
 include $(MKFILES_ROOT)/qtargets.mk
 
-$(info VAR='$(SRCVPATH)')
-$(info VAR='$(EXTRA_SRCVPATH)')
-$(info VAR='$(SRCVPATH)')
+optimized: CCFLAGS += $(OPTIMIZATION)
+optimized: all
+
+# Compile using regular gcc and immediately remove output binary. Just to see warnings.
+# __DOXYGEN__ is defined as 0 to avoid undef errors but still compile regularly without special treatment for doc
+# generation
+lint:
+	gcc -D__DOXYGEN__=0 $(CCFLAGS) $(INCLUDE) $(SRCFILES) -o $(LINT_OUTPUT)
+	@rm $(LINT_OUTPUT)

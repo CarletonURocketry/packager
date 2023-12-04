@@ -12,7 +12,6 @@ endef
 
 ### OUTPUT BINARY ###
 NAME=packager
-LINT_OUTPUT=deleteme
 
 ### COMPILER OPTIONS ###
 CSTD = gnu11
@@ -37,24 +36,13 @@ CCFLAGS += -std=$(CSTD) $(WARNINGS)
 #### PROJECT SPECIFIC ####
 
 ### PROJECT INCLUDES ###
-INCLUDE_DIRS += $(PROJECT_ROOT)/src/include
-INCLUDE = $(patsubst %,-I%,$(INCLUDE_DIRS))
-EXTRA_INCVPATH += $(INCLUDE_DIRS)
+EXTRA_INCVPATH += $(PROJECT_ROOT)/src/include
 
 ### SOURCE FILES ###
-SRCDIRS += $(PROJECT_ROOT)/src
-SRCFILES = $(wildcard $(SRCDIRS)/*.c)
-EXTRA_SRCVPATH += $(SRCDIRS)
+EXTRA_SRCVPATH += $(PROJECT_ROOT)/src
 
 include $(MKFILES_ROOT)/qtargets.mk
 
 # Make optimized binary
 optimized: CCFLAGS += $(OPTIMIZATION)
 optimized: all
-
-# Compile using regular gcc and immediately remove output binary. Just to see warnings.
-# __DOXYGEN__ is defined as 0 to avoid undef errors but still compile regularly without special treatment for doc
-# generation
-lint:
-	gcc -D__DOXYGEN__=0 $(CCFLAGS) $(INCLUDE) $(SRCFILES) -o $(LINT_OUTPUT)
-	@rm $(LINT_OUTPUT)

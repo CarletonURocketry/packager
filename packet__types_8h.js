@@ -2,7 +2,7 @@ var packet__types_8h =
 [
     [ "PacketHeader", "structPacketHeader.html", "structPacketHeader" ],
     [ "BlockHeader", "structBlockHeader.html", "structBlockHeader" ],
-    [ "SignalReportBlock", "unionSignalReportBlock.html", "unionSignalReportBlock" ],
+    [ "SignalReportBlock", "structSignalReportBlock.html", "structSignalReportBlock" ],
     [ "AltitudeDataBlock", "structAltitudeDataBlock.html", "structAltitudeDataBlock" ],
     [ "AngularVelocityBlock", "structAngularVelocityBlock.html", "structAngularVelocityBlock" ],
     [ "AccelerationDataBlock", "structAccelerationDataBlock.html", "structAccelerationDataBlock" ],
@@ -58,7 +58,7 @@ var packet__types_8h =
     [ "packet_append_block", "packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec", null ],
     [ "packet_header_get_length", "packet__types_8h.html#a458cb5abef8a8a04b26c5b31cebcdbc9", null ],
     [ "packet_header_init", "packet__types_8h.html#ac5862f04a01edd6d42896f795bd6ef5c", null ],
-    [ "packet_header_set_length", "packet__types_8h.html#ae5475025bd142a3d86b9322c98ebd1ae", null ],
+    [ "packet_header_set_length", "packet__types_8h.html#a99e62b51d80e999e6c8ef3da6dc5dd50", null ],
     [ "signal_report_init", "packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada", null ],
     [ "telemetry_request_block_init", "packet__types_8h.html#aa32867ba87c9f3ab1dca3b61737969ee", null ]
 ];

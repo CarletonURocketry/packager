@@ -5,7 +5,7 @@ var annotated_dup =
     [ "AngularVelocityBlock", "structAngularVelocityBlock.html", "structAngularVelocityBlock" ],
     [ "BlockHeader", "structBlockHeader.html", "structBlockHeader" ],
     [ "PacketHeader", "structPacketHeader.html", "structPacketHeader" ],
-    [ "SignalReportBlock", "unionSignalReportBlock.html", "unionSignalReportBlock" ],
+    [ "SignalReportBlock", "structSignalReportBlock.html", "structSignalReportBlock" ],
     [ "TelemetryRequestBlock", "structTelemetryRequestBlock.html", "structTelemetryRequestBlock" ],
     [ "TIGHTLY_PACKED", "structTIGHTLY__PACKED.html", "structTIGHTLY__PACKED" ]
 ];

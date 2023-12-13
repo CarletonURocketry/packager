@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['signalreportblock_0',['SignalReportBlock',['../unionSignalReportBlock.html',1,'']]]
+  ['signalreportblock_0',['SignalReportBlock',['../structSignalReportBlock.html',1,'']]]
 ];

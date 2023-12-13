@@ -84,8 +84,6 @@ typedef struct packet_header {
 
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint16_t packet_number);
-uint16_t packet_header_get_length(const PacketHeader *p);
-void packet_header_set_length(PacketHeader *p, uint16_t length);
 
 /** Each block in the radio packet will have a header in this format. */
 typedef struct block_header {
@@ -95,28 +93,11 @@ typedef struct block_header {
 
 void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
                        const BlockSubtype subtype, const DeviceAddress dest);
-uint16_t block_header_get_length(const BlockHeader *b);
-void block_header_set_length(BlockHeader *b, const uint16_t length);
 
 /** Signal report for the last block that was sent by the block's destination device */
-typedef union signal_report_block {
+typedef struct signal_report_block {
     /** The signal block report accessed as a bytes array */
     uint8_t bytes[4];
-    /** Individually accessible components of the signal report */
-    struct {
-        /** The signal to noise ratio, in units of 1dB/LSB */
-        int8_t snr : 8;
-        /** The recieved signal strength indication, in units of 1dB/LSB */
-        int8_t rssi : 8;
-        /** The index of the radio that sends the request for a report */
-        uint8_t radio : 2;
-        /** Transmit power with which this report was sent in units of 1dB/LSB */
-        int8_t tx_power : 6;
-        /** Reserved bits */
-        uint8_t _dead_space : 7;
-        /** When set, indicates this block is a request, receiver should respond */
-        bool request : 1;
-    } TIGHTLY_PACKED contents;
 } SignalReportBlock;
 
 void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
@@ -176,5 +157,42 @@ typedef struct {
 } TIGHTLY_PACKED Packet;
 
 bool packet_append_block(Packet *p, const Block b);
+
+/**
+ * Sets the length of the packet the header is associated with.
+ * @param p The packet header to store the length in.
+ * @param length The length of the packet in bytes, not including the packet header itself.
+ */
+extern inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
+    uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
+    p->bytes[6] &= ~0xFC;                                               // Clear top 6 bits
+    p->bytes[6] |= (encoded_length & 0x3F) << 2;                        // OR in bottom 6 bits of length, shifted left
+}
+
+/**
+ * Gets the length of the packet header.
+ * @param p The packet header to read the length from.
+ * @return The length of the packet header in bytes, including itself.
+ */
+extern inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
+
+/**
+ * Sets the length of the block the block header is associated with.
+ * @param b The block header to store the length in.
+ * @param length The length of the block in bytes, not including the header itself. Must be a multiple of 4.
+ */
+extern inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
+    uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
+    encoded_length &= 0x1F;                                            // Last 5 bits are length
+    b->bytes[0] &= ~0xF8;                                              // Clear the first 5 bits
+    b->bytes[0] |= (encoded_length << 3);                              // Length shifted to start of byte
+}
+
+/**
+ * Gets the length of the block header.
+ * @param p The block header to read the length from.
+ * @return The length of the block header in bytes, including itself.
+ */
+extern inline uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
 
 #endif // _PACKET_TYPES_H

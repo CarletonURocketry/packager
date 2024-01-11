@@ -4,14 +4,32 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+/** Represents the different sensor data types that can be interpreted by packager. */
+typedef enum {
+    DTYPE_TEMPERATURE = 0, /**< Temperature */
+    DTYPE_TIME = 1,        /**< Time */
+    DTYPE_PRESSURE = 2,    /** Pressure */
+    DTYPE_DNE = 3,         /**< Data type does not exist */
+} Dtype;
+
+/** String representation of the possible data types. */
+const char *DTYPES[] = {
+    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time", [DTYPE_PRESSURE] = "Pressure", [DTYPE_DNE] = ""};
+
+/** The size of the buffer for reading sensor data input. */
 #define BUFFER_SIZE 150
 
+/** Static variable to store the user HAM radio call sign. */
 static char *callsign = NULL;
+/** Static variable to store the file name to read input from instead of stdin. */
 static char *file = NULL;
+/** Static buffer for reading input. */
 static char buffer[BUFFER_SIZE] = {0};
 
 void debug_print_bytes(uint8_t *bytes, size_t n_bytes);
+Dtype dtype_from_str(const char *str);
 
 int main(int argc, char **argv) {
 
@@ -53,9 +71,24 @@ int main(int argc, char **argv) {
         input = stdin;
     }
 
-    /* Read input data. */
+    /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
     while (fgets(buffer, BUFFER_SIZE, input) != NULL) {
-        printf("Packaged: %s", buffer);
+        char *dtype_str = strtok(buffer, ":");
+        Dtype dtype = dtype_from_str(dtype_str);
+        switch (dtype) {
+        case DTYPE_TIME:
+            printf("Time: %d\n", atoi(strtok(NULL, ":")));
+            break;
+        case DTYPE_TEMPERATURE:
+            printf("Temp: %s\n", strtok(NULL, ":"));
+            break;
+        case DTYPE_PRESSURE:
+            printf("Pres: %s\n", strtok(NULL, ":"));
+            break;
+        default:
+            fprintf(stderr, "Unknown input data type: %s\n", dtype_str);
+            continue;
+        }
     }
 
     return EXIT_SUCCESS;
@@ -66,4 +99,16 @@ void debug_print_bytes(uint8_t *bytes, size_t n_bytes) {
         printf("%02x ", bytes[i]);
     }
     putchar('\n');
+}
+
+/**
+ * Converts a string to a data type enumeration value.
+ * @param str The string to match with an enumeration value.
+ * @return The data type matching the string value.
+ */
+Dtype dtype_from_str(const char *str) {
+    for (uint8_t i = 0; i < sizeof(DTYPES) / sizeof(DTYPES[0]); i++) {
+        if (!strcmp(str, DTYPES[i])) return i;
+    }
+    return DTYPE_DNE;
 }

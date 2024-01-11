@@ -181,6 +181,7 @@ void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_s
     b->bytes[3] = data_subtype_4 << 2;
     b->bytes[3] |= used_4 && 0x01;
 }
+
 /**
  * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
  * the block.

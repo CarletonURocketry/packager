@@ -103,7 +103,8 @@ int main(int argc, char **argv) {
             case DTYPE_TEMPERATURE:
                 block_header_init(&block.header, 0, false, TYPE_DATA, DATA_ALT, GROUNDSTATION);
                 uint32_t temp = strtoul(strtok(NULL, ":"), NULL, 10);
-                altitude_data_block_init((AltitudeDataBlock *)contents_ptr, 0, 0, temp, 0);
+                altitude_data_block_init((AltitudeDataBlock *)contents_ptr, 1, 2, temp, 3);
+                block_header_set_length(&block.header, sizeof(AltitudeDataBlock));
                 block.contents = contents_ptr;
                 contents_ptr += sizeof(AltitudeDataBlock);
                 break;

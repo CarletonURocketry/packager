@@ -10,9 +10,6 @@
 #include <stdint.h>
 #include <string.h>
 
-/** The maximum size of a packet in bytes. */
-static const uint16_t PACKET_MAX_SIZE = 256;
-
 /* Copies memory from source to destination in big endian format.
  * @param dest The destination buffer.
  * @param src The source buffer.
@@ -201,6 +198,7 @@ bool packet_append_block(Packet *p, const Block b) {
     if (p_len == sizeof(PacketHeader)) {
         p->blocks[0] = b;
         packet_header_set_length(&p->header, b_len); // The packet is now the length of the first block
+        p->block_count++;
         return true;
     }
 
@@ -216,5 +214,6 @@ bool packet_append_block(Packet *p, const Block b) {
     p->blocks[i] = b; // Add block at correct spot
     // Packet length is now equal to its previous length + the new block
     packet_header_set_length(&p->header, p_len - sizeof(PacketHeader) + b_len);
+    p->block_count++;
     return true;
 }

@@ -15,6 +15,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/** The maximum size a packet can be in bytes. */
+#define PACKET_MAX_SIZE 256
+
+/** The maximum size a block can be in bytes. */
+#define BLOCK_MAX_SIZE 128
+
 // Don't confuse Doxygen documenting with the attribute macro
 #if __DOXYGEN__
 #define TIGHTLY_PACKED
@@ -154,6 +160,8 @@ typedef struct {
     PacketHeader header;
     /** Packet contents in blocks, up to 256 bytes long. */
     Block *blocks;
+    /** The number of blocks in this packet. */
+    uint8_t block_count;
 } TIGHTLY_PACKED Packet;
 
 bool packet_append_block(Packet *p, const Block b);

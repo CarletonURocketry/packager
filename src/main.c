@@ -122,15 +122,7 @@ int main(int argc, char **argv) {
             }
         }
         pkt_count++;
-
-        // Send the packet over stdout
-        debug_print_bytes(packet.header.bytes, sizeof(packet.header.bytes), false);
-        for (uint8_t i = 0; i < packet.block_count; i++) {
-            debug_print_bytes(packet.blocks[i].header.bytes, sizeof(packet.blocks[i].header.bytes), false);
-            uint16_t content_len = block_header_get_length(&packet.blocks[i].header) - sizeof(packet.blocks[i].header);
-            debug_print_bytes(packet.blocks[i].contents, content_len, false);
-        }
-        putchar('\n');
+        packet_print_hex(stdout, &packet);
     }
     return EXIT_SUCCESS;
 }

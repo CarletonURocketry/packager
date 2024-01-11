@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 /* Copies memory from source to destination in big endian format.
@@ -216,4 +217,29 @@ bool packet_append_block(Packet *p, const Block b) {
     packet_header_set_length(&p->header, p_len - sizeof(PacketHeader) + b_len);
     p->block_count++;
     return true;
+}
+
+#define write_bytes(stream, bytes)                                                                                     \
+    for (size_t hjkl = 0; hjkl < sizeof(bytes); hjkl++) {                                                              \
+        fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
+    }
+
+#define write_bytes_sized(stream, bytes, size)                                                                         \
+    for (size_t hjkl = 0; hjkl < size; hjkl++) {                                                                       \
+        fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
+    }
+
+/**
+ * Prints a packet to the output stream in hexadecimal representation.
+ * @param stream The output stream to which the packet should be printed.
+ * @param packet The packet to be printed.
+ */
+void packet_print_hex(FILE *stream, Packet *packet) {
+    write_bytes(stream, packet->header.bytes);
+    for (uint8_t i = 0; i < packet->block_count; i++) {
+        write_bytes(stream, packet->blocks[i].header.bytes);
+        uint16_t content_len = block_header_get_length(&packet->blocks[i].header) - sizeof(packet->blocks[i].header);
+        write_bytes_sized(stream, packet->blocks[i].contents, content_len);
+    }
+    putchar('\n');
 }

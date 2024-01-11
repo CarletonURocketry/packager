@@ -14,6 +14,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 
 /** The maximum size a packet can be in bytes. */
 #define PACKET_MAX_SIZE 256
@@ -165,6 +166,7 @@ typedef struct {
 } TIGHTLY_PACKED Packet;
 
 bool packet_append_block(Packet *p, const Block b);
+void packet_print_hex(FILE *stream, Packet *packet);
 
 /**
  * Sets the length of the packet the header is associated with.

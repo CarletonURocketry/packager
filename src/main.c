@@ -32,6 +32,12 @@ static char *file = NULL;
 static char buffer[BUFFER_SIZE] = {0};
 /** Static buffer for storing the contents of packets as they are being created from input. */
 static uint8_t block_contents[PACKET_MAX_SIZE];
+/** Memory for storing blocks in packet as it is constructed. */
+static Block blocks[BLOCK_LIMIT];
+/** Memory for storing new block headers as they are parsed. */
+static Block block;
+/** Packet count tracker for encoding packets number. */
+static uint16_t pkt_count = 0;
 
 void debug_print_bytes(uint8_t *bytes, size_t n_bytes, bool newline);
 Dtype dtype_from_str(const char *str);
@@ -76,10 +82,6 @@ int main(int argc, char **argv) {
         input = stdin;
     }
 
-    uint16_t pkt_count = 0;
-    Block blocks[BLOCK_LIMIT]; // Memory for storing blocks in packet
-    Block block;               // Memory for storing new block headers
-
     for (;;) {
         // Construct packet out of BLOCK_LIMIT blocks
         Packet packet;
@@ -101,18 +103,17 @@ int main(int argc, char **argv) {
                 break;
             case DTYPE_TEMPERATURE:
                 block_header_init(&block.header, 0, false, TYPE_DATA, DATA_TEMP, GROUNDSTATION);
-                temperature_data_block_init((TemperatureDataBlock *)contents_ptr, 0,
-                                            1000 * strtod(strtok(NULL, ":"), NULL));
-                block_header_set_length(&block.header, sizeof(TemperatureDataBlock));
+                temperature_db_init((TemperatureDB *)contents_ptr, 0, 1000 * strtod(strtok(NULL, ":"), NULL));
+                block_header_set_length(&block.header, sizeof(TemperatureDB));
                 block.contents = contents_ptr;
-                contents_ptr += sizeof(TemperatureDataBlock);
+                contents_ptr += sizeof(TemperatureDB);
                 break;
             case DTYPE_PRESSURE:
                 block_header_init(&block.header, 0, false, TYPE_DATA, DATA_PRESSURE, GROUNDSTATION);
-                pressure_data_block_init((PressureDataBlock *)contents_ptr, 0, 1000 * strtod(strtok(NULL, ":"), NULL));
-                block_header_set_length(&block.header, sizeof(PressureDataBlock));
+                pressure_db_init((PressureDB *)contents_ptr, 0, 1000 * strtod(strtok(NULL, ":"), NULL));
+                block_header_set_length(&block.header, sizeof(PressureDB));
                 block.contents = contents_ptr;
-                contents_ptr += sizeof(PressureDataBlock);
+                contents_ptr += sizeof(PressureDB);
                 break;
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);

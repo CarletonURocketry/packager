@@ -100,7 +100,7 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  * @param measurement_time The mission time at the taking of the measurement
  * @param altitude The calculated altitude in units of 1 mm/LSB.
  */
-void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t altitude) {
+void altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &altitude, sizeof(altitude));
 }
@@ -111,7 +111,7 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
  * @param measurement_time The mission time at the taking of the measurement
  * @param temperature The calculated temperature in units of millidegrees Celsius.
  */
-void temperature_data_block_init(TemperatureDataBlock *b, const uint32_t measurement_time, const int32_t temperature) {
+void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &temperature, sizeof(temperature));
 }
@@ -122,7 +122,7 @@ void temperature_data_block_init(TemperatureDataBlock *b, const uint32_t measure
  * @param measurement_time The mission time at the taking of the measurement
  * @param pressure The calculated pressure in units of Pascals.
  */
-void pressure_data_block_init(PressureDataBlock *b, const uint32_t measurement_time, const int32_t pressure) {
+void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int32_t pressure) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
 }
@@ -137,7 +137,7 @@ void pressure_data_block_init(PressureDataBlock *b, const uint32_t measurement_t
  * @param y_axis The angular velocity measurement for the y axis.
  * @param z_axis The angular velocity measurement for the z axis.
  */
-void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
@@ -158,7 +158,7 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
  * @param y_axis The acceleration measurement for the y axis.
  * @param z_axis The acceleration measurement for the z axis.
  * */
-void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
+void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time,
                                   const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                   const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));

@@ -111,42 +111,42 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
 typedef struct {
     /** The altitude data block accessed as a bytes array */
     uint8_t bytes[8];
-} AltitudeDataBlock;
+} AltitudeDB;
 
-void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t altitude);
+void altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude);
 
 /** A data block containing information about temperature. */
 typedef struct {
     /** The temperature data block can be accessed as a bytes array. */
     uint8_t bytes[8];
-} TemperatureDataBlock;
+} TemperatureDB;
 
-void temperature_data_block_init(TemperatureDataBlock *b, const uint32_t measurement_time, const int32_t temperature);
+void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature);
 
 /** A data block containing information about pressure. */
 typedef struct {
     /** The pressure data block can be accessed as a bytes array. */
     uint8_t bytes[8];
-} PressureDataBlock;
+} PressureDB;
 
-void pressure_data_block_init(PressureDataBlock *b, const uint32_t measurement_time, const int32_t pressure);
+void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int32_t pressure);
 
 /** A data block containing information about angular velocity. */
 typedef struct {
     /** The angular velocity block accessed as a bytes array */
     uint8_t bytes[12];
-} AngularVelocityBlock;
+} AngularVelocityDB;
 
-void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time,
                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                  const int16_t z_axis);
 
 /** A data block containing information about acceleration. */
 typedef struct acceleration_data_block {
     uint8_t bytes[12];
-} AccelerationDataBlock;
+} AccelerationDB;
 
-void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
+void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time,
                                   const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
                                   const int16_t z_axis);
 

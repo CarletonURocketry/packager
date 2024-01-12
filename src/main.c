@@ -90,6 +90,7 @@ int main(int argc, char **argv) {
         packet_header_init(&packet.header, callsign, 0, VERSION, ROCKET, pkt_count);
 
         uint8_t *contents_ptr = &block_contents[0];
+        uint32_t last_time = 0;
         while (packet.block_count < BLOCK_LIMIT) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
@@ -100,17 +101,19 @@ int main(int argc, char **argv) {
             Dtype dtype = dtype_from_str(dtype_str);
             switch (dtype) {
             case DTYPE_TIME:
+                // Update with most recent time measurement to use as measurement time for other packets
+                last_time = strtoul(strtok(NULL, ":"), NULL, 10);
                 break;
             case DTYPE_TEMPERATURE:
                 block_header_init(&block.header, 0, false, TYPE_DATA, DATA_TEMP, GROUNDSTATION);
-                temperature_db_init((TemperatureDB *)contents_ptr, 0, 1000 * strtod(strtok(NULL, ":"), NULL));
+                temperature_db_init((TemperatureDB *)contents_ptr, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
                 block_header_set_length(&block.header, sizeof(TemperatureDB));
                 block.contents = contents_ptr;
                 contents_ptr += sizeof(TemperatureDB);
                 break;
             case DTYPE_PRESSURE:
                 block_header_init(&block.header, 0, false, TYPE_DATA, DATA_PRESSURE, GROUNDSTATION);
-                pressure_db_init((PressureDB *)contents_ptr, 0, 1000 * strtod(strtok(NULL, ":"), NULL));
+                pressure_db_init((PressureDB *)contents_ptr, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
                 block_header_set_length(&block.header, sizeof(PressureDB));
                 block.contents = contents_ptr;
                 contents_ptr += sizeof(PressureDB);

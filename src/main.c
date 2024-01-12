@@ -1,5 +1,4 @@
 #include "packet_types.h"
-#include <assert.h>
 #include <getopt.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -101,14 +100,19 @@ int main(int argc, char **argv) {
             case DTYPE_TIME:
                 break;
             case DTYPE_TEMPERATURE:
-                block_header_init(&block.header, 0, false, TYPE_DATA, DATA_ALT, GROUNDSTATION);
-                uint32_t temp = 1000 * strtod(strtok(NULL, ":"), NULL);
-                altitude_data_block_init((AltitudeDataBlock *)contents_ptr, 0, 0, temp, 0);
-                block_header_set_length(&block.header, sizeof(AltitudeDataBlock));
+                block_header_init(&block.header, 0, false, TYPE_DATA, DATA_TEMP, GROUNDSTATION);
+                temperature_data_block_init((TemperatureDataBlock *)contents_ptr, 0,
+                                            1000 * strtod(strtok(NULL, ":"), NULL));
+                block_header_set_length(&block.header, sizeof(TemperatureDataBlock));
                 block.contents = contents_ptr;
-                contents_ptr += sizeof(AltitudeDataBlock);
+                contents_ptr += sizeof(TemperatureDataBlock);
                 break;
             case DTYPE_PRESSURE:
+                block_header_init(&block.header, 0, false, TYPE_DATA, DATA_PRESSURE, GROUNDSTATION);
+                pressure_data_block_init((PressureDataBlock *)contents_ptr, 0, 1000 * strtod(strtok(NULL, ":"), NULL));
+                block_header_set_length(&block.header, sizeof(PressureDataBlock));
+                block.contents = contents_ptr;
+                contents_ptr += sizeof(PressureDataBlock);
                 break;
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);

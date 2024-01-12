@@ -66,18 +66,15 @@ typedef enum command_block_type {
 
 /** Possible sub-types of data blocks that can be sent. */
 typedef enum data_block_type {
-    DATA_DBG_MSG = 0x0,          /**< Debug message */
-    DATA_STATUS = 0x1,           /**< Debug status */
-    DATA_STARTUP_MSG = 0x2,      /**< Startup message */
-    DATA_ALT = 0x3,              /**< Altitude data */
-    DATA_ACCEL = 0x3,            /**< Acceleration data */
-    DATA_ANGULAR_VEL = 0x4,      /**< Angular velocity data */
-    DATA_GNSS_LOC = 0x5,         /**< GNSS location data */
-    DATA_GNSS_META = 0x6,        /**< GNSS metadata */
-    DATA_PWR_INFO = 0x7,         /**< Power info */
-    DATA_TEMP = 0x8,             /**< Temperature data */
-    DATA_MPU9250_IMU = 0x9,      /**< MPU9250-IMU data */
-    DATA_KX134_1211_ACCEL = 0xA, /**< KX134-1211 accelerometer data */
+    DATA_DBG_MSG = 0x0,     /**< Debug message */
+    DATA_STATUS = 0x1,      /**< Debug status */
+    DATA_ALT = 0x2,         /**< Altitude data */
+    DATA_TEMP = 0x3,        /**< Temperature data */
+    DATA_PRESSURE = 0x4,    /**< Pressure data */
+    DATA_ACCEL = 0x5,       /**< Acceleration data */
+    DATA_ANGULAR_VEL = 0x6, /**< Angular velocity data */
+    DATA_GNSS_LOC = 0x7,    /**< GNSS location data */
+    DATA_GNSS_META = 0x8,   /**< GNSS metadata */
 } DataBlockType;
 
 /** Any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
@@ -111,16 +108,31 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
                         const int8_t tx_power, const bool request);
 
 /** A data block containing information about altitude. */
-typedef struct altitude_data_block {
+typedef struct {
     /** The altitude data block accessed as a bytes array */
-    uint8_t bytes[16];
+    uint8_t bytes[8];
 } AltitudeDataBlock;
 
-void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
-                              const int32_t temperature, const int32_t altitude);
+void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t altitude);
+
+/** A data block containing information about temperature. */
+typedef struct {
+    /** The temperature data block can be accessed as a bytes array. */
+    uint8_t bytes[8];
+} TemperatureDataBlock;
+
+void temperature_data_block_init(TemperatureDataBlock *b, const uint32_t measurement_time, const int32_t temperature);
+
+/** A data block containing information about pressure. */
+typedef struct {
+    /** The pressure data block can be accessed as a bytes array. */
+    uint8_t bytes[8];
+} PressureDataBlock;
+
+void pressure_data_block_init(PressureDataBlock *b, const uint32_t measurement_time, const int32_t pressure);
 
 /** A data block containing information about angular velocity. */
-typedef struct angular_velocity_block {
+typedef struct {
     /** The angular velocity block accessed as a bytes array */
     uint8_t bytes[12];
 } AngularVelocityBlock;

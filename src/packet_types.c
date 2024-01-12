@@ -5,7 +5,6 @@
  * Packet types should be created using their initialization functions.
  */
 #include "packet_types.h"
-#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -99,17 +98,35 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
  * @param measurement_time The mission time at the taking of the measurement
- * @param pressure The measured pressure in terms of Pascals.
- * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB.
  * @param altitude The calculated altitude in units of 1 mm/LSB.
  */
-void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
-                              const int32_t temperature, const int32_t altitude) {
+void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t altitude) {
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &altitude, sizeof(altitude));
+}
+
+/**
+ * Initializes a temperature data block with the provided information.
+ * @param b The temperature data block to be initialized.
+ * @param measurement_time The mission time at the taking of the measurement
+ * @param temperature The calculated temperature in units of millidegrees Celsius.
+ */
+void temperature_data_block_init(TemperatureDataBlock *b, const uint32_t measurement_time, const int32_t temperature) {
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &temperature, sizeof(temperature));
+}
+
+/**
+ * Initializes a temperature data block with the provided information.
+ * @param b The temperature data block to be initialized.
+ * @param measurement_time The mission time at the taking of the measurement
+ * @param pressure The calculated pressure in units of Pascals.
+ */
+void pressure_data_block_init(PressureDataBlock *b, const uint32_t measurement_time, const int32_t pressure) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude, sizeof(altitude));
 }
+
 /**
  * Initializes an angular velocity block with the provided information.
  * @param b The angular velocity block to be initialized.

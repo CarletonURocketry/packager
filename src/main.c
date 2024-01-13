@@ -30,16 +30,23 @@ static char *callsign = NULL;
 static char *file = NULL;
 /** Static buffer for reading input. */
 static char buffer[BUFFER_SIZE] = {0};
-/** Static buffer for storing the contents of packets as they are being created from input. */
-static uint8_t block_contents[PACKET_MAX_SIZE];
+
+/* --- CONSTRUCTING PACKETS --- */
+
 /** Memory for storing blocks in packet as it is constructed. */
 static Block blocks[BLOCK_LIMIT];
+/** Static buffer for storing the contents of packets as they are being created from input. */
+static uint8_t block_contents[PACKET_MAX_SIZE];
+/** The current position in the block_contents array at which to allocate new contents. */
+uint8_t *contents_pos = &block_contents[0];
 /** Memory for storing new block headers as they are parsed. */
 static Block block;
 /** Packet count tracker for encoding packets number. */
 static uint16_t pkt_count = 0;
+/** The packet being constructed as input is read. */
+static Packet packet = {.blocks = blocks, .block_count = 0};
 
-void debug_print_bytes(uint8_t *bytes, size_t n_bytes, bool newline);
+void construct_block(Block *block, DataBlockType t, size_t size);
 Dtype dtype_from_str(const char *str);
 
 int main(int argc, char **argv) {
@@ -84,12 +91,10 @@ int main(int argc, char **argv) {
 
     for (;;) {
         // Construct packet out of BLOCK_LIMIT blocks
-        Packet packet;
         packet.block_count = 0;
-        packet.blocks = blocks;
         packet_header_init(&packet.header, callsign, 0, VERSION, ROCKET, pkt_count);
 
-        uint8_t *contents_ptr = &block_contents[0];
+        contents_pos = &block_contents[0];
         uint32_t last_time = 0;
         while (packet.block_count < BLOCK_LIMIT) {
 
@@ -105,18 +110,12 @@ int main(int argc, char **argv) {
                 last_time = strtoul(strtok(NULL, ":"), NULL, 10);
                 break;
             case DTYPE_TEMPERATURE:
-                block_header_init(&block.header, 0, false, TYPE_DATA, DATA_TEMP, GROUNDSTATION);
-                temperature_db_init((TemperatureDB *)contents_ptr, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                block_header_set_length(&block.header, sizeof(TemperatureDB));
-                block.contents = contents_ptr;
-                contents_ptr += sizeof(TemperatureDB);
+                temperature_db_init((TemperatureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                construct_block(&block, DATA_TEMP, sizeof(TemperatureDB));
                 break;
             case DTYPE_PRESSURE:
-                block_header_init(&block.header, 0, false, TYPE_DATA, DATA_PRESSURE, GROUNDSTATION);
-                pressure_db_init((PressureDB *)contents_ptr, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                block_header_set_length(&block.header, sizeof(PressureDB));
-                block.contents = contents_ptr;
-                contents_ptr += sizeof(PressureDB);
+                pressure_db_init((PressureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                construct_block(&block, DATA_PRESSURE, sizeof(PressureDB));
                 break;
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);
@@ -135,13 +134,6 @@ int main(int argc, char **argv) {
     return EXIT_SUCCESS;
 }
 
-void debug_print_bytes(uint8_t *bytes, size_t n_bytes, bool newline) {
-    for (size_t i = 0; i < n_bytes; i++) {
-        printf("%02x ", bytes[i]);
-    }
-    if (newline) putchar('\n');
-}
-
 /**
  * Converts a string to a data type enumeration value.
  * @param str The string to match with an enumeration value.
@@ -152,4 +144,17 @@ Dtype dtype_from_str(const char *str) {
         if (!strcmp(str, DTYPES[i])) return i;
     }
     return DTYPE_DNE;
+}
+
+/**
+ * Updates a block with the required information for allocating a new data block.
+ * @param b The block to be updated.
+ * @param t The type of the data block.
+ * @param size The size of the data block that will be stored in this block.
+ */
+void construct_block(Block *b, DataBlockType t, size_t size) {
+    block_header_init(&b->header, 0, false, TYPE_DATA, t, GROUNDSTATION);
+    block_header_set_length(&b->header, size);
+    b->contents = contents_pos;
+    contents_pos += size;
 }

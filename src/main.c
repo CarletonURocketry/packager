@@ -9,7 +9,7 @@
 typedef enum {
     DTYPE_TEMPERATURE = 0, /**< Temperature */
     DTYPE_TIME = 1,        /**< Time */
-    DTYPE_PRESSURE = 2,    /** Pressure */
+    DTYPE_PRESSURE = 2,    /**< Pressure */
     DTYPE_DNE = 3,         /**< Data type does not exist */
 } Dtype;
 
@@ -38,7 +38,7 @@ static Block blocks[BLOCK_LIMIT];
 /** Static buffer for storing the contents of packets as they are being created from input. */
 static uint8_t block_contents[PACKET_MAX_SIZE];
 /** The current position in the block_contents array at which to allocate new contents. */
-uint8_t *contents_pos = &block_contents[0];
+static uint8_t *contents_pos = &block_contents[0];
 /** Memory for storing new block headers as they are parsed. */
 static Block block;
 /** Packet count tracker for encoding packets number. */
@@ -102,12 +102,13 @@ int main(int argc, char **argv) {
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
             if (fgets(buffer, BUFFER_SIZE, input) == NULL) {
                 no_input = true; // No more data
-                break; // Send the partially constructed packet before exiting
+                break;           // Send the partially constructed packet before exiting
             }
 
             // Decide what contents to add to the block
             char *dtype_str = strtok(buffer, ":");
             Dtype dtype = dtype_from_str(dtype_str);
+
             switch (dtype) {
             case DTYPE_TIME:
                 // Update with most recent time measurement to use as measurement time for other packets

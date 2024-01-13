@@ -67,14 +67,13 @@ typedef enum command_block_type {
 /** Possible sub-types of data blocks that can be sent. */
 typedef enum data_block_type {
     DATA_DBG_MSG = 0x0,     /**< Debug message */
-    DATA_STATUS = 0x1,      /**< Debug status */
-    DATA_ALT = 0x2,         /**< Altitude data */
-    DATA_TEMP = 0x3,        /**< Temperature data */
-    DATA_PRESSURE = 0x4,    /**< Pressure data */
-    DATA_ACCEL = 0x5,       /**< Acceleration data */
-    DATA_ANGULAR_VEL = 0x6, /**< Angular velocity data */
-    DATA_GNSS_LOC = 0x7,    /**< GNSS location data */
-    DATA_GNSS_META = 0x8,   /**< GNSS metadata */
+    DATA_ALT = 0x1,         /**< Altitude data */
+    DATA_TEMP = 0x2,        /**< Temperature data */
+    DATA_PRESSURE = 0x3,    /**< Pressure data */
+    DATA_ACCEL = 0x4,       /**< Acceleration data */
+    DATA_ANGULAR_VEL = 0x5, /**< Angular velocity data */
+    DATA_GNSS_LOC = 0x6,    /**< GNSS location data */
+    DATA_GNSS_META = 0x7,   /**< GNSS metadata */
 } DataBlockType;
 
 /** Any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
@@ -137,18 +136,16 @@ typedef struct {
     uint8_t bytes[12];
 } AngularVelocityDB;
 
-void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time,
-                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                 const int16_t z_axis);
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
 
 /** A data block containing information about acceleration. */
 typedef struct acceleration_data_block {
     uint8_t bytes[12];
 } AccelerationDB;
 
-void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time,
-                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                  const int16_t z_axis);
+void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
 
 typedef struct telemetry_request_block {
     /** The telemetry request block accessed as a bytes array. */

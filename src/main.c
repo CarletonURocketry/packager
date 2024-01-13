@@ -89,7 +89,8 @@ int main(int argc, char **argv) {
         input = stdin;
     }
 
-    for (;;) {
+    bool no_input = false;
+    while (!no_input) {
         // Construct packet out of BLOCK_LIMIT blocks
         packet.block_count = 0;
         packet_header_init(&packet.header, callsign, 0, VERSION, ROCKET, pkt_count);
@@ -99,7 +100,10 @@ int main(int argc, char **argv) {
         while (packet.block_count < BLOCK_LIMIT) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
-            if (fgets(buffer, BUFFER_SIZE, input) == NULL) return EXIT_SUCCESS; // No more data
+            if (fgets(buffer, BUFFER_SIZE, input) == NULL) {
+                no_input = true; // No more data
+                break; // Send the partially constructed packet before exiting
+            }
 
             // Decide what contents to add to the block
             char *dtype_str = strtok(buffer, ":");

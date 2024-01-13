@@ -137,9 +137,8 @@ void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int3
  * @param y_axis The angular velocity measurement for the y axis.
  * @param z_axis The angular velocity measurement for the z axis.
  */
-void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time,
-                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                 const int16_t z_axis) {
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
     memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
@@ -158,9 +157,8 @@ void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_t
  * @param y_axis The acceleration measurement for the y axis.
  * @param z_axis The acceleration measurement for the z axis.
  * */
-void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time,
-                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                  const int16_t z_axis) {
+void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
     // One byte of dead space after FSR

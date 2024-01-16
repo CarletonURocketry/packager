@@ -14,6 +14,13 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
+
+/** The maximum size a packet can be in bytes. */
+#define PACKET_MAX_SIZE 256
+
+/** The maximum size a block can be in bytes. */
+#define BLOCK_MAX_SIZE 128
 
 // Don't confuse Doxygen documenting with the attribute macro
 #if __DOXYGEN__
@@ -59,18 +66,14 @@ typedef enum command_block_type {
 
 /** Possible sub-types of data blocks that can be sent. */
 typedef enum data_block_type {
-    DATA_DBG_MSG = 0x0,          /**< Debug message */
-    DATA_STATUS = 0x1,           /**< Debug status */
-    DATA_STARTUP_MSG = 0x2,      /**< Startup message */
-    DATA_ALT = 0x3,              /**< Altitude data */
-    DATA_ACCEL = 0x3,            /**< Acceleration data */
-    DATA_ANGULAR_VEL = 0x4,      /**< Angular velocity data */
-    DATA_GNSS_LOC = 0x5,         /**< GNSS location data */
-    DATA_GNSS_META = 0x6,        /**< GNSS metadata */
-    DATA_PWR_INFO = 0x7,         /**< Power info */
-    DATA_TEMP = 0x8,             /**< Temperature data */
-    DATA_MPU9250_IMU = 0x9,      /**< MPU9250-IMU data */
-    DATA_KX134_1211_ACCEL = 0xA, /**< KX134-1211 accelerometer data */
+    DATA_DBG_MSG = 0x0,     /**< Debug message */
+    DATA_ALT = 0x1,         /**< Altitude data */
+    DATA_TEMP = 0x2,        /**< Temperature data */
+    DATA_PRESSURE = 0x3,    /**< Pressure data */
+    DATA_ACCEL = 0x4,       /**< Acceleration data */
+    DATA_ANGULAR_VEL = 0x5, /**< Angular velocity data */
+    DATA_GNSS_LOC = 0x6,    /**< GNSS location data */
+    DATA_GNSS_META = 0x7,   /**< GNSS metadata */
 } DataBlockType;
 
 /** Any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
@@ -104,35 +107,48 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
                         const int8_t tx_power, const bool request);
 
 /** A data block containing information about altitude. */
-typedef struct altitude_data_block {
+typedef struct {
     /** The altitude data block accessed as a bytes array */
-    uint8_t bytes[16];
-} AltitudeDataBlock;
+    uint8_t bytes[8];
+} AltitudeDB;
 
-void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
-                              const int32_t temperature, const int32_t altitude);
+void altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude);
+
+/** A data block containing information about temperature. */
+typedef struct {
+    /** The temperature data block can be accessed as a bytes array. */
+    uint8_t bytes[8];
+} TemperatureDB;
+
+void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature);
+
+/** A data block containing information about pressure. */
+typedef struct {
+    /** The pressure data block can be accessed as a bytes array. */
+    uint8_t bytes[8];
+} PressureDB;
+
+void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int32_t pressure);
 
 /** A data block containing information about angular velocity. */
-typedef struct angular_velocity_block {
+typedef struct {
     /** The angular velocity block accessed as a bytes array */
     uint8_t bytes[12];
-} AngularVelocityBlock;
+} AngularVelocityDB;
 
-void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
-                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                 const int16_t z_axis);
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
 
 /** A data block containing information about acceleration. */
 typedef struct acceleration_data_block {
     uint8_t bytes[12];
-} AccelerationDataBlock;
+} AccelerationDB;
 
-void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
-                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                  const int16_t z_axis);
+void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
 
 typedef struct telemetry_request_block {
-    /**The telemetry request block accessed as a bytes array. */
+    /** The telemetry request block accessed as a bytes array. */
     uint8_t bytes[4];
 } TelemetryRequestBlock;
 
@@ -154,16 +170,19 @@ typedef struct {
     PacketHeader header;
     /** Packet contents in blocks, up to 256 bytes long. */
     Block *blocks;
+    /** The number of blocks in this packet. */
+    uint8_t block_count;
 } TIGHTLY_PACKED Packet;
 
 bool packet_append_block(Packet *p, const Block b);
+void packet_print_hex(FILE *stream, Packet *packet);
 
 /**
  * Sets the length of the packet the header is associated with.
  * @param p The packet header to store the length in.
  * @param length The length of the packet in bytes, not including the packet header itself.
  */
-extern inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
+static inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
     uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
     p->bytes[6] &= ~0xFC;                                               // Clear top 6 bits
     p->bytes[6] |= (encoded_length & 0x3F) << 2;                        // OR in bottom 6 bits of length, shifted left
@@ -174,14 +193,14 @@ extern inline void packet_header_set_length(PacketHeader *p, const uint16_t leng
  * @param p The packet header to read the length from.
  * @return The length of the packet header in bytes, including itself.
  */
-extern inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
+static inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
 
 /**
  * Sets the length of the block the block header is associated with.
  * @param b The block header to store the length in.
  * @param length The length of the block in bytes, not including the header itself. Must be a multiple of 4.
  */
-extern inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
+static inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
     uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
     encoded_length &= 0x1F;                                            // Last 5 bits are length
     b->bytes[0] &= ~0xF8;                                              // Clear the first 5 bits
@@ -193,6 +212,6 @@ extern inline void block_header_set_length(BlockHeader *b, const uint16_t length
  * @param p The block header to read the length from.
  * @return The length of the block header in bytes, including itself.
  */
-extern inline uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
+static inline uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
 
 #endif // _PACKET_TYPES_H

@@ -5,13 +5,10 @@
  * Packet types should be created using their initialization functions.
  */
 #include "packet_types.h"
-#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
-
-/** The maximum size of a packet in bytes. */
-static const uint16_t PACKET_MAX_SIZE = 256;
 
 /* Copies memory from source to destination in big endian format.
  * @param dest The destination buffer.
@@ -101,17 +98,35 @@ void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rss
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
  * @param measurement_time The mission time at the taking of the measurement
- * @param pressure The measured pressure in terms of Pascals.
- * @param temperature The measured temperature in units of 1 millidegree Celsius/LSB.
  * @param altitude The calculated altitude in units of 1 mm/LSB.
  */
-void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_time, const int32_t pressure,
-                              const int32_t temperature, const int32_t altitude) {
+void altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude) {
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &altitude, sizeof(altitude));
+}
+
+/**
+ * Initializes a temperature data block with the provided information.
+ * @param b The temperature data block to be initialized.
+ * @param measurement_time The mission time at the taking of the measurement
+ * @param temperature The calculated temperature in units of millidegrees Celsius.
+ */
+void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature) {
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &temperature, sizeof(temperature));
+}
+
+/**
+ * Initializes a temperature data block with the provided information.
+ * @param b The temperature data block to be initialized.
+ * @param measurement_time The mission time at the taking of the measurement
+ * @param pressure The calculated pressure in units of Pascals.
+ */
+void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int32_t pressure) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure), &temperature, sizeof(temperature));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(pressure) + sizeof(temperature), &altitude, sizeof(altitude));
 }
+
 /**
  * Initializes an angular velocity block with the provided information.
  * @param b The angular velocity block to be initialized.
@@ -122,9 +137,8 @@ void altitude_data_block_init(AltitudeDataBlock *b, const uint32_t measurement_t
  * @param y_axis The angular velocity measurement for the y axis.
  * @param z_axis The angular velocity measurement for the z axis.
  */
-void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measurement_time,
-                                 const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                 const int16_t z_axis) {
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
     memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
@@ -143,9 +157,8 @@ void angular_velocity_block_init(AngularVelocityBlock *b, const uint32_t measure
  * @param y_axis The acceleration measurement for the y axis.
  * @param z_axis The acceleration measurement for the z axis.
  * */
-void acceleration_data_block_init(AccelerationDataBlock *b, const uint32_t measurement_time,
-                                  const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis,
-                                  const int16_t z_axis) {
+void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
     memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
     memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
     // One byte of dead space after FSR
@@ -181,6 +194,7 @@ void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_s
     b->bytes[3] = data_subtype_4 << 2;
     b->bytes[3] |= used_4 && 0x01;
 }
+
 /**
  * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
  * the block.
@@ -200,6 +214,7 @@ bool packet_append_block(Packet *p, const Block b) {
     if (p_len == sizeof(PacketHeader)) {
         p->blocks[0] = b;
         packet_header_set_length(&p->header, b_len); // The packet is now the length of the first block
+        p->block_count++;
         return true;
     }
 
@@ -215,5 +230,31 @@ bool packet_append_block(Packet *p, const Block b) {
     p->blocks[i] = b; // Add block at correct spot
     // Packet length is now equal to its previous length + the new block
     packet_header_set_length(&p->header, p_len - sizeof(PacketHeader) + b_len);
+    p->block_count++;
     return true;
+}
+
+#define write_bytes(stream, bytes)                                                                                     \
+    for (size_t hjkl = 0; hjkl < sizeof(bytes); hjkl++) {                                                              \
+        fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
+    }
+
+#define write_bytes_sized(stream, bytes, size)                                                                         \
+    for (size_t hjkl = 0; hjkl < size; hjkl++) {                                                                       \
+        fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
+    }
+
+/**
+ * Prints a packet to the output stream in hexadecimal representation.
+ * @param stream The output stream to which the packet should be printed.
+ * @param packet The packet to be printed.
+ */
+void packet_print_hex(FILE *stream, Packet *packet) {
+    write_bytes(stream, packet->header.bytes);
+    for (uint8_t i = 0; i < packet->block_count; i++) {
+        write_bytes(stream, packet->blocks[i].header.bytes);
+        uint16_t content_len = block_header_get_length(&packet->blocks[i].header) - sizeof(packet->blocks[i].header);
+        write_bytes_sized(stream, packet->blocks[i].contents, content_len);
+    }
+    putchar('\n');
 }

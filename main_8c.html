@@ -89,30 +89,67 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">main.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="packet__types_8h_source.html">packet_types.h</a>&quot;</code><br />
-<code>#include &lt;assert.h&gt;</code><br />
 <code>#include &lt;getopt.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a6b20d41d6252e9871430c242cb1a56e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>&#160;&#160;&#160;150</td></tr>
 <tr class="separator:a6b20d41d6252e9871430c242cb1a56e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6d3e1aa5bc8db863f50759b6e5ae085"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa6d3e1aa5bc8db863f50759b6e5ae085">BLOCK_LIMIT</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:aa6d3e1aa5bc8db863f50759b6e5ae085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c6d5de492ac61ad29aec7aa9a436bbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a1c6d5de492ac61ad29aec7aa9a436bbf">VERSION</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a1c6d5de492ac61ad29aec7aa9a436bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a5ef564db68b3fc6fe44cde6fdcc25192"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a> { <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a> = 0
+, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a> = 1
+, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a> = 2
+, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a> = 3
+ }</td></tr>
+<tr class="separator:a5ef564db68b3fc6fe44cde6fdcc25192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a341f978518c3a27e94e263102d83c5f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a341f978518c3a27e94e263102d83c5f4">debug_print_bytes</a> (uint8_t *bytes, size_t n_bytes)</td></tr>
-<tr class="separator:a341f978518c3a27e94e263102d83c5f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a713c69d2f51ab25c371869453860e41c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a713c69d2f51ab25c371869453860e41c">construct_block</a> (Block *block, <a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3f">DataBlockType</a> t, size_t size)</td></tr>
+<tr class="separator:a713c69d2f51ab25c371869453860e41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f926104a6829eb0dec01215c63c2f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a91f926104a6829eb0dec01215c63c2f4">dtype_from_str</a> (const char *str)</td></tr>
+<tr class="separator:a91f926104a6829eb0dec01215c63c2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aa2c4f57d7fdbe67a651632ab31d49c23"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa2c4f57d7fdbe67a651632ab31d49c23">DTYPES</a> []</td></tr>
+<tr class="separator:aa2c4f57d7fdbe67a651632ab31d49c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa6d3e1aa5bc8db863f50759b6e5ae085" name="aa6d3e1aa5bc8db863f50759b6e5ae085"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6d3e1aa5bc8db863f50759b6e5ae085">&#9670;&nbsp;</a></span>BLOCK_LIMIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLOCK_LIMIT&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >The maximum number of blocks that can be added to a packet before it is sent. </p>
+
+</div>
+</div>
 <a id="a6b20d41d6252e9871430c242cb1a56e7" name="a6b20d41d6252e9871430c242cb1a56e7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6b20d41d6252e9871430c242cb1a56e7">&#9670;&nbsp;</a></span>BUFFER_SIZE</h2>
 
@@ -124,27 +161,75 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >The size of the buffer for reading sensor data input. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a341f978518c3a27e94e263102d83c5f4" name="a341f978518c3a27e94e263102d83c5f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a341f978518c3a27e94e263102d83c5f4">&#9670;&nbsp;</a></span>debug_print_bytes()</h2>
+<a id="a1c6d5de492ac61ad29aec7aa9a436bbf" name="a1c6d5de492ac61ad29aec7aa9a436bbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c6d5de492ac61ad29aec7aa9a436bbf">&#9670;&nbsp;</a></span>VERSION</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void debug_print_bytes </td>
+          <td class="memname">#define VERSION&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >The version of the packet encoding being used. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a5ef564db68b3fc6fe44cde6fdcc25192" name="a5ef564db68b3fc6fe44cde6fdcc25192"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ef564db68b3fc6fe44cde6fdcc25192">&#9670;&nbsp;</a></span>Dtype</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Represents the different sensor data types that can be interpreted by packager. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc" name="a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc"></a>DTYPE_TEMPERATURE&#160;</td><td class="fielddoc"><p >Temperature </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2" name="a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2"></a>DTYPE_TIME&#160;</td><td class="fielddoc"><p >Time </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf" name="a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf"></a>DTYPE_PRESSURE&#160;</td><td class="fielddoc"><p >Pressure </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957" name="a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957"></a>DTYPE_DNE&#160;</td><td class="fielddoc"><p >Data type does not exist </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a713c69d2f51ab25c371869453860e41c" name="a713c69d2f51ab25c371869453860e41c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a713c69d2f51ab25c371869453860e41c">&#9670;&nbsp;</a></span>construct_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void construct_block </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>bytes</em>, </td>
+          <td class="paramtype">Block *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3f">DataBlockType</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>n_bytes</em>&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -153,6 +238,39 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >Updates a block with the required information for allocating a new data block. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The block to be updated. </td></tr>
+    <tr><td class="paramname">t</td><td>The type of the data block. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of the data block that will be stored in this block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a91f926104a6829eb0dec01215c63c2f4" name="a91f926104a6829eb0dec01215c63c2f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91f926104a6829eb0dec01215c63c2f4">&#9670;&nbsp;</a></span>dtype_from_str()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a> dtype_from_str </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Converts a string to a data type enumeration value. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The string to match with an enumeration value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The data type matching the string value. </dd></dl>
 
 </div>
 </div>
@@ -181,6 +299,28 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="aa2c4f57d7fdbe67a651632ab31d49c23" name="aa2c4f57d7fdbe67a651632ab31d49c23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2c4f57d7fdbe67a651632ab31d49c23">&#9670;&nbsp;</a></span>DTYPES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* DTYPES[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a>] = <span class="stringliteral">&quot;Temperature&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a>] = <span class="stringliteral">&quot;Time&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a>] = <span class="stringliteral">&quot;Pressure&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a>] = <span class="stringliteral">&quot;&quot;</span>}</div>
+<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a></div><div class="ttdeci">@ DTYPE_TIME</div><div class="ttdef"><b>Definition:</b> main.c:11</div></div>
+<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a></div><div class="ttdeci">@ DTYPE_DNE</div><div class="ttdef"><b>Definition:</b> main.c:13</div></div>
+<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a></div><div class="ttdeci">@ DTYPE_PRESSURE</div><div class="ttdef"><b>Definition:</b> main.c:12</div></div>
+<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a></div><div class="ttdeci">@ DTYPE_TEMPERATURE</div><div class="ttdef"><b>Definition:</b> main.c:10</div></div>
+</div><!-- fragment --><p >String representation of the possible data types. </p>
 
 </div>
 </div>

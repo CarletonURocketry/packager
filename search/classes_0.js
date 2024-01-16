@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['accelerationdatablock_0',['AccelerationDataBlock',['../structAccelerationDataBlock.html',1,'']]],
-  ['altitudedatablock_1',['AltitudeDataBlock',['../structAltitudeDataBlock.html',1,'']]],
-  ['angularvelocityblock_2',['AngularVelocityBlock',['../structAngularVelocityBlock.html',1,'']]]
+  ['accelerationdb_0',['AccelerationDB',['../structAccelerationDB.html',1,'']]],
+  ['altitudedb_1',['AltitudeDB',['../structAltitudeDB.html',1,'']]],
+  ['angularvelocitydb_2',['AngularVelocityDB',['../structAngularVelocityDB.html',1,'']]]
 ];

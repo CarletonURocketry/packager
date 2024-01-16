@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['header_0',['header',['../structTIGHTLY__PACKED.html#a88805038ec52af178cc1ee45bd9c1135',1,'TIGHTLY_PACKED::header()'],['../structTIGHTLY__PACKED.html#aa5e4771be405763c932bd7bb9766d8ff',1,'TIGHTLY_PACKED::header()']]]
+  ['dtypes_0',['DTYPES',['../main_8c.html#aa2c4f57d7fdbe67a651632ab31d49c23',1,'main.c']]]
 ];

@@ -158,8 +158,7 @@ Dtype dtype_from_str(const char *str) {
  * @param size The size of the data block that will be stored in this block.
  */
 void construct_block(Block *b, DataBlockType t, size_t size) {
-    block_header_init(&b->header, 0, false, TYPE_DATA, t, GROUNDSTATION);
-    block_header_set_length(&b->header, size);
+    block_header_init(&b->header, size, false, TYPE_DATA, t, GROUNDSTATION);
     b->contents = contents_pos;
     contents_pos += size;
 }

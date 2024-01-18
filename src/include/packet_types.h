@@ -201,10 +201,9 @@ static inline uint16_t packet_header_get_length(const PacketHeader *p) { return 
  * @param length The length of the block in bytes, not including the header itself. Must be a multiple of 4.
  */
 static inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
-    uint8_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
-    encoded_length &= 0x1F;                                            // Last 5 bits are length
-    b->bytes[0] &= ~0xF8;                                              // Clear the first 5 bits
-    b->bytes[0] |= (encoded_length << 3);                              // Length shifted to start of byte
+    uint16_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
+    *(uint32_t *)(&b->bytes[0]) &= ~0x1F;                               // Clear the lowest 5 bits
+    *(uint32_t *)(&b->bytes[0]) |= encoded_length & 0x1F;               // Last 5 bits are length
 }
 
 /**
@@ -212,6 +211,8 @@ static inline void block_header_set_length(BlockHeader *b, const uint16_t length
  * @param p The block header to read the length from.
  * @return The length of the block header in bytes, including itself.
  */
-static inline uint16_t block_header_get_length(const BlockHeader *b) { return (((b->bytes[0] & 0xF8) >> 3) + 1) * 4; }
+static inline uint16_t block_header_get_length(const BlockHeader *b) {
+    return (((*(uint32_t *)(&b->bytes[0])) & 0x1F) + 1) * 4;
+}
 
 #endif // _PACKET_TYPES_H

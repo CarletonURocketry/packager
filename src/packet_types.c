@@ -200,6 +200,40 @@ void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_s
 }
 
 /**
+ * Initializes a GNSS location data block with the provided information
+ * @param b The GNSS location data block to be initialized
+ * @param fix_time The mission time the fix was recieved
+ * @param latitude The latitude of the rocket in units of 100 micro-arcminutes per LSB
+ * @param longitude The longitude of the rocket in units of 100 micro-arcminutes per LSB
+ * @param utc_time The UTC time when the fix was recieved
+ * @param altitude The altitude calculated by the GNSS module, in mm
+ * @param speed The speed over the ground in hundredths of a knot
+ * @param course The course over ground of the rocket in hundredths of a degree
+ * @param pdop Position dilution of precision multiplied by 100
+ * @param hdop Horizontal dilution of precision multipled by 100
+ * @param vdop Vertical dilution of precision multiplied by 100
+ * @param sats The number of GNSS satellites used in the fix
+ * @param fix The fix type, as two bits
+ */
+void gnss_location_db_init(GNSSLocationDB *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude,
+                           const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course,
+                           uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix) {
+    // Could write this all out with sizeofs, but it gets really hard to read after a second
+    memcpy(b->bytes, &fix_time, sizeof(fix_time));
+    memcpy(b->bytes + (4), &latitude, sizeof(latitude));
+    memcpy(b->bytes + (4 * 2), &longitude, sizeof(longitude));
+    memcpy(b->bytes + (4 * 3), &utc_time, sizeof(utc_time));
+    memcpy(b->bytes + (4 * 4), &altitude, sizeof(altitude));
+    memcpy(b->bytes + (4 * 4), &speed, sizeof(speed));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed), &course, sizeof(course));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course), &pdop, sizeof(pdop));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course) + sizeof(pdop), &hdop, sizeof(hdop));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course) + sizeof(pdop) + sizeof(hdop), &vdop, sizeof(vdop));
+    b->bytes[31] = sats;
+    b->bytes[32] = (uint8_t)((fix & 0x03) << 6);
+}
+
+/**
  * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
  * the block.
  * @param p The packet to be appended to.

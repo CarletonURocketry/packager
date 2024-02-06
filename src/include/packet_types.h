@@ -156,6 +156,15 @@ void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_s
                                   const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
                                   const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4);
 
+/** A data block containing location information provided by a GNSS sensor */
+typedef struct gnss_location_data_block {
+    uint8_t bytes[32];
+} GNSSLocationDB;
+
+void gnss_location_db_init(GNSSLocationDB *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude,
+                           const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course,
+                           uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix);
+
 /** Represents a radio packet block with variable length contents. */
 typedef struct {
     /** The block header. Block length is encoded here. */

@@ -125,6 +125,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTelemetryRequestBlock.html">TelemetryRequestBlock</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTIGHTLY__PACKED.html">TIGHTLY_PACKED</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -207,6 +209,8 @@ Functions</h2></td></tr>
 <tr class="separator:ae07814aeca5224dcc15f87a7c08687cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa32867ba87c9f3ab1dca3b61737969ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aa32867ba87c9f3ab1dca3b61737969ee">telemetry_request_block_init</a> (<a class="el" href="structTelemetryRequestBlock.html">TelemetryRequestBlock</a> *b, const uint8_t data_subtype_1, const uint8_t used_1, const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3, const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4)</td></tr>
 <tr class="separator:aa32867ba87c9f3ab1dca3b61737969ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a900add4f7036507ea27042eed65b7615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a900add4f7036507ea27042eed65b7615">gnss_location_db_init</a> (<a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a> *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude, const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course, uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix)</td></tr>
+<tr class="separator:a900add4f7036507ea27042eed65b7615"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec">packet_append_block</a> (Packet *p, const Block b)</td></tr>
 <tr class="separator:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af63f80194e050629b872ff50d81a448d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#af63f80194e050629b872ff50d81a448d">packet_print_hex</a> (FILE *stream, Packet *packet)</td></tr>
@@ -639,6 +643,118 @@ Functions</h2></td></tr>
     <tr><td class="paramname">type</td><td>The type of the block to follow the header </td></tr>
     <tr><td class="paramname">subtype</td><td>The sub type of the block to follow the header </td></tr>
     <tr><td class="paramname">dest</td><td>The device address of the destination device </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a900add4f7036507ea27042eed65b7615" name="a900add4f7036507ea27042eed65b7615"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a900add4f7036507ea27042eed65b7615">&#9670;&nbsp;</a></span>gnss_location_db_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void gnss_location_db_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a> *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>fix_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>latitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>longitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>utc_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>altitude</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>speed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>course</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>pdop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>hdop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>vdop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>sats</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fix</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Initializes a GNSS location data block with the provided information </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The GNSS location data block to be initialized </td></tr>
+    <tr><td class="paramname">fix_time</td><td>The mission time the fix was recieved </td></tr>
+    <tr><td class="paramname">latitude</td><td>The latitude of the rocket in units of 100 micro-arcminutes per LSB </td></tr>
+    <tr><td class="paramname">longitude</td><td>The longitude of the rocket in units of 100 micro-arcminutes per LSB </td></tr>
+    <tr><td class="paramname">utc_time</td><td>The UTC time when the fix was recieved </td></tr>
+    <tr><td class="paramname">altitude</td><td>The altitude calculated by the GNSS module, in mm </td></tr>
+    <tr><td class="paramname">speed</td><td>The speed over the ground in hundredths of a knot </td></tr>
+    <tr><td class="paramname">course</td><td>The course over ground of the rocket in hundredths of a degree </td></tr>
+    <tr><td class="paramname">pdop</td><td>Position dilution of precision multiplied by 100 </td></tr>
+    <tr><td class="paramname">hdop</td><td>Horizontal dilution of precision multipled by 100 </td></tr>
+    <tr><td class="paramname">vdop</td><td>Vertical dilution of precision multiplied by 100 </td></tr>
+    <tr><td class="paramname">sats</td><td>The number of GNSS satellites used in the fix </td></tr>
+    <tr><td class="paramname">fix</td><td>The fix type, as two bits </td></tr>
   </table>
   </dd>
 </dl>

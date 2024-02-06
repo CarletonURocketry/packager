@@ -6,6 +6,7 @@ var packet__types_8c =
     [ "altitude_db_init", "packet__types_8c.html#ab12cd79378d809441f655438b4a3b831", null ],
     [ "angular_velocity_db_init", "packet__types_8c.html#a543359e6301c9ef8dee54ba2a7c61653", null ],
     [ "block_header_init", "packet__types_8c.html#aae2e56890427e8cd7f3aef4144fdf3bc", null ],
+    [ "gnss_location_db_init", "packet__types_8c.html#a900add4f7036507ea27042eed65b7615", null ],
     [ "memcpy_be", "packet__types_8c.html#aba679592b86f02a1e165463d32f103f8", null ],
     [ "packet_append_block", "packet__types_8c.html#aa0f7d3bde8660c68f0c96dd21da35eec", null ],
     [ "packet_header_init", "packet__types_8c.html#ac5862f04a01edd6d42896f795bd6ef5c", null ],

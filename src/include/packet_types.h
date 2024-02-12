@@ -165,7 +165,7 @@ typedef struct {
     BlockHeader header;
     /** The block contents up to a length of 128 bytes. */
     uint8_t *contents;
-} TIGHTLY_PACKED Block;
+} Block;
 
 /** Represents a packet with a variable number of blocks. Maximum of 256 bytes. */
 typedef struct {
@@ -175,7 +175,7 @@ typedef struct {
     Block *blocks;
     /** The number of blocks in this packet. */
     uint8_t block_count;
-} TIGHTLY_PACKED Packet;
+} Packet;
 
 bool packet_append_block(Packet *p, const Block b);
 void packet_print_hex(FILE *stream, Packet *packet);

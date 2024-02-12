@@ -71,19 +71,25 @@ typedef struct {
     uint8_t src_addr;
     /** Which number this packet is in the stream of sent packets. */
     uint32_t packet_num;
-} TIGHTLY_PACKED PacketHeader;
+} PacketHeader;
 
-void packet_header_init(PacketHeader *p, const char *callsign, const uint32_t length, const uint8_t version,
+void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint32_t packet_number);
 
 /** Each block in the radio packet will have a header in this format. */
-typedef struct block_header {
+typedef struct {
     /** The block header accessed as a bytes array. */
-    uint8_t bytes[4];
+    uint8_t len;
+    /** The type of this block. */
+    uint8_t type;
+    /** The sub type of this block. */
+    uint8_t subtype;
+    /** The address of this blocks destination device. */
+    uint8_t dest_addr;
 } BlockHeader;
 
-void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
-                       const BlockSubtype subtype, const DeviceAddress dest);
+void block_header_init(BlockHeader *b, const uint16_t length, const BlockType type, const BlockSubtype subtype,
+                       const DeviceAddress dest);
 
 /** Signal report for the last block that was sent by the block's destination device */
 typedef struct signal_report_block {
@@ -196,9 +202,7 @@ static inline uint16_t packet_header_get_length(const PacketHeader *p) { return 
  * @param length The length of the block in bytes, not including the header itself. Must be a multiple of 4.
  */
 static inline void block_header_set_length(BlockHeader *b, const uint16_t length) {
-    uint16_t encoded_length = ((length + sizeof(BlockHeader)) / 4) - 1; // Add header size, 4 byte increments
-    *(uint32_t *)(&b->bytes[0]) &= ~0x1F;                               // Clear the lowest 5 bits
-    *(uint32_t *)(&b->bytes[0]) |= encoded_length & 0x1F;               // Last 5 bits are length
+    b->len = ((length + sizeof(BlockHeader)) / 4) - 1;
 }
 
 /**
@@ -206,8 +210,6 @@ static inline void block_header_set_length(BlockHeader *b, const uint16_t length
  * @param p The block header to read the length from.
  * @return The length of the block header in bytes, including itself.
  */
-static inline uint16_t block_header_get_length(const BlockHeader *b) {
-    return (((*(uint32_t *)(&b->bytes[0])) & 0x1F) + 1) * 4;
-}
+static inline uint16_t block_header_get_length(const BlockHeader *b) { return (b->len + 1) * 4; }
 
 #endif // _PACKET_TYPES_H

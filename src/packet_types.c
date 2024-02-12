@@ -31,7 +31,7 @@ void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
  * @param source The source of the packet this header is associated with
  * @param packet_number The number of this packet (how many were sent before it)
  */
-void packet_header_init(PacketHeader *p, const char *callsign, const uint32_t length, const uint8_t version,
+void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint32_t packet_number) {
 
     // Copying the entire call sign, excluding null terminator
@@ -50,26 +50,18 @@ void packet_header_init(PacketHeader *p, const char *callsign, const uint32_t le
  * Initializes a block header with the provided information.
  *
  * @param b The block header to be initialized
- * @param length The length of the block this header is associated with, in 4 byte increments
- * @param has_sig Whether or not the block will have a cryptographic signature
+ * @param length The length of the block this header is associated with, in bytes, not including the header itself
  * @param type The type of the block to follow the header
  * @param subtype The sub type of the block to follow the header
  * @param dest The device address of the destination device
  */
-void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
-                       const BlockSubtype subtype, const DeviceAddress dest) {
+void block_header_init(BlockHeader *b, const uint16_t length, const BlockType type, const BlockSubtype subtype,
+                       const DeviceAddress dest) {
 
-    uint32_t header;
-    header = ((uint32_t)(dest & 0xF));
-    header = header << 6;
-    header |= ((uint32_t)(subtype & 0x3F));
-    header = header << 4;
-    header |= ((uint32_t)(type & 0xF));
-    header = header << 1;
-    header |= ((uint32_t)(has_sig & 0x1));
-    header = header << 5;
-    memcpy(b->bytes, &header, sizeof(header));
     block_header_set_length(b, length);
+    b->type = type;
+    b->subtype = subtype;
+    b->dest_addr = dest;
 }
 
 /**
@@ -264,11 +256,6 @@ bool packet_append_block(Packet *p, const Block b) {
     return true;
 }
 
-#define write_bytes(stream, bytes)                                                                                     \
-    for (size_t hjkl = 0; hjkl < sizeof(bytes); hjkl++) {                                                              \
-        fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
-    }
-
 #define write_bytes_sized(stream, bytes, size)                                                                         \
     for (size_t hjkl = 0; hjkl < size; hjkl++) {                                                                       \
         fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
@@ -282,7 +269,7 @@ bool packet_append_block(Packet *p, const Block b) {
 void packet_print_hex(FILE *stream, Packet *packet) {
     write_bytes_sized(stream, ((uint8_t *)(&packet->header)), sizeof(packet->header));
     for (uint8_t i = 0; i < packet->block_count; i++) {
-        write_bytes(stream, packet->blocks[i].header.bytes);
+        write_bytes_sized(stream, ((uint8_t *)(&packet->blocks[i].header)), sizeof(packet->blocks[i].header));
         uint16_t content_len = block_header_get_length(&packet->blocks[i].header) - sizeof(packet->blocks[i].header);
         write_bytes_sized(stream, packet->blocks[i].contents, content_len);
     }

@@ -36,33 +36,13 @@ void memcpy_be(void *dest, const void *src, unsigned long n_bytes);
 typedef enum device_address {
     GROUNDSTATION = 0x0, /**< Ground station */
     ROCKET = 0x1,        /**< The rocket */
-    MULTICAST = 0xF,     /**< Any device which is listening */
+    MULTICAST = 0xFF,    /**< Any device which is listening */
 } DeviceAddress;
 
 /** Possible types of radio packet blocks that could be sent. */
 typedef enum block_type {
-    TYPE_CTRL = 0x0, /**< Control block */
-    TYPE_CMD = 0x1,  /**< Command block */
-    TYPE_DATA = 0x2, /**< Data block */
+    TYPE_DATA = 0x0, /**< Data block */
 } BlockType;
-
-/** Possible sub-types of control blocks that can be sent. */
-typedef enum control_block_type {
-    CTRL_SIGNAL_REPORT = 0x0,   /**< Signal report block */
-    CTRL_CMD_ACK = 0x1,         /**< Command acknowledgement block */
-    CTRL_CMD_NONCE_RQST = 0x2,  /**< Command nonce request block */
-    CTRL_CMD_NONCE = 0x3,       /**< Command nonce block */
-    CTRL_BEACON = 0x4,          /**< Beacon block (searching for peer device) */
-    CTRL_BEACON_RESPONSE = 0x5, /**< Beacon response block (response from peer device) */
-} CtrlBlockType;
-
-/** Possible sub-types of command blocks that can be sent. */
-typedef enum command_block_type {
-    CMD_RST_ROCKET_AV = 0X0,   /**< Reset rocket avionics */
-    CMD_RQST_TELEM_DATA = 0X1, /**< Request for telemetry data */
-    CMD_DEPLOY_CHUTE = 0X2,    /**< Deploy parachutes */
-    CMD_TARE_SENSORS = 0X3,    /**< Tare sensors */
-} CmdBlockType;
 
 /** Possible sub-types of data blocks that can be sent. */
 typedef enum data_block_type {
@@ -80,13 +60,21 @@ typedef enum data_block_type {
 typedef uint8_t BlockSubtype;
 
 /** Each radio packet will have a header in this format. */
-typedef struct packet_header {
-    /** The packet header accessed as a bytes array. */
-    uint8_t bytes[12];
-} PacketHeader;
+typedef struct {
+    /** The HAM radio call sign with trailing null characters. */
+    char call_sign[9];
+    /** The packet length in multiples of 4 bytes. */
+    uint8_t len;
+    /** The version of InSpace radio packet encoding being used. */
+    uint8_t version;
+    /** The source address of the packet. */
+    uint8_t src_addr;
+    /** Which number this packet is in the stream of sent packets. */
+    uint32_t packet_num;
+} TIGHTLY_PACKED PacketHeader;
 
-void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
-                        const DeviceAddress source, const uint16_t packet_number);
+void packet_header_init(PacketHeader *p, const char *callsign, const uint32_t length, const uint8_t version,
+                        const DeviceAddress source, const uint32_t packet_number);
 
 /** Each block in the radio packet will have a header in this format. */
 typedef struct block_header {
@@ -192,9 +180,7 @@ void packet_print_hex(FILE *stream, Packet *packet);
  * @param length The length of the packet in bytes, not including the packet header itself.
  */
 static inline void packet_header_set_length(PacketHeader *p, const uint16_t length) {
-    uint8_t encoded_length = ((length + sizeof(PacketHeader)) / 4) - 1; // Include header length, 4 byte increments
-    p->bytes[6] &= ~0xFC;                                               // Clear top 6 bits
-    p->bytes[6] |= (encoded_length & 0x3F) << 2;                        // OR in bottom 6 bits of length, shifted left
+    p->len = ((length + sizeof(PacketHeader)) / 4) - 1;
 }
 
 /**
@@ -202,7 +188,7 @@ static inline void packet_header_set_length(PacketHeader *p, const uint16_t leng
  * @param p The packet header to read the length from.
  * @return The length of the packet header in bytes, including itself.
  */
-static inline uint16_t packet_header_get_length(const PacketHeader *p) { return (((p->bytes[6] & 0xFC) >> 2) + 1) * 4; }
+static inline uint16_t packet_header_get_length(const PacketHeader *p) { return (p->len + 1) * 4; }
 
 /**
  * Sets the length of the block the block header is associated with.

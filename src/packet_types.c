@@ -31,27 +31,19 @@ void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
  * @param source The source of the packet this header is associated with
  * @param packet_number The number of this packet (how many were sent before it)
  */
-void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
-                        const DeviceAddress source, const uint16_t packet_number) {
+void packet_header_init(PacketHeader *p, const char *callsign, const uint32_t length, const uint8_t version,
+                        const DeviceAddress source, const uint32_t packet_number) {
 
-    /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
-     * the packet header will be the null terminator. This will not cause any issues since the null terminator is
-     * effectively zero-padding, which is what's expected by the packet encoding format.
-     *
-     * In the case of a 6 character call sign, the null terminator will not be included in the packet header, which is
-     * equally fine and follows the packet encoding format for 6 character call signs.
-     */
-    memcpy(p->bytes, callsign, 6);
+    // Copying the entire call sign, excluding null terminator
+    uint8_t call_sign_char_count = strlen(callsign);
+    memcpy(p->call_sign, callsign, call_sign_char_count);
+    // Fill remaining chars with null terminator
+    memset(&p->call_sign[call_sign_char_count], 0, sizeof(p->call_sign) - call_sign_char_count);
 
-    packet_header_set_length(p, length);
-    p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
-    p->bytes[7] = (uint8_t)((version & 0x07) << 5);  // Last three bits of version at start of byte
-    // Remaining 5 bits in byte 8 are dead space
-    p->bytes[8] = (uint8_t)((source & 0x0F) << 4);           // Last four bits are source
-    p->bytes[8] |= (uint8_t)((packet_number & 0x0F00) >> 8); // First four bits of packet_number fill out rest of byte
-    p->bytes[9] = (uint8_t)(packet_number & 0x00FF);         // Last 8 bits fill out byte
-    p->bytes[10] = 0;                                        // Dead space
-    p->bytes[11] = 0;                                        // Dead space
+    packet_header_set_length(p, length); // Set length
+    p->version = version;
+    p->src_addr = source;
+    p->packet_num = packet_number;
 }
 
 /**
@@ -288,7 +280,7 @@ bool packet_append_block(Packet *p, const Block b) {
  * @param packet The packet to be printed.
  */
 void packet_print_hex(FILE *stream, Packet *packet) {
-    write_bytes(stream, packet->header.bytes);
+    write_bytes_sized(stream, ((uint8_t *)(&packet->header)), sizeof(packet->header));
     for (uint8_t i = 0; i < packet->block_count; i++) {
         write_bytes(stream, packet->blocks[i].header.bytes);
         uint16_t content_len = block_header_get_length(&packet->blocks[i].header) - sizeof(packet->blocks[i].header);

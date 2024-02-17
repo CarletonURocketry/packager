@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>packager: BlockHeader Struct Reference</title>
+<title>packager: Packet Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,7 +68,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structBlockHeader.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structPacket.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('structBlockHeader.html',''); initResiz
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">BlockHeader Struct Reference</div></div>
+  <div class="headertitle"><div class="title">Packet Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -97,75 +97,58 @@ $(document).ready(function(){initNavTree('structBlockHeader.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:afa047139b7a76c524a42a26fe6c75f51"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBlockHeader.html#afa047139b7a76c524a42a26fe6c75f51">len</a></td></tr>
-<tr class="separator:afa047139b7a76c524a42a26fe6c75f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac858bb6ec9731f063a6f79a70f6a1e4d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBlockHeader.html#ac858bb6ec9731f063a6f79a70f6a1e4d">type</a></td></tr>
-<tr class="separator:ac858bb6ec9731f063a6f79a70f6a1e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dc0ab62f5dd9a5a26abf965b984d1cc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBlockHeader.html#a8dc0ab62f5dd9a5a26abf965b984d1cc">subtype</a></td></tr>
-<tr class="separator:a8dc0ab62f5dd9a5a26abf965b984d1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9c70ded727748326afa72903d612d5f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBlockHeader.html#ae9c70ded727748326afa72903d612d5f">dest_addr</a></td></tr>
-<tr class="separator:ae9c70ded727748326afa72903d612d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ffe27b98b750e7b4d9201b7c0713f24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPacketHeader.html">PacketHeader</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacket.html#a4ffe27b98b750e7b4d9201b7c0713f24">header</a></td></tr>
+<tr class="separator:a4ffe27b98b750e7b4d9201b7c0713f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66cd071dff59636ec2e9a4b1188c2a1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structBlock.html">Block</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacket.html#a66cd071dff59636ec2e9a4b1188c2a1a">blocks</a></td></tr>
+<tr class="separator:a66cd071dff59636ec2e9a4b1188c2a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2569c200d5f4f99285cd10cc1eeada33"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacket.html#a2569c200d5f4f99285cd10cc1eeada33">block_count</a></td></tr>
+<tr class="separator:a2569c200d5f4f99285cd10cc1eeada33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >Each block in the radio packet will have a header in this format. </p>
+<div class="textblock"><p >Represents a packet with a variable number of blocks. Maximum of 256 bytes. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="ae9c70ded727748326afa72903d612d5f" name="ae9c70ded727748326afa72903d612d5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9c70ded727748326afa72903d612d5f">&#9670;&nbsp;</a></span>dest_addr</h2>
+<a id="a2569c200d5f4f99285cd10cc1eeada33" name="a2569c200d5f4f99285cd10cc1eeada33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2569c200d5f4f99285cd10cc1eeada33">&#9670;&nbsp;</a></span>block_count</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t BlockHeader::dest_addr</td>
+          <td class="memname">uint8_t Packet::block_count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The address of this blocks destination device. </p>
+<p >The number of blocks in this packet. </p>
 
 </div>
 </div>
-<a id="afa047139b7a76c524a42a26fe6c75f51" name="afa047139b7a76c524a42a26fe6c75f51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa047139b7a76c524a42a26fe6c75f51">&#9670;&nbsp;</a></span>len</h2>
+<a id="a66cd071dff59636ec2e9a4b1188c2a1a" name="a66cd071dff59636ec2e9a4b1188c2a1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66cd071dff59636ec2e9a4b1188c2a1a">&#9670;&nbsp;</a></span>blocks</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t BlockHeader::len</td>
+          <td class="memname"><a class="el" href="structBlock.html">Block</a>* Packet::blocks</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The block header accessed as a bytes array. </p>
+<p ><a class="el" href="structPacket.html">Packet</a> contents in blocks, up to 256 bytes long. </p>
 
 </div>
 </div>
-<a id="a8dc0ab62f5dd9a5a26abf965b984d1cc" name="a8dc0ab62f5dd9a5a26abf965b984d1cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dc0ab62f5dd9a5a26abf965b984d1cc">&#9670;&nbsp;</a></span>subtype</h2>
+<a id="a4ffe27b98b750e7b4d9201b7c0713f24" name="a4ffe27b98b750e7b4d9201b7c0713f24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ffe27b98b750e7b4d9201b7c0713f24">&#9670;&nbsp;</a></span>header</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t BlockHeader::subtype</td>
+          <td class="memname"><a class="el" href="structPacketHeader.html">PacketHeader</a> Packet::header</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The sub type of this block. </p>
-
-</div>
-</div>
-<a id="ac858bb6ec9731f063a6f79a70f6a1e4d" name="ac858bb6ec9731f063a6f79a70f6a1e4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac858bb6ec9731f063a6f79a70f6a1e4d">&#9670;&nbsp;</a></span>type</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t BlockHeader::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >The type of this block. </p>
+<p >The packet header. <a class="el" href="structPacket.html">Packet</a> length is encoded here. </p>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['header_0',['header',['../structTIGHTLY__PACKED.html#a88805038ec52af178cc1ee45bd9c1135',1,'TIGHTLY_PACKED::header()'],['../structTIGHTLY__PACKED.html#aa5e4771be405763c932bd7bb9766d8ff',1,'TIGHTLY_PACKED::header()']]]
+  ['header_0',['header',['../structBlock.html#ae86925a120ca16a078a4fa44cd3e493a',1,'Block::header()'],['../structPacket.html#a4ffe27b98b750e7b4d9201b7c0713f24',1,'Packet::header()']]]
 ];

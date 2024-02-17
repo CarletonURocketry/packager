@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['blockheader_0',['BlockHeader',['../structBlockHeader.html',1,'']]]
+  ['block_0',['Block',['../structBlock.html',1,'']]],
+  ['blockheader_1',['BlockHeader',['../structBlockHeader.html',1,'']]]
 ];

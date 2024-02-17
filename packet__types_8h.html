@@ -127,7 +127,9 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTIGHTLY__PACKED.html">TIGHTLY_PACKED</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBlock.html">Block</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacket.html">Packet</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -148,31 +150,12 @@ Typedefs</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:a342f5a9f74cdec1043dd88e774c4c630"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> { <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a5e56eb1cf5d04bea91f1bfa04b1b1868">GROUNDSTATION</a> = 0x0
 , <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630afafc201536271f745d3923b7efb6d375">ROCKET</a> = 0x1
-, <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a607d700b2c0a01c54bdadde074a7cb12">MULTICAST</a> = 0xF
+, <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a607d700b2c0a01c54bdadde074a7cb12">MULTICAST</a> = 0xFF
  }</td></tr>
 <tr class="separator:a342f5a9f74cdec1043dd88e774c4c630"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54420623f26ab6bb61042b41cccf37a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> { <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3abf69e32423b4eec57c639b337bca3a6e">TYPE_CTRL</a> = 0x0
-, <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3a31c7517410257c2000072034cb89fa0a">TYPE_CMD</a> = 0x1
-, <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15">TYPE_DATA</a> = 0x2
+<tr class="memitem:a54420623f26ab6bb61042b41cccf37a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> { <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15">TYPE_DATA</a> = 0x0
  }</td></tr>
 <tr class="separator:a54420623f26ab6bb61042b41cccf37a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac588e0028f994a83da3d2dcfef7ee380"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380">CtrlBlockType</a> { <br />
-&#160;&#160;<a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380aef6f1fd8b40a4c425822dacb2f832d27">CTRL_SIGNAL_REPORT</a> = 0x0
-, <a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380a524cc1dbd7bfae5d50b73bd04c5e937c">CTRL_CMD_ACK</a> = 0x1
-, <a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380a1b668477b2ae5cfcd98f93f6e1af0535">CTRL_CMD_NONCE_RQST</a> = 0x2
-, <a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380afb7c42cc2dbcb20d196142ec57fe1687">CTRL_CMD_NONCE</a> = 0x3
-, <br />
-&#160;&#160;<a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380aeafb398a1ef9f46016eda0dd71d86088">CTRL_BEACON</a> = 0x4
-, <a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380af38546f54cbffcff8a25c38a182572ec">CTRL_BEACON_RESPONSE</a> = 0x5
-<br />
- }</td></tr>
-<tr class="separator:ac588e0028f994a83da3d2dcfef7ee380"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a451aabef89d8f76e81fbc4bf439e8e59"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a451aabef89d8f76e81fbc4bf439e8e59">CmdBlockType</a> { <a class="el" href="packet__types_8h.html#a451aabef89d8f76e81fbc4bf439e8e59a63f41707648853b58d19a4261f15c579">CMD_RST_ROCKET_AV</a> = 0X0
-, <a class="el" href="packet__types_8h.html#a451aabef89d8f76e81fbc4bf439e8e59a9c4962d529fdd0ebdcebe5eb090b70a0">CMD_RQST_TELEM_DATA</a> = 0X1
-, <a class="el" href="packet__types_8h.html#a451aabef89d8f76e81fbc4bf439e8e59aedfb28c7fdc96c286612c059949cb2b2">CMD_DEPLOY_CHUTE</a> = 0X2
-, <a class="el" href="packet__types_8h.html#a451aabef89d8f76e81fbc4bf439e8e59a72ec7c70d5a467c688d26821411b3fc1">CMD_TARE_SENSORS</a> = 0X3
- }</td></tr>
-<tr class="separator:a451aabef89d8f76e81fbc4bf439e8e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2cdad06147808bbec52b49736391d3f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3f">DataBlockType</a> { <br />
 &#160;&#160;<a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fac672ecfbfe918efc6cbbe74f220542fe">DATA_DBG_MSG</a> = 0x0
 , <a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3faacf6096387d07c89e56487b091d83010">DATA_ALT</a> = 0x1
@@ -191,10 +174,10 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:aba679592b86f02a1e165463d32f103f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aba679592b86f02a1e165463d32f103f8">memcpy_be</a> (void *dest, const void *src, unsigned long n_bytes)</td></tr>
 <tr class="separator:aba679592b86f02a1e165463d32f103f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5862f04a01edd6d42896f795bd6ef5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#ac5862f04a01edd6d42896f795bd6ef5c">packet_header_init</a> (<a class="el" href="structPacketHeader.html">PacketHeader</a> *p, const char *callsign, const uint16_t length, const uint8_t version, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> source, const uint16_t packet_number)</td></tr>
-<tr class="separator:ac5862f04a01edd6d42896f795bd6ef5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae2e56890427e8cd7f3aef4144fdf3bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aae2e56890427e8cd7f3aef4144fdf3bc">block_header_init</a> (<a class="el" href="structBlockHeader.html">BlockHeader</a> *b, const uint16_t length, const bool has_sig, const <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> type, const <a class="el" href="packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97">BlockSubtype</a> subtype, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> dest)</td></tr>
-<tr class="separator:aae2e56890427e8cd7f3aef4144fdf3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a048dbf1eece020fd3c685c5228eab595"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a048dbf1eece020fd3c685c5228eab595">packet_header_init</a> (<a class="el" href="structPacketHeader.html">PacketHeader</a> *p, const char *callsign, const uint16_t length, const uint8_t version, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> source, const uint32_t packet_number)</td></tr>
+<tr class="separator:a048dbf1eece020fd3c685c5228eab595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35a255e9842ac122fd31e13a6691694"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#ad35a255e9842ac122fd31e13a6691694">block_header_init</a> (<a class="el" href="structBlockHeader.html">BlockHeader</a> *b, const uint16_t length, const <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> type, const <a class="el" href="packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97">BlockSubtype</a> subtype, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> dest)</td></tr>
+<tr class="separator:ad35a255e9842ac122fd31e13a6691694"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a0b521ef6a3e32e6040a68a6a82d67ada">signal_report_init</a> (<a class="el" href="structSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const bool request)</td></tr>
 <tr class="separator:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab12cd79378d809441f655438b4a3b831"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#ab12cd79378d809441f655438b4a3b831">altitude_db_init</a> (<a class="el" href="structAltitudeDB.html">AltitudeDB</a> *b, const uint32_t measurement_time, const int32_t altitude)</td></tr>
@@ -211,9 +194,9 @@ Functions</h2></td></tr>
 <tr class="separator:aa32867ba87c9f3ab1dca3b61737969ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a900add4f7036507ea27042eed65b7615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a900add4f7036507ea27042eed65b7615">gnss_location_db_init</a> (<a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a> *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude, const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course, uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix)</td></tr>
 <tr class="separator:a900add4f7036507ea27042eed65b7615"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec">packet_append_block</a> (Packet *p, const Block b)</td></tr>
+<tr class="memitem:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec">packet_append_block</a> (<a class="el" href="structPacket.html">Packet</a> *p, const <a class="el" href="structBlock.html">Block</a> b)</td></tr>
 <tr class="separator:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af63f80194e050629b872ff50d81a448d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#af63f80194e050629b872ff50d81a448d">packet_print_hex</a> (FILE *stream, Packet *packet)</td></tr>
+<tr class="memitem:af63f80194e050629b872ff50d81a448d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#af63f80194e050629b872ff50d81a448d">packet_print_hex</a> (FILE *stream, <a class="el" href="structPacket.html">Packet</a> *packet)</td></tr>
 <tr class="separator:af63f80194e050629b872ff50d81a448d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -258,7 +241,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="structTIGHTLY__PACKED.html">TIGHTLY_PACKED</a>&#160;&#160;&#160;__attribute__((packed, aligned(1)))</td>
+          <td class="memname">#define TIGHTLY_PACKED&#160;&#160;&#160;__attribute__((packed, aligned(1)))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -296,65 +279,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >Possible types of radio packet blocks that could be sent. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a54420623f26ab6bb61042b41cccf37a3abf69e32423b4eec57c639b337bca3a6e" name="a54420623f26ab6bb61042b41cccf37a3abf69e32423b4eec57c639b337bca3a6e"></a>TYPE_CTRL&#160;</td><td class="fielddoc"><p >Control block </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a54420623f26ab6bb61042b41cccf37a3a31c7517410257c2000072034cb89fa0a" name="a54420623f26ab6bb61042b41cccf37a3a31c7517410257c2000072034cb89fa0a"></a>TYPE_CMD&#160;</td><td class="fielddoc"><p >Command block </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15" name="a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15"></a>TYPE_DATA&#160;</td><td class="fielddoc"><p >Data block </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="a451aabef89d8f76e81fbc4bf439e8e59" name="a451aabef89d8f76e81fbc4bf439e8e59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a451aabef89d8f76e81fbc4bf439e8e59">&#9670;&nbsp;</a></span>CmdBlockType</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="packet__types_8h.html#a451aabef89d8f76e81fbc4bf439e8e59">CmdBlockType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Possible sub-types of command blocks that can be sent. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a451aabef89d8f76e81fbc4bf439e8e59a63f41707648853b58d19a4261f15c579" name="a451aabef89d8f76e81fbc4bf439e8e59a63f41707648853b58d19a4261f15c579"></a>CMD_RST_ROCKET_AV&#160;</td><td class="fielddoc"><p >Reset rocket avionics </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a451aabef89d8f76e81fbc4bf439e8e59a9c4962d529fdd0ebdcebe5eb090b70a0" name="a451aabef89d8f76e81fbc4bf439e8e59a9c4962d529fdd0ebdcebe5eb090b70a0"></a>CMD_RQST_TELEM_DATA&#160;</td><td class="fielddoc"><p >Request for telemetry data </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a451aabef89d8f76e81fbc4bf439e8e59aedfb28c7fdc96c286612c059949cb2b2" name="a451aabef89d8f76e81fbc4bf439e8e59aedfb28c7fdc96c286612c059949cb2b2"></a>CMD_DEPLOY_CHUTE&#160;</td><td class="fielddoc"><p >Deploy parachutes </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a451aabef89d8f76e81fbc4bf439e8e59a72ec7c70d5a467c688d26821411b3fc1" name="a451aabef89d8f76e81fbc4bf439e8e59a72ec7c70d5a467c688d26821411b3fc1"></a>CMD_TARE_SENSORS&#160;</td><td class="fielddoc"><p >Tare sensors </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ac588e0028f994a83da3d2dcfef7ee380" name="ac588e0028f994a83da3d2dcfef7ee380"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac588e0028f994a83da3d2dcfef7ee380">&#9670;&nbsp;</a></span>CtrlBlockType</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="packet__types_8h.html#ac588e0028f994a83da3d2dcfef7ee380">CtrlBlockType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Possible sub-types of control blocks that can be sent. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac588e0028f994a83da3d2dcfef7ee380aef6f1fd8b40a4c425822dacb2f832d27" name="ac588e0028f994a83da3d2dcfef7ee380aef6f1fd8b40a4c425822dacb2f832d27"></a>CTRL_SIGNAL_REPORT&#160;</td><td class="fielddoc"><p >Signal report block </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ac588e0028f994a83da3d2dcfef7ee380a524cc1dbd7bfae5d50b73bd04c5e937c" name="ac588e0028f994a83da3d2dcfef7ee380a524cc1dbd7bfae5d50b73bd04c5e937c"></a>CTRL_CMD_ACK&#160;</td><td class="fielddoc"><p >Command acknowledgement block </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ac588e0028f994a83da3d2dcfef7ee380a1b668477b2ae5cfcd98f93f6e1af0535" name="ac588e0028f994a83da3d2dcfef7ee380a1b668477b2ae5cfcd98f93f6e1af0535"></a>CTRL_CMD_NONCE_RQST&#160;</td><td class="fielddoc"><p >Command nonce request block </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ac588e0028f994a83da3d2dcfef7ee380afb7c42cc2dbcb20d196142ec57fe1687" name="ac588e0028f994a83da3d2dcfef7ee380afb7c42cc2dbcb20d196142ec57fe1687"></a>CTRL_CMD_NONCE&#160;</td><td class="fielddoc"><p >Command nonce block </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ac588e0028f994a83da3d2dcfef7ee380aeafb398a1ef9f46016eda0dd71d86088" name="ac588e0028f994a83da3d2dcfef7ee380aeafb398a1ef9f46016eda0dd71d86088"></a>CTRL_BEACON&#160;</td><td class="fielddoc"><p >Beacon block (searching for peer device) </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ac588e0028f994a83da3d2dcfef7ee380af38546f54cbffcff8a25c38a182572ec" name="ac588e0028f994a83da3d2dcfef7ee380af38546f54cbffcff8a25c38a182572ec"></a>CTRL_BEACON_RESPONSE&#160;</td><td class="fielddoc"><p >Beacon response block (response from peer device) </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15" name="a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15"></a>TYPE_DATA&#160;</td><td class="fielddoc"><p >Data block </p>
 </td></tr>
 </table>
 
@@ -585,8 +510,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aae2e56890427e8cd7f3aef4144fdf3bc" name="aae2e56890427e8cd7f3aef4144fdf3bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae2e56890427e8cd7f3aef4144fdf3bc">&#9670;&nbsp;</a></span>block_header_init()</h2>
+<a id="ad35a255e9842ac122fd31e13a6691694" name="ad35a255e9842ac122fd31e13a6691694"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad35a255e9842ac122fd31e13a6691694">&#9670;&nbsp;</a></span>block_header_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -602,12 +527,6 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">const uint16_t&#160;</td>
           <td class="paramname"><em>length</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const bool&#160;</td>
-          <td class="paramname"><em>has_sig</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -638,8 +557,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The block header to be initialized </td></tr>
-    <tr><td class="paramname">length</td><td>The length of the block this header is associated with, in 4 byte increments </td></tr>
-    <tr><td class="paramname">has_sig</td><td>Whether or not the block will have a cryptographic signature </td></tr>
+    <tr><td class="paramname">length</td><td>The length of the block this header is associated with, in bytes, not including the header itself </td></tr>
     <tr><td class="paramname">type</td><td>The type of the block to follow the header </td></tr>
     <tr><td class="paramname">subtype</td><td>The sub type of the block to follow the header </td></tr>
     <tr><td class="paramname">dest</td><td>The device address of the destination device </td></tr>
@@ -804,13 +722,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">bool packet_append_block </td>
           <td>(</td>
-          <td class="paramtype">Packet *&#160;</td>
+          <td class="paramtype"><a class="el" href="structPacket.html">Packet</a> *&#160;</td>
           <td class="paramname"><em>p</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Block&#160;</td>
+          <td class="paramtype">const <a class="el" href="structBlock.html">Block</a>&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -831,8 +749,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac5862f04a01edd6d42896f795bd6ef5c" name="ac5862f04a01edd6d42896f795bd6ef5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5862f04a01edd6d42896f795bd6ef5c">&#9670;&nbsp;</a></span>packet_header_init()</h2>
+<a id="a048dbf1eece020fd3c685c5228eab595" name="a048dbf1eece020fd3c685c5228eab595"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a048dbf1eece020fd3c685c5228eab595">&#9670;&nbsp;</a></span>packet_header_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -870,7 +788,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramtype">const uint32_t&#160;</td>
           <td class="paramname"><em>packet_number</em>&#160;</td>
         </tr>
         <tr>
@@ -910,7 +828,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Packet *&#160;</td>
+          <td class="paramtype"><a class="el" href="structPacket.html">Packet</a> *&#160;</td>
           <td class="paramname"><em>packet</em>&#160;</td>
         </tr>
         <tr>

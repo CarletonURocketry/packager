@@ -97,24 +97,92 @@ $(document).ready(function(){initNavTree('structPacketHeader.html',''); initResi
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3c880dfe2f942b78ed8e780e357d917a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacketHeader.html#a3c880dfe2f942b78ed8e780e357d917a">bytes</a> [12]</td></tr>
-<tr class="separator:a3c880dfe2f942b78ed8e780e357d917a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71dd512e579dda7c8cc5815e7f750570"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacketHeader.html#a71dd512e579dda7c8cc5815e7f750570">call_sign</a> [9]</td></tr>
+<tr class="separator:a71dd512e579dda7c8cc5815e7f750570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a149935e8872389c71aad441e047d3fd0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacketHeader.html#a149935e8872389c71aad441e047d3fd0">len</a></td></tr>
+<tr class="separator:a149935e8872389c71aad441e047d3fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cd7a7e0ecba9fbb32343ba3af228724"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacketHeader.html#a8cd7a7e0ecba9fbb32343ba3af228724">version</a></td></tr>
+<tr class="separator:a8cd7a7e0ecba9fbb32343ba3af228724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a546d8e64abf714f7906e1451776100ed"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacketHeader.html#a546d8e64abf714f7906e1451776100ed">src_addr</a></td></tr>
+<tr class="separator:a546d8e64abf714f7906e1451776100ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0dce3a60b746ac130e781a6dd8dade8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPacketHeader.html#af0dce3a60b746ac130e781a6dd8dade8">packet_num</a></td></tr>
+<tr class="separator:af0dce3a60b746ac130e781a6dd8dade8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Each radio packet will have a header in this format. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a3c880dfe2f942b78ed8e780e357d917a" name="a3c880dfe2f942b78ed8e780e357d917a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c880dfe2f942b78ed8e780e357d917a">&#9670;&nbsp;</a></span>bytes</h2>
+<a id="a71dd512e579dda7c8cc5815e7f750570" name="a71dd512e579dda7c8cc5815e7f750570"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71dd512e579dda7c8cc5815e7f750570">&#9670;&nbsp;</a></span>call_sign</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t PacketHeader::bytes[12]</td>
+          <td class="memname">char PacketHeader::call_sign[9]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The packet header accessed as a bytes array. </p>
+<p >The HAM radio call sign with trailing null characters. </p>
+
+</div>
+</div>
+<a id="a149935e8872389c71aad441e047d3fd0" name="a149935e8872389c71aad441e047d3fd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a149935e8872389c71aad441e047d3fd0">&#9670;&nbsp;</a></span>len</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PacketHeader::len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >The packet length in multiples of 4 bytes. </p>
+
+</div>
+</div>
+<a id="af0dce3a60b746ac130e781a6dd8dade8" name="af0dce3a60b746ac130e781a6dd8dade8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0dce3a60b746ac130e781a6dd8dade8">&#9670;&nbsp;</a></span>packet_num</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t PacketHeader::packet_num</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Which number this packet is in the stream of sent packets. </p>
+
+</div>
+</div>
+<a id="a546d8e64abf714f7906e1451776100ed" name="a546d8e64abf714f7906e1451776100ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a546d8e64abf714f7906e1451776100ed">&#9670;&nbsp;</a></span>src_addr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PacketHeader::src_addr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >The source address of the packet. </p>
+
+</div>
+</div>
+<a id="a8cd7a7e0ecba9fbb32343ba3af228724" name="a8cd7a7e0ecba9fbb32343ba3af228724"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cd7a7e0ecba9fbb32343ba3af228724">&#9670;&nbsp;</a></span>version</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t PacketHeader::version</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >The version of InSpace radio packet encoding being used. </p>
 
 </div>
 </div>

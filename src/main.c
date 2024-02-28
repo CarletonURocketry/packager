@@ -7,15 +7,18 @@
 
 /** Represents the different sensor data types that can be interpreted by packager. */
 typedef enum {
-    DTYPE_TEMPERATURE = 0, /**< Temperature */
-    DTYPE_TIME = 1,        /**< Time */
-    DTYPE_PRESSURE = 2,    /**< Pressure */
-    DTYPE_DNE = 3,         /**< Data type does not exist */
+    DTYPE_TEMPERATURE, /**< Temperature */
+    DTYPE_TIME,        /**< Time */
+    DTYPE_PRESSURE,    /**< Pressure */
+    DTYPE_ALTITUDE,    /**< Altitude */
+    DTYPE_DNE,         /**< Data type does not exist */
 } Dtype;
 
 /** String representation of the possible data types. */
 const char *DTYPES[] = {
-    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time", [DTYPE_PRESSURE] = "Pressure", [DTYPE_DNE] = ""};
+    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time", [DTYPE_PRESSURE] = "Pressure",
+    [DTYPE_ALTITUDE] = "Altitude",       [DTYPE_DNE] = "",
+};
 
 /** The size of the buffer for reading sensor data input. */
 #define BUFFER_SIZE 150
@@ -121,6 +124,10 @@ int main(int argc, char **argv) {
             case DTYPE_PRESSURE:
                 pressure_db_init((PressureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
                 construct_block(&block, DATA_PRESSURE, sizeof(PressureDB));
+                break;
+            case DTYPE_ALTITUDE:
+                altitude_db_init((AltitudeDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                construct_block(&block, DATA_ALT, sizeof(AltitudeDB));
                 break;
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);

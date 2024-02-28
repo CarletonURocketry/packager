@@ -90,13 +90,13 @@ int main(int argc, char **argv) {
     }
 
     bool no_input = false;
+    uint32_t last_time = 0;
     while (!no_input) {
         // Construct packet out of BLOCK_LIMIT blocks
         packet.block_count = 0;
         packet_header_init(&packet.header, callsign, 0, VERSION, ROCKET, pkt_count);
 
         contents_pos = &block_contents[0];
-        uint32_t last_time = 0;
         while (packet.block_count < BLOCK_LIMIT) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */

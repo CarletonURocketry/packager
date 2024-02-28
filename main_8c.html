@@ -113,10 +113,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a5ef564db68b3fc6fe44cde6fdcc25192"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a> { <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a> = 0
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a> = 1
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a> = 2
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a> = 3
+<tr class="memitem:a5ef564db68b3fc6fe44cde6fdcc25192"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a> { <br />
+&#160;&#160;<a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a>
+, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a>
+, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a>
+, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b">DTYPE_ALTITUDE</a>
+, <br />
+&#160;&#160;<a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a>
+<br />
  }</td></tr>
 <tr class="separator:a5ef564db68b3fc6fe44cde6fdcc25192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -199,6 +203,8 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2" name="a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2"></a>DTYPE_TIME&#160;</td><td class="fielddoc"><p >Time </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf" name="a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf"></a>DTYPE_PRESSURE&#160;</td><td class="fielddoc"><p >Pressure </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b" name="a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b"></a>DTYPE_ALTITUDE&#160;</td><td class="fielddoc"><p >Altitude </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957" name="a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957"></a>DTYPE_DNE&#160;</td><td class="fielddoc"><p >Data type does not exist </p>
 </td></tr>
@@ -315,10 +321,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a>] = <span class="stringliteral">&quot;Temperature&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a>] = <span class="stringliteral">&quot;Time&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a>] = <span class="stringliteral">&quot;Pressure&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a>] = <span class="stringliteral">&quot;&quot;</span>}</div>
+<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a>] = <span class="stringliteral">&quot;Temperature&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a>] = <span class="stringliteral">&quot;Time&quot;</span>, [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a>] = <span class="stringliteral">&quot;Pressure&quot;</span>,</div>
+<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b">DTYPE_ALTITUDE</a>] = <span class="stringliteral">&quot;Altitude&quot;</span>,       [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a>] = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line">}</div>
 <div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a></div><div class="ttdeci">@ DTYPE_TIME</div><div class="ttdef"><b>Definition:</b> main.c:11</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a></div><div class="ttdeci">@ DTYPE_DNE</div><div class="ttdef"><b>Definition:</b> main.c:13</div></div>
+<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a></div><div class="ttdeci">@ DTYPE_DNE</div><div class="ttdef"><b>Definition:</b> main.c:14</div></div>
 <div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a></div><div class="ttdeci">@ DTYPE_PRESSURE</div><div class="ttdef"><b>Definition:</b> main.c:12</div></div>
+<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b">DTYPE_ALTITUDE</a></div><div class="ttdeci">@ DTYPE_ALTITUDE</div><div class="ttdef"><b>Definition:</b> main.c:13</div></div>
 <div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a></div><div class="ttdeci">@ DTYPE_TEMPERATURE</div><div class="ttdef"><b>Definition:</b> main.c:10</div></div>
 </div><!-- fragment --><p >String representation of the possible data types. </p>
 

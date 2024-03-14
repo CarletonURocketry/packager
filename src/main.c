@@ -30,7 +30,9 @@ const char *DTYPES[] = {
 /** Static variable to store the user HAM radio call sign. */
 static char *callsign = NULL;
 /** Static variable to store the file name to read input from instead of stdin. */
-static char *file = NULL;
+static char *infile = NULL;
+/** Static variable to store the file name to write output to instead of stdout. */
+static char *outfile = NULL;
 /** Static buffer for reading input. */
 static char buffer[BUFFER_SIZE] = {0};
 
@@ -56,10 +58,13 @@ int main(int argc, char **argv) {
 
     /* Fetch command line arguments. */
     int c;
-    while ((c = getopt(argc, argv, ":f:")) != -1) {
+    while ((c = getopt(argc, argv, ":i:o:")) != -1) {
         switch (c) {
-        case 'f':
-            file = optarg;
+        case 'i':
+            infile = optarg;
+            break;
+        case 'o':
+            outfile = optarg;
             break;
         case ':':
             fprintf(stderr, "Option -%c requires an argument.\n", optopt);
@@ -81,15 +86,23 @@ int main(int argc, char **argv) {
     callsign = argv[optind];
 
     /* Open input stream. */
-    FILE *input;
-    if (file != NULL) {
-        input = fopen(file, "r");
+    FILE *input = stdin;
+    if (infile != NULL) {
+        input = fopen(infile, "r");
         if (input == NULL) {
-            fprintf(stderr, "File '%s' could not be opened.\n", file);
+            fprintf(stderr, "File '%s' could not be opened for reading.\n", infile);
             exit(EXIT_FAILURE);
         }
-    } else {
-        input = stdin;
+    }
+
+    /* Open output stream. */
+    FILE *output = stdout;
+    if (outfile != NULL) {
+        output = fopen(outfile, "w");
+        if (input == NULL) {
+            fprintf(stderr, "File '%s' could not be opened for writing.\n", outfile);
+            exit(EXIT_FAILURE);
+        }
     }
 
     bool no_input = false;
@@ -141,7 +154,7 @@ int main(int argc, char **argv) {
             }
         }
         pkt_count++;
-        packet_print_hex(stdout, &packet);
+        packet_print_hex(output, &packet);
     }
     return EXIT_SUCCESS;
 }

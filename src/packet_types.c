@@ -273,5 +273,5 @@ void packet_print_hex(FILE *stream, Packet *packet) {
         uint16_t content_len = block_header_get_length(&packet->blocks[i].header) - sizeof(packet->blocks[i].header);
         write_bytes_sized(stream, packet->blocks[i].contents, content_len);
     }
-    putchar('\n');
+    fputc('\n', stream);
 }

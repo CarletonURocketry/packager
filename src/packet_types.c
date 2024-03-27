@@ -32,52 +32,36 @@ void memcpy_be(void *dest, const void *src, unsigned long n_bytes) {
  * @param packet_number The number of this packet (how many were sent before it)
  */
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
-                        const DeviceAddress source, const uint16_t packet_number) {
+                        const DeviceAddress source, const uint32_t packet_number) {
 
-    /* All Canadian call signs are 5-6 characters in length. In the case of 5 character lengths, the 6th character in
-     * the packet header will be the null terminator. This will not cause any issues since the null terminator is
-     * effectively zero-padding, which is what's expected by the packet encoding format.
-     *
-     * In the case of a 6 character call sign, the null terminator will not be included in the packet header, which is
-     * equally fine and follows the packet encoding format for 6 character call signs.
-     */
-    memcpy(p->bytes, callsign, 6);
+    // Copying the entire call sign, excluding null terminator
+    uint8_t call_sign_char_count = strlen(callsign);
+    memcpy(p->call_sign, callsign, call_sign_char_count);
+    // Fill remaining chars with null terminator
+    memset(&p->call_sign[call_sign_char_count], 0, sizeof(p->call_sign) - call_sign_char_count);
 
-    packet_header_set_length(p, length);
-    p->bytes[6] |= (uint8_t)((version & 0x18) >> 3); // First two bits of version right after length
-    p->bytes[7] = (uint8_t)((version & 0x07) << 5);  // Last three bits of version at start of byte
-    // Remaining 5 bits in byte 8 are dead space
-    p->bytes[8] = (uint8_t)((source & 0x0F) << 4);           // Last four bits are source
-    p->bytes[8] |= (uint8_t)((packet_number & 0x0F00) >> 8); // First four bits of packet_number fill out rest of byte
-    p->bytes[9] = (uint8_t)(packet_number & 0x00FF);         // Last 8 bits fill out byte
-    p->bytes[10] = 0;                                        // Dead space
-    p->bytes[11] = 0;                                        // Dead space
+    packet_header_set_length(p, length); // Set length
+    p->version = version;
+    p->src_addr = source;
+    p->packet_num = packet_number;
 }
 
 /**
  * Initializes a block header with the provided information.
  *
  * @param b The block header to be initialized
- * @param length The length of the block this header is associated with, in 4 byte increments
- * @param has_sig Whether or not the block will have a cryptographic signature
+ * @param length The length of the block this header is associated with, in bytes, not including the header itself
  * @param type The type of the block to follow the header
  * @param subtype The sub type of the block to follow the header
  * @param dest The device address of the destination device
  */
-void block_header_init(BlockHeader *b, const uint16_t length, const bool has_sig, const BlockType type,
-                       const BlockSubtype subtype, const DeviceAddress dest) {
+void block_header_init(BlockHeader *b, const uint16_t length, const BlockType type, const BlockSubtype subtype,
+                       const DeviceAddress dest) {
 
-    uint32_t header;
-    header = ((uint32_t)(dest & 0xF));
-    header = header << 6;
-    header |= ((uint32_t)(subtype & 0x3F));
-    header = header << 4;
-    header |= ((uint32_t)(type & 0xF));
-    header = header << 1;
-    header |= ((uint32_t)(has_sig & 0x1));
-    header = header << 5;
-    memcpy(b->bytes, &header, sizeof(header));
     block_header_set_length(b, length);
+    b->type = type;
+    b->subtype = subtype;
+    b->dest_addr = dest;
 }
 
 /**
@@ -211,6 +195,40 @@ void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const uint
 }
 
 /**
+ * Initializes a GNSS location data block with the provided information
+ * @param b The GNSS location data block to be initialized
+ * @param fix_time The mission time the fix was recieved
+ * @param latitude The latitude of the rocket in units of 100 micro-arcminutes per LSB
+ * @param longitude The longitude of the rocket in units of 100 micro-arcminutes per LSB
+ * @param utc_time The UTC time when the fix was recieved
+ * @param altitude The altitude calculated by the GNSS module, in mm
+ * @param speed The speed over the ground in hundredths of a knot
+ * @param course The course over ground of the rocket in hundredths of a degree
+ * @param pdop Position dilution of precision multiplied by 100
+ * @param hdop Horizontal dilution of precision multipled by 100
+ * @param vdop Vertical dilution of precision multiplied by 100
+ * @param sats The number of GNSS satellites used in the fix
+ * @param fix The fix type, as two bits
+ */
+void gnss_location_db_init(GNSSLocationDB *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude,
+                           const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course,
+                           uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix) {
+    // Could write this all out with sizeofs, but it gets really hard to read after a second
+    memcpy(b->bytes, &fix_time, sizeof(fix_time));
+    memcpy(b->bytes + (4), &latitude, sizeof(latitude));
+    memcpy(b->bytes + (4 * 2), &longitude, sizeof(longitude));
+    memcpy(b->bytes + (4 * 3), &utc_time, sizeof(utc_time));
+    memcpy(b->bytes + (4 * 4), &altitude, sizeof(altitude));
+    memcpy(b->bytes + (4 * 4), &speed, sizeof(speed));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed), &course, sizeof(course));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course), &pdop, sizeof(pdop));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course) + sizeof(pdop), &hdop, sizeof(hdop));
+    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course) + sizeof(pdop) + sizeof(hdop), &vdop, sizeof(vdop));
+    b->bytes[31] = sats;
+    b->bytes[32] = (uint8_t)((fix & 0x03) << 6);
+}
+
+/**
  * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
  * the block.
  * @param p The packet to be appended to.
@@ -249,11 +267,6 @@ bool packet_append_block(Packet *p, const Block b) {
     return true;
 }
 
-#define write_bytes(stream, bytes)                                                                                     \
-    for (size_t hjkl = 0; hjkl < sizeof(bytes); hjkl++) {                                                              \
-        fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
-    }
-
 #define write_bytes_sized(stream, bytes, size)                                                                         \
     for (size_t hjkl = 0; hjkl < size; hjkl++) {                                                                       \
         fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
@@ -265,11 +278,11 @@ bool packet_append_block(Packet *p, const Block b) {
  * @param packet The packet to be printed.
  */
 void packet_print_hex(FILE *stream, Packet *packet) {
-    write_bytes(stream, packet->header.bytes);
+    write_bytes_sized(stream, ((uint8_t *)(&packet->header)), sizeof(packet->header));
     for (uint8_t i = 0; i < packet->block_count; i++) {
-        write_bytes(stream, packet->blocks[i].header.bytes);
+        write_bytes_sized(stream, ((uint8_t *)(&packet->blocks[i].header)), sizeof(packet->blocks[i].header));
         uint16_t content_len = block_header_get_length(&packet->blocks[i].header) - sizeof(packet->blocks[i].header);
         write_bytes_sized(stream, packet->blocks[i].contents, content_len);
     }
-    putchar('\n');
+    fputc('\n', stream);
 }

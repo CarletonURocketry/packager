@@ -11,7 +11,8 @@ typedef enum {
     DTYPE_TIME = 1,        /**< Time */
     DTYPE_PRESSURE = 2,    /**< Pressure */
     DTYPE_HUMIDITY = 3,    /**< Humidity */
-    DTYPE_DNE = 4,         /**< Data type does not exist */
+    DTYPE_ALTITUDE = 4,    /**< Altitude */
+    DTYPE_DNE = 5,         /**< Data type does not exist */
 } Dtype;
 
 /** String representation of the possible data types. */
@@ -19,6 +20,7 @@ const char *DTYPES[] = {[DTYPE_TEMPERATURE] = "Temperature",
                         [DTYPE_TIME] = "Time",
                         [DTYPE_PRESSURE] = "Pressure",
                         [DTYPE_DNE] = "",
+                        [DTYPE_ALTITUDE] = "Altitude",
                         [DTYPE_HUMIDITY] = "Humidity"};
 
 /** The size of the buffer for reading sensor data input. */
@@ -31,7 +33,9 @@ const char *DTYPES[] = {[DTYPE_TEMPERATURE] = "Temperature",
 /** Static variable to store the user HAM radio call sign. */
 static char *callsign = NULL;
 /** Static variable to store the file name to read input from instead of stdin. */
-static char *file = NULL;
+static char *infile = NULL;
+/** Static variable to store the file name to write output to instead of stdout. */
+static char *outfile = NULL;
 /** Static buffer for reading input. */
 static char buffer[BUFFER_SIZE] = {0};
 
@@ -57,10 +61,13 @@ int main(int argc, char **argv) {
 
     /* Fetch command line arguments. */
     int c;
-    while ((c = getopt(argc, argv, ":f:")) != -1) {
+    while ((c = getopt(argc, argv, ":i:o:")) != -1) {
         switch (c) {
-        case 'f':
-            file = optarg;
+        case 'i':
+            infile = optarg;
+            break;
+        case 'o':
+            outfile = optarg;
             break;
         case ':':
             fprintf(stderr, "Option -%c requires an argument.\n", optopt);
@@ -82,25 +89,33 @@ int main(int argc, char **argv) {
     callsign = argv[optind];
 
     /* Open input stream. */
-    FILE *input;
-    if (file != NULL) {
-        input = fopen(file, "r");
+    FILE *input = stdin;
+    if (infile != NULL) {
+        input = fopen(infile, "r");
         if (input == NULL) {
-            fprintf(stderr, "File '%s' could not be opened.\n", file);
+            fprintf(stderr, "File '%s' could not be opened for reading.\n", infile);
             exit(EXIT_FAILURE);
         }
-    } else {
-        input = stdin;
+    }
+
+    /* Open output stream. */
+    FILE *output = stdout;
+    if (outfile != NULL) {
+        output = fopen(outfile, "w");
+        if (input == NULL) {
+            fprintf(stderr, "File '%s' could not be opened for writing.\n", outfile);
+            exit(EXIT_FAILURE);
+        }
     }
 
     bool no_input = false;
+    uint32_t last_time = 0;
     while (!no_input) {
         // Construct packet out of BLOCK_LIMIT blocks
         packet.block_count = 0;
         packet_header_init(&packet.header, callsign, 0, VERSION, ROCKET, pkt_count);
 
         contents_pos = &block_contents[0];
-        uint32_t last_time = 0;
         while (packet.block_count < BLOCK_LIMIT) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
@@ -127,8 +142,12 @@ int main(int argc, char **argv) {
                 construct_block(&block, DATA_PRESSURE, sizeof(PressureDB));
                 break;
             case DTYPE_HUMIDITY:
-                humidity_db_init((HumidityDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                humidity_db_init((HumidityDB *)contents_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
                 construct_block(&block, DATA_HUMIDITY, sizeof(HumidityDB));
+                break;
+            case DTYPE_ALTITUDE:
+                altitude_db_init((AltitudeDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                construct_block(&block, DATA_ALT, sizeof(AltitudeDB));
                 break;
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);
@@ -142,7 +161,7 @@ int main(int argc, char **argv) {
             }
         }
         pkt_count++;
-        packet_print_hex(stdout, &packet);
+        packet_print_hex(output, &packet);
     }
     return EXIT_SUCCESS;
 }
@@ -166,7 +185,7 @@ Dtype dtype_from_str(const char *str) {
  * @param size The size of the data block that will be stored in this block.
  */
 void construct_block(Block *b, DataBlockType t, size_t size) {
-    block_header_init(&b->header, size, false, TYPE_DATA, t, GROUNDSTATION);
+    block_header_init(&b->header, size, TYPE_DATA, t, GROUNDSTATION);
     b->contents = contents_pos;
     contents_pos += size;
 }

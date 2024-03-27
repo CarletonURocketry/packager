@@ -9,8 +9,10 @@ DESCRIPTION:
     A command line utility for packaging sensor data into radio format.
 
 SYNTAX:
-    packager [-f file] callsign
+    packager [-i file -o file] callsign
 
 OPTIONS:
-    -f file         The file or pipe to read sensor data from. If none is 
+    -i file         The file or pipe to read sensor data from. If none is 
                     provided, data will be read from stdin.
+    -o file         The file or pipe to write packets to. If none is provided,
+                    data will be written to stdout.

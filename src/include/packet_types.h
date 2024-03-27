@@ -122,6 +122,15 @@ typedef struct {
 
 void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature);
 
+/** A data block containing information about humidity. */
+typedef struct {
+    /** The humidity data block can be accessed as a bytes array. */
+    uint8_t bytes[8];
+} HumidityDB;
+
+void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const int32_t humidity);
+
+
 /** A data block containing information about pressure. */
 typedef struct {
     /** The pressure data block can be accessed as a bytes array. */

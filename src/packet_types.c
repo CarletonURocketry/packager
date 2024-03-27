@@ -200,6 +200,17 @@ void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_s
 }
 
 /**
+ * Initializes a humidity data block with the provided information.
+ * @param b The humidity data block to be initialized.
+ * @param measurement_time The mission time at the taking of the measurement
+ * @param humidity The calculated humidity in ten thousandths of a percent. 
+ */
+void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const int32_t humidity) {
+    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
+    memcpy(b->bytes + sizeof(measurement_time), &humidity, sizeof(humidity));
+}
+
+/**
  * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
  * the block.
  * @param p The packet to be appended to.

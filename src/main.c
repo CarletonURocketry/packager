@@ -16,12 +16,10 @@ typedef enum {
 } Dtype;
 
 /** String representation of the possible data types. */
-const char *DTYPES[] = {[DTYPE_TEMPERATURE] = "Temperature",
-                        [DTYPE_TIME] = "Time",
-                        [DTYPE_PRESSURE] = "Pressure",
-                        [DTYPE_DNE] = "",
-                        [DTYPE_ALTITUDE] = "Altitude",
-                        [DTYPE_HUMIDITY] = "Humidity"};
+const char *DTYPES[] = {
+    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time",         [DTYPE_PRESSURE] = "Pressure", [DTYPE_DNE] = "",
+    [DTYPE_ALTITUDE] = "Altitude",       [DTYPE_HUMIDITY] = "Humidity",
+};
 
 /** The size of the buffer for reading sensor data input. */
 #define BUFFER_SIZE 150

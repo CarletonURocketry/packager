@@ -129,7 +129,7 @@ typedef struct {
     uint8_t bytes[8];
 } HumidityDB;
 
-void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const int32_t humidity);
+void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const uint32_t humidity);
 
 /** A data block containing information about pressure. */
 typedef struct {

@@ -7,23 +7,24 @@
 
 /** Represents the different sensor data types that can be interpreted by packager. */
 typedef enum {
-    DTYPE_TEMPERATURE, /**< Temperature */
-    DTYPE_TIME,        /**< Time */
-    DTYPE_PRESSURE,    /**< Pressure */
-    DTYPE_ALTITUDE,    /**< Altitude */
-    DTYPE_DNE,         /**< Data type does not exist */
+    DTYPE_TEMPERATURE = 0, /**< Temperature */
+    DTYPE_TIME = 1,        /**< Time */
+    DTYPE_PRESSURE = 2,    /**< Pressure */
+    DTYPE_HUMIDITY = 3,    /**< Humidity */
+    DTYPE_ALTITUDE = 4,    /**< Altitude */
+    DTYPE_DNE = 5,         /**< Data type does not exist */
 } Dtype;
 
 /** String representation of the possible data types. */
 const char *DTYPES[] = {
-    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time", [DTYPE_PRESSURE] = "Pressure",
-    [DTYPE_ALTITUDE] = "Altitude",       [DTYPE_DNE] = "",
+    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time",         [DTYPE_PRESSURE] = "Pressure", [DTYPE_DNE] = "",
+    [DTYPE_ALTITUDE] = "Altitude",       [DTYPE_HUMIDITY] = "Humidity",
 };
 
 /** The size of the buffer for reading sensor data input. */
 #define BUFFER_SIZE 150
 /** The maximum number of blocks that can be added to a packet before it is sent. */
-#define BLOCK_LIMIT 3
+#define BLOCK_LIMIT 4
 /** The version of the packet encoding being used. */
 #define VERSION 1
 
@@ -137,6 +138,10 @@ int main(int argc, char **argv) {
             case DTYPE_PRESSURE:
                 pressure_db_init((PressureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
                 construct_block(&block, DATA_PRESSURE, sizeof(PressureDB));
+                break;
+            case DTYPE_HUMIDITY:
+                humidity_db_init((HumidityDB *)contents_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
+                construct_block(&block, DATA_HUMIDITY, sizeof(HumidityDB));
                 break;
             case DTYPE_ALTITUDE:
                 altitude_db_init((AltitudeDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));

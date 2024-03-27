@@ -129,6 +129,8 @@ Functions</h2></td></tr>
 <tr class="separator:ae07814aeca5224dcc15f87a7c08687cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa32867ba87c9f3ab1dca3b61737969ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aa32867ba87c9f3ab1dca3b61737969ee">telemetry_request_block_init</a> (<a class="el" href="structTelemetryRequestBlock.html">TelemetryRequestBlock</a> *b, const uint8_t data_subtype_1, const uint8_t used_1, const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3, const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4)</td></tr>
 <tr class="separator:aa32867ba87c9f3ab1dca3b61737969ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeebf333f77799b43903411cb1b3a7584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aeebf333f77799b43903411cb1b3a7584">humidity_db_init</a> (<a class="el" href="structHumidityDB.html">HumidityDB</a> *b, const uint32_t measurement_time, const uint32_t humidity)</td></tr>
+<tr class="separator:aeebf333f77799b43903411cb1b3a7584"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a900add4f7036507ea27042eed65b7615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a900add4f7036507ea27042eed65b7615">gnss_location_db_init</a> (<a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a> *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude, const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course, uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix)</td></tr>
 <tr class="separator:a900add4f7036507ea27042eed65b7615"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aa0f7d3bde8660c68f0c96dd21da35eec">packet_append_block</a> (<a class="el" href="structPacket.html">Packet</a> *p, const <a class="el" href="structBlock.html">Block</a> b)</td></tr>
@@ -509,6 +511,48 @@ Functions</h2></td></tr>
     <tr><td class="paramname">vdop</td><td>Vertical dilution of precision multiplied by 100 </td></tr>
     <tr><td class="paramname">sats</td><td>The number of GNSS satellites used in the fix </td></tr>
     <tr><td class="paramname">fix</td><td>The fix type, as two bits </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeebf333f77799b43903411cb1b3a7584" name="aeebf333f77799b43903411cb1b3a7584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeebf333f77799b43903411cb1b3a7584">&#9670;&nbsp;</a></span>humidity_db_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void humidity_db_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structHumidityDB.html">HumidityDB</a> *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>measurement_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>humidity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Initializes a humidity data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The humidity data block to be initialized. </td></tr>
+    <tr><td class="paramname">measurement_time</td><td>The mission time at the taking of the measurement </td></tr>
+    <tr><td class="paramname">humidity</td><td>The calculated humidity in ten thousandths of a percent. </td></tr>
   </table>
   </dd>
 </dl>

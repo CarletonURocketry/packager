@@ -117,6 +117,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTemperatureDB.html">TemperatureDB</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structHumidityDB.html">HumidityDB</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPressureDB.html">PressureDB</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAngularVelocityDB.html">AngularVelocityDB</a></td></tr>
@@ -166,6 +168,8 @@ Enumerations</h2></td></tr>
 , <a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa164d2895a374e02e5d1663a48f2679de">DATA_ANGULAR_VEL</a> = 0x5
 , <a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa8508368d05295d04be62133d7bff0288">DATA_GNSS_LOC</a> = 0x6
 , <a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa413e07c416faf5a3ebb4a456776a73de">DATA_GNSS_META</a> = 0x7
+, <br />
+&#160;&#160;<a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fafd1dd55fdb796ce89401c6cbbe3fea04">DATA_HUMIDITY</a> = 0x8
 <br />
  }</td></tr>
 <tr class="separator:aa2cdad06147808bbec52b49736391d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,6 +188,8 @@ Functions</h2></td></tr>
 <tr class="separator:ab12cd79378d809441f655438b4a3b831"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a745f8f08a168990e46dc7b46aeda81c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a745f8f08a168990e46dc7b46aeda81c7">temperature_db_init</a> (<a class="el" href="structTemperatureDB.html">TemperatureDB</a> *b, const uint32_t measurement_time, const int32_t temperature)</td></tr>
 <tr class="separator:a745f8f08a168990e46dc7b46aeda81c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeebf333f77799b43903411cb1b3a7584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#aeebf333f77799b43903411cb1b3a7584">humidity_db_init</a> (<a class="el" href="structHumidityDB.html">HumidityDB</a> *b, const uint32_t measurement_time, const uint32_t humidity)</td></tr>
+<tr class="separator:aeebf333f77799b43903411cb1b3a7584"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bf100277c9d7c2195015de2a8f93fe5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a5bf100277c9d7c2195015de2a8f93fe5">pressure_db_init</a> (<a class="el" href="structPressureDB.html">PressureDB</a> *b, const uint32_t measurement_time, const int32_t pressure)</td></tr>
 <tr class="separator:a5bf100277c9d7c2195015de2a8f93fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a543359e6301c9ef8dee54ba2a7c61653"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8h.html#a543359e6301c9ef8dee54ba2a7c61653">angular_velocity_db_init</a> (<a class="el" href="structAngularVelocityDB.html">AngularVelocityDB</a> *b, const uint32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis)</td></tr>
@@ -313,6 +319,8 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="aa2cdad06147808bbec52b49736391d3fa8508368d05295d04be62133d7bff0288" name="aa2cdad06147808bbec52b49736391d3fa8508368d05295d04be62133d7bff0288"></a>DATA_GNSS_LOC&#160;</td><td class="fielddoc"><p >GNSS location data </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aa2cdad06147808bbec52b49736391d3fa413e07c416faf5a3ebb4a456776a73de" name="aa2cdad06147808bbec52b49736391d3fa413e07c416faf5a3ebb4a456776a73de"></a>DATA_GNSS_META&#160;</td><td class="fielddoc"><p >GNSS metadata </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa2cdad06147808bbec52b49736391d3fafd1dd55fdb796ce89401c6cbbe3fea04" name="aa2cdad06147808bbec52b49736391d3fafd1dd55fdb796ce89401c6cbbe3fea04"></a>DATA_HUMIDITY&#160;</td><td class="fielddoc"><p >Humidity data </p>
 </td></tr>
 </table>
 
@@ -673,6 +681,48 @@ Functions</h2></td></tr>
     <tr><td class="paramname">vdop</td><td>Vertical dilution of precision multiplied by 100 </td></tr>
     <tr><td class="paramname">sats</td><td>The number of GNSS satellites used in the fix </td></tr>
     <tr><td class="paramname">fix</td><td>The fix type, as two bits </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeebf333f77799b43903411cb1b3a7584" name="aeebf333f77799b43903411cb1b3a7584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeebf333f77799b43903411cb1b3a7584">&#9670;&nbsp;</a></span>humidity_db_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void humidity_db_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structHumidityDB.html">HumidityDB</a> *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>measurement_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>humidity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Initializes a humidity data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The humidity data block to be initialized. </td></tr>
+    <tr><td class="paramname">measurement_time</td><td>The mission time at the taking of the measurement </td></tr>
+    <tr><td class="paramname">humidity</td><td>The calculated humidity in ten thousandths of a percent. </td></tr>
   </table>
   </dd>
 </dl>

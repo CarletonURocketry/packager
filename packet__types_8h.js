@@ -5,6 +5,7 @@ var packet__types_8h =
     [ "SignalReportBlock", "structSignalReportBlock.html", "structSignalReportBlock" ],
     [ "AltitudeDB", "structAltitudeDB.html", "structAltitudeDB" ],
     [ "TemperatureDB", "structTemperatureDB.html", "structTemperatureDB" ],
+    [ "HumidityDB", "structHumidityDB.html", "structHumidityDB" ],
     [ "PressureDB", "structPressureDB.html", "structPressureDB" ],
     [ "AngularVelocityDB", "structAngularVelocityDB.html", "structAngularVelocityDB" ],
     [ "AccelerationDB", "structAccelerationDB.html", "structAccelerationDB" ],
@@ -27,7 +28,8 @@ var packet__types_8h =
       [ "DATA_ACCEL", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa599fafe621581ddbd0e7a8bddac5a168", null ],
       [ "DATA_ANGULAR_VEL", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa164d2895a374e02e5d1663a48f2679de", null ],
       [ "DATA_GNSS_LOC", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa8508368d05295d04be62133d7bff0288", null ],
-      [ "DATA_GNSS_META", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa413e07c416faf5a3ebb4a456776a73de", null ]
+      [ "DATA_GNSS_META", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa413e07c416faf5a3ebb4a456776a73de", null ],
+      [ "DATA_HUMIDITY", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fafd1dd55fdb796ce89401c6cbbe3fea04", null ]
     ] ],
     [ "DeviceAddress", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630", [
       [ "GROUNDSTATION", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a5e56eb1cf5d04bea91f1bfa04b1b1868", null ],
@@ -39,6 +41,7 @@ var packet__types_8h =
     [ "angular_velocity_db_init", "packet__types_8h.html#a543359e6301c9ef8dee54ba2a7c61653", null ],
     [ "block_header_init", "packet__types_8h.html#ad35a255e9842ac122fd31e13a6691694", null ],
     [ "gnss_location_db_init", "packet__types_8h.html#a900add4f7036507ea27042eed65b7615", null ],
+    [ "humidity_db_init", "packet__types_8h.html#aeebf333f77799b43903411cb1b3a7584", null ],
     [ "memcpy_be", "packet__types_8h.html#aba679592b86f02a1e165463d32f103f8", null ],
     [ "packet_append_block", "packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec", null ],
     [ "packet_header_init", "packet__types_8h.html#a048dbf1eece020fd3c685c5228eab595", null ],

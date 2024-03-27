@@ -7,6 +7,7 @@ var main_8c =
       [ "DTYPE_TEMPERATURE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc", null ],
       [ "DTYPE_TIME", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2", null ],
       [ "DTYPE_PRESSURE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf", null ],
+      [ "DTYPE_HUMIDITY", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578", null ],
       [ "DTYPE_ALTITUDE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b", null ],
       [ "DTYPE_DNE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957", null ]
     ] ],

@@ -6,6 +6,7 @@ var annotated_dup =
     [ "Block", "structBlock.html", "structBlock" ],
     [ "BlockHeader", "structBlockHeader.html", "structBlockHeader" ],
     [ "GNSSLocationDB", "structGNSSLocationDB.html", "structGNSSLocationDB" ],
+    [ "HumidityDB", "structHumidityDB.html", "structHumidityDB" ],
     [ "Packet", "structPacket.html", "structPacket" ],
     [ "PacketHeader", "structPacketHeader.html", "structPacketHeader" ],
     [ "PressureDB", "structPressureDB.html", "structPressureDB" ],

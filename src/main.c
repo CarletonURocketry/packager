@@ -15,13 +15,16 @@ typedef enum {
 } Dtype;
 
 /** String representation of the possible data types. */
-const char *DTYPES[] = {
-    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time", [DTYPE_PRESSURE] = "Pressure", [DTYPE_DNE] = "", [DTYPE_HUMIDITY] = "Humidity"};
+const char *DTYPES[] = {[DTYPE_TEMPERATURE] = "Temperature",
+                        [DTYPE_TIME] = "Time",
+                        [DTYPE_PRESSURE] = "Pressure",
+                        [DTYPE_DNE] = "",
+                        [DTYPE_HUMIDITY] = "Humidity"};
 
 /** The size of the buffer for reading sensor data input. */
 #define BUFFER_SIZE 150
 /** The maximum number of blocks that can be added to a packet before it is sent. */
-#define BLOCK_LIMIT 4 
+#define BLOCK_LIMIT 4
 /** The version of the packet encoding being used. */
 #define VERSION 1
 
@@ -125,7 +128,7 @@ int main(int argc, char **argv) {
                 break;
             case DTYPE_HUMIDITY:
                 humidity_db_init((HumidityDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_HUMIDITY, sizeof(HumidityDB))
+                construct_block(&block, DATA_HUMIDITY, sizeof(HumidityDB));
                 break;
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);

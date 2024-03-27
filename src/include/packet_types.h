@@ -74,6 +74,7 @@ typedef enum data_block_type {
     DATA_ANGULAR_VEL = 0x5, /**< Angular velocity data */
     DATA_GNSS_LOC = 0x6,    /**< GNSS location data */
     DATA_GNSS_META = 0x7,   /**< GNSS metadata */
+    DATA_HUMIDITY = 0x8,    /**< Humidity data */
 } DataBlockType;
 
 /** Any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
@@ -129,7 +130,6 @@ typedef struct {
 } HumidityDB;
 
 void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const int32_t humidity);
-
 
 /** A data block containing information about pressure. */
 typedef struct {

@@ -1,7 +1,14 @@
+/**
+ * @file test_init.c
+ * @brief Tests the init functions for packet encoding.
+ */
 #include "../src/include/packet_types.h"
 #include <assert.h>
 #include <string.h>
 
+/**
+ * Test that a packet header is initialized properly from provided parameters.
+ */
 void test_packet_header_init(void) {
 
     PacketHeader p;
@@ -26,6 +33,15 @@ void test_block_header_init(void) {
     assert(b.type == TYPE_DATA);
     assert(b.subtype == DATA_ALT);
     assert(b.dest_addr == GROUNDSTATION);
+}
+
+/**
+ * Test that an altitude block can be properly initialized using parameters.
+ */
+void test_altitude_block_init(void) {
+    AltitudeDB b;
+    altitude_db_init(&b, 156, 12);
+    // TODO: finish after struct conversion
 }
 
 int main(void) {

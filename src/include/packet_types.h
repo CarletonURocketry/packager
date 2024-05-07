@@ -145,15 +145,6 @@ typedef struct acceleration_data_block {
 void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int8_t full_scale_range,
                           const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
 
-typedef struct telemetry_request_block {
-    /** The telemetry request block accessed as a bytes array. */
-    uint8_t bytes[4];
-} TelemetryRequestBlock;
-
-void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_subtype_1, const uint8_t used_1,
-                                  const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
-                                  const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4);
-
 /** A data block containing location information provided by a GNSS sensor */
 typedef struct gnss_location_data_block {
     uint8_t bytes[32];

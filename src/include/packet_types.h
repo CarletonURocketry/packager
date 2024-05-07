@@ -92,81 +92,79 @@ typedef struct {
 void block_header_init(BlockHeader *b, const uint16_t length, const BlockType type, const BlockSubtype subtype,
                        const DeviceAddress dest);
 
-/** Signal report for the last block that was sent by the block's destination device */
-typedef struct signal_report_block {
-    /** The signal block report accessed as a bytes array */
-    uint8_t bytes[4];
-} SignalReportBlock;
-
-void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
-                        const int8_t tx_power, const bool request);
-
 /** A data block containing information about altitude. */
 typedef struct {
-    /** The altitude data block accessed as a bytes array */
-    uint8_t bytes[8];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Altitude in units of millimetres above/below the launch height. */
+    int32_t altitude;
 } AltitudeDB;
 
-void altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude);
+void altitude_db_init(AltitudeDB *b, const uint32_t mission_time, const int32_t altitude);
 
 /** A data block containing information about temperature. */
 typedef struct {
-    /** The temperature data block can be accessed as a bytes array. */
-    uint8_t bytes[8];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Temperature in millidegrees Celsius. */
+    int32_t temperature;
 } TemperatureDB;
 
-void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature);
+void temperature_db_init(TemperatureDB *b, const uint32_t mission_time, const int32_t temperature);
 
 /** A data block containing information about humidity. */
 typedef struct {
-    /** The humidity data block can be accessed as a bytes array. */
-    uint8_t bytes[8];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Relative humidity in ten thousandths of a percent. */
+    uint32_t humidity;
 } HumidityDB;
 
-void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const uint32_t humidity);
+void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t humidity);
 
 /** A data block containing information about pressure. */
 typedef struct {
-    /** The pressure data block can be accessed as a bytes array. */
-    uint8_t bytes[8];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Pressure measured in Pascals. */
+    uint32_t pressure;
 } PressureDB;
 
-void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int32_t pressure);
+void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure);
 
 /** A data block containing information about angular velocity. */
 typedef struct {
-    /** The angular velocity block accessed as a bytes array */
-    uint8_t bytes[12];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Angular velocity in the x-axis measured in tenths of degrees per second. */
+    int16_t x;
+    /** Angular velocity in the y-axis measured in tenths of degrees per second. */
+    int16_t y;
+    /** Angular velocity in the z-axis measured in tenths of degrees per second. */
+    int16_t z;
+    /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
+    int16_t _padding;
 } AngularVelocityDB;
 
-void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
-                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int16_t x_axis,
+                              const int16_t y_axis, const int16_t z_axis);
 
 /** A data block containing information about acceleration. */
 typedef struct acceleration_data_block {
-    uint8_t bytes[12];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Linear acceleration in the x-axis measured in centimetres per second squared. */
+    int16_t x;
+    /** Linear acceleration in the y-axis measured in centimetres per second squared. */
+    int16_t y;
+    /** Linear acceleration in the z-axis measured in centimetres per second squared. */
+    int16_t z;
+    /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
+    int16_t _padding;
 } AccelerationDB;
 
-void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
-                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
-
-typedef struct telemetry_request_block {
-    /** The telemetry request block accessed as a bytes array. */
-    uint8_t bytes[4];
-} TelemetryRequestBlock;
-
-void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_subtype_1, const uint8_t used_1,
-                                  const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
-                                  const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4);
-
-/** A data block containing location information provided by a GNSS sensor */
-typedef struct gnss_location_data_block {
-    uint8_t bytes[32];
-} GNSSLocationDB;
-
-void gnss_location_db_init(GNSSLocationDB *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude,
-                           const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course,
-                           uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix);
+void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
+                          const int16_t z_axis);
 
 /** Represents a radio packet block with variable length contents. */
 typedef struct {

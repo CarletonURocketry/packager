@@ -1,3 +1,7 @@
+/**
+ * @file harness.c
+ * @brief A simple C test harness made of macros.
+ */
 #ifndef _HARNESS_H_
 #define _HARNESS_H_
 

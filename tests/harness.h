@@ -13,11 +13,16 @@
 #error "Define FAIL_COUNT to be a size_t variable name for counting the total number of tests failed."
 #endif
 
+#define COLOUR_RED "\x1b[31m"
+#define COLOUR_GREEN "\x1b[32m"
+#define COLOUR_RESET "\x1b[0m"
+
 /** Log an asserted statement and immediately return false from failing test function if assertion fails.. */
 #define LOG_ASSERT(exp)                                                                                                \
     do {                                                                                                               \
         if (!(exp)) {                                                                                                  \
-            fprintf(stderr, "%s:%d: assertion failed\n\t%s \n.", __FILE__, __LINE__, #exp);                            \
+            fprintf(stderr, "%s:%d:" COLOUR_RED " assertion failed!" COLOUR_RESET "\n\t%s \n.", __FILE__, __LINE__,    \
+                    #exp);                                                                                             \
             return false;                                                                                              \
         }                                                                                                              \
     } while (0)
@@ -27,10 +32,10 @@
     do {                                                                                                               \
         TOTAL_COUNT++;                                                                                                 \
         if (tc()) {                                                                                                    \
-            printf("%s :: [PASSED]\n", #tc);                                                                           \
+            printf("%s ::" COLOUR_GREEN "[PASSED]" COLOUR_RESET "\n", #tc);                                            \
         } else {                                                                                                       \
             FAIL_COUNT++;                                                                                              \
-            fprintf(stderr, "%s :: [FAILED]\n", #tc);                                                                  \
+            fprintf(stderr, "%s :: " COLOUR_RED "[FAILED]\n" COLOUR_RESET, #tc);                                       \
         }                                                                                                              \
     } while (0)
 

@@ -65,167 +65,79 @@ void block_header_init(BlockHeader *b, const uint16_t length, const BlockType ty
 }
 
 /**
- * Initializes a signal report block with the provided information.
- * @param b The signal report to be initialized
- * @param snr The signal to noise ratio, in units of 1dB/LSB
- * @param rssi The received signal strength indication, in units of 1dB/LSB
- * @param radio The index of the radio that is making a request for the signal report
- * @param tx_power The power with which a signal report is sent
- * @param request 1 if this is a request for a report, 0 if this is a report
- */
-void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
-                        const int8_t tx_power, const bool request) {
-    b->bytes[0] = snr;                         // SNR fills first byte completely
-    b->bytes[1] = rssi;                        // RSSI fills second byte completely
-    b->bytes[2] = (uint8_t)(radio & 0x3) << 6; // Last two bits at start of byte
-    b->bytes[2] |= (uint8_t)(tx_power & 0x3F); // Fill the rest of the six bits
-    b->bytes[3] = (uint8_t)(request & 0x1);    // Set dead space and request indicator
-}
-
-/**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
- * @param measurement_time The mission time at the taking of the measurement
- * @param altitude The calculated altitude in units of 1 mm/LSB.
+ * @param mission_time The mission time at the taking of the measurement
+ * @param altitude The calculated altitude in units millimetres above/below launch height.
  */
-void altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &altitude, sizeof(altitude));
+void altitude_db_init(AltitudeDB *b, const uint32_t mission_time, const int32_t altitude) {
+    b->mission_time = mission_time;
+    b->altitude = altitude;
 }
 
 /**
  * Initializes a temperature data block with the provided information.
  * @param b The temperature data block to be initialized.
- * @param measurement_time The mission time at the taking of the measurement
+ * @param mission_time The mission time at the taking of the measurement
  * @param temperature The calculated temperature in units of millidegrees Celsius.
  */
-void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &temperature, sizeof(temperature));
+void temperature_db_init(TemperatureDB *b, const uint32_t mission_time, const int32_t temperature) {
+    b->mission_time = mission_time;
+    b->temperature = temperature;
 }
 
 /**
  * Initializes a temperature data block with the provided information.
  * @param b The temperature data block to be initialized.
- * @param measurement_time The mission time at the taking of the measurement
+ * @param mission_time The mission time at the taking of the measurement
  * @param pressure The calculated pressure in units of Pascals.
  */
-void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int32_t pressure) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
+void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure) {
+    b->mission_time = mission_time;
+    b->pressure = pressure;
 }
 
 /**
  * Initializes an angular velocity block with the provided information.
  * @param b The angular velocity block to be initialized.
- * @param measurement_time The mission time when the measurement was taken.
- * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
- * maximum and minimum angular velocity that can be measured.
- * @param x_axis The angular velocity measurement for the x axis.
- * @param y_axis The angular velocity measurement for the y axis.
- * @param z_axis The angular velocity measurement for the z axis.
+ * @param mission_time The mission time when the measurement was taken.
+ * @param x_axis The angular velocity measurement for the x axis in tenths of degrees per second.
+ * @param y_axis The angular velocity measurement for the y axis in tenths of degrees per second.
+ * @param z_axis The angular velocity measurement for the z axis in tenths of degrees per second.
  */
-void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
-                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
-           sizeof(z_axis));
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int16_t x_axis,
+                              const int16_t y_axis, const int16_t z_axis) {
+    b->mission_time = mission_time;
+    b->x = x_axis;
+    b->y = y_axis;
+    b->z = z_axis;
 }
 
 /**
  * Initializes an acceleration data block with the provided information.
  * @param b The acceleration data block to be initialized.
- * @param measurement_time The mission time when the measurement was taken.
- * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
- * maximum and minimum acceleration that can be measured.
- * @param x_axis The acceleration measurement for the x axis.
- * @param y_axis The acceleration measurement for the y axis.
- * @param z_axis The acceleration measurement for the z axis.
+ * @param mission_time The mission time when the measurement was taken.
+ * @param x_axis The acceleration measurement for the x axis in centimetres per second squared.
+ * @param y_axis The acceleration measurement for the y axis in centimetres per second squared.
+ * @param z_axis The acceleration measurement for the z axis in centimetres per second squared.
  * */
-void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
-                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
-    // One byte of dead space after FSR
-    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
-           sizeof(y_axis));
-    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
-           &z_axis, sizeof(z_axis));
-}
-
-/**
- * Initializes a telemetry data block with the provided information.
- * @param b The telemetry request block to be initialized.
- * @param data_subtype_1 The first requested data type.
- * @param used_1 A boolean to determine if the first data request is valid.
- * @param data_subtype_2 The second requested data type.
- * @param used_2 A boolean to determine if the second data request is valid.
- * @param data_subtype_3 The third requested data type.
- * @param used_3 A boolean to determine if the third data request is valid.
- * @param data_subtype_4 The fourth requested data type.
- * @param used_4 A boolean to determine if the fourth data request is valid.
- * */
-void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_subtype_1, const uint8_t used_1,
-                                  const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3,
-                                  const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4) {
-
-    b->bytes[0] = data_subtype_1 << 2;
-    b->bytes[0] |= used_1 && 0x01;
-    b->bytes[1] = data_subtype_2 << 2;
-    b->bytes[1] |= used_2 && 0x01;
-    b->bytes[2] = data_subtype_3 << 2;
-    b->bytes[2] |= used_3 && 0x01;
-    b->bytes[3] = data_subtype_4 << 2;
-    b->bytes[3] |= used_4 && 0x01;
+void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
+                          const int16_t z_axis) {
+    b->mission_time = mission_time;
+    b->x = x_axis;
+    b->y = y_axis;
+    b->z = z_axis;
 }
 
 /**
  * Initializes a humidity data block with the provided information.
  * @param b The humidity data block to be initialized.
- * @param measurement_time The mission time at the taking of the measurement
+ * @param mission_time The mission time at the taking of the measurement
  * @param humidity The calculated humidity in ten thousandths of a percent.
  */
-void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const uint32_t humidity) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &humidity, sizeof(humidity));
-}
-
-/**
- * Initializes a GNSS location data block with the provided information
- * @param b The GNSS location data block to be initialized
- * @param fix_time The mission time the fix was recieved
- * @param latitude The latitude of the rocket in units of 100 micro-arcminutes per LSB
- * @param longitude The longitude of the rocket in units of 100 micro-arcminutes per LSB
- * @param utc_time The UTC time when the fix was recieved
- * @param altitude The altitude calculated by the GNSS module, in mm
- * @param speed The speed over the ground in hundredths of a knot
- * @param course The course over ground of the rocket in hundredths of a degree
- * @param pdop Position dilution of precision multiplied by 100
- * @param hdop Horizontal dilution of precision multipled by 100
- * @param vdop Vertical dilution of precision multiplied by 100
- * @param sats The number of GNSS satellites used in the fix
- * @param fix The fix type, as two bits
- */
-void gnss_location_db_init(GNSSLocationDB *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude,
-                           const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course,
-                           uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix) {
-    // Could write this all out with sizeofs, but it gets really hard to read after a second
-    memcpy(b->bytes, &fix_time, sizeof(fix_time));
-    memcpy(b->bytes + (4), &latitude, sizeof(latitude));
-    memcpy(b->bytes + (4 * 2), &longitude, sizeof(longitude));
-    memcpy(b->bytes + (4 * 3), &utc_time, sizeof(utc_time));
-    memcpy(b->bytes + (4 * 4), &altitude, sizeof(altitude));
-    memcpy(b->bytes + (4 * 4), &speed, sizeof(speed));
-    memcpy(b->bytes + (4 * 4) + sizeof(speed), &course, sizeof(course));
-    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course), &pdop, sizeof(pdop));
-    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course) + sizeof(pdop), &hdop, sizeof(hdop));
-    memcpy(b->bytes + (4 * 4) + sizeof(speed) + sizeof(course) + sizeof(pdop) + sizeof(hdop), &vdop, sizeof(vdop));
-    b->bytes[31] = sats;
-    b->bytes[32] = (uint8_t)((fix & 0x03) << 6);
+void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t humidity) {
+    b->mission_time = mission_time;
+    b->humidity = humidity;
 }
 
 /**

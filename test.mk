@@ -35,7 +35,7 @@ $(TESTBINS): binaries
 
 all: binaries
 
-test: $(TESTBINS)
+test: $(TESTBINS) clean
 
 clean:
 	@rm $(TESTBINS)

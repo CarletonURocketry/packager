@@ -115,24 +115,18 @@ Functions</h2></td></tr>
 <tr class="separator:a048dbf1eece020fd3c685c5228eab595"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad35a255e9842ac122fd31e13a6691694"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#ad35a255e9842ac122fd31e13a6691694">block_header_init</a> (<a class="el" href="structBlockHeader.html">BlockHeader</a> *b, const uint16_t length, const <a class="el" href="packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3">BlockType</a> type, const <a class="el" href="packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97">BlockSubtype</a> subtype, const <a class="el" href="packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630">DeviceAddress</a> dest)</td></tr>
 <tr class="separator:ad35a255e9842ac122fd31e13a6691694"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a0b521ef6a3e32e6040a68a6a82d67ada">signal_report_init</a> (<a class="el" href="structSignalReportBlock.html">SignalReportBlock</a> *b, const int8_t snr, const int8_t rssi, const uint8_t radio, const int8_t tx_power, const bool request)</td></tr>
-<tr class="separator:a0b521ef6a3e32e6040a68a6a82d67ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab12cd79378d809441f655438b4a3b831"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#ab12cd79378d809441f655438b4a3b831">altitude_db_init</a> (<a class="el" href="structAltitudeDB.html">AltitudeDB</a> *b, const uint32_t measurement_time, const int32_t altitude)</td></tr>
-<tr class="separator:ab12cd79378d809441f655438b4a3b831"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a745f8f08a168990e46dc7b46aeda81c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a745f8f08a168990e46dc7b46aeda81c7">temperature_db_init</a> (<a class="el" href="structTemperatureDB.html">TemperatureDB</a> *b, const uint32_t measurement_time, const int32_t temperature)</td></tr>
-<tr class="separator:a745f8f08a168990e46dc7b46aeda81c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bf100277c9d7c2195015de2a8f93fe5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a5bf100277c9d7c2195015de2a8f93fe5">pressure_db_init</a> (<a class="el" href="structPressureDB.html">PressureDB</a> *b, const uint32_t measurement_time, const int32_t pressure)</td></tr>
-<tr class="separator:a5bf100277c9d7c2195015de2a8f93fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a543359e6301c9ef8dee54ba2a7c61653"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a543359e6301c9ef8dee54ba2a7c61653">angular_velocity_db_init</a> (<a class="el" href="structAngularVelocityDB.html">AngularVelocityDB</a> *b, const uint32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis)</td></tr>
-<tr class="separator:a543359e6301c9ef8dee54ba2a7c61653"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07814aeca5224dcc15f87a7c08687cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#ae07814aeca5224dcc15f87a7c08687cd">acceleration_db_init</a> (<a class="el" href="structAccelerationDB.html">AccelerationDB</a> *b, const uint32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis)</td></tr>
-<tr class="separator:ae07814aeca5224dcc15f87a7c08687cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa32867ba87c9f3ab1dca3b61737969ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aa32867ba87c9f3ab1dca3b61737969ee">telemetry_request_block_init</a> (<a class="el" href="structTelemetryRequestBlock.html">TelemetryRequestBlock</a> *b, const uint8_t data_subtype_1, const uint8_t used_1, const uint8_t data_subtype_2, const uint8_t used_2, const uint8_t data_subtype_3, const uint8_t used_3, const uint8_t data_subtype_4, const uint8_t used_4)</td></tr>
-<tr class="separator:aa32867ba87c9f3ab1dca3b61737969ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeebf333f77799b43903411cb1b3a7584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aeebf333f77799b43903411cb1b3a7584">humidity_db_init</a> (<a class="el" href="structHumidityDB.html">HumidityDB</a> *b, const uint32_t measurement_time, const uint32_t humidity)</td></tr>
-<tr class="separator:aeebf333f77799b43903411cb1b3a7584"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a900add4f7036507ea27042eed65b7615"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a900add4f7036507ea27042eed65b7615">gnss_location_db_init</a> (<a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a> *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude, const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course, uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix)</td></tr>
-<tr class="separator:a900add4f7036507ea27042eed65b7615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a74a41c48f2d3d7781f71c950fe601"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a97a74a41c48f2d3d7781f71c950fe601">altitude_db_init</a> (<a class="el" href="structAltitudeDB.html">AltitudeDB</a> *b, const uint32_t mission_time, const int32_t altitude)</td></tr>
+<tr class="separator:a97a74a41c48f2d3d7781f71c950fe601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c609baca24197fd0e7404f21573d2d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a6c609baca24197fd0e7404f21573d2d8">temperature_db_init</a> (<a class="el" href="structTemperatureDB.html">TemperatureDB</a> *b, const uint32_t mission_time, const int32_t temperature)</td></tr>
+<tr class="separator:a6c609baca24197fd0e7404f21573d2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16648799cfecdd04d856398fc91eae3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a16648799cfecdd04d856398fc91eae3c">pressure_db_init</a> (<a class="el" href="structPressureDB.html">PressureDB</a> *b, const uint32_t mission_time, const int32_t pressure)</td></tr>
+<tr class="separator:a16648799cfecdd04d856398fc91eae3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4678165e57d774e9bb76405757f5e142"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a4678165e57d774e9bb76405757f5e142">angular_velocity_db_init</a> (<a class="el" href="structAngularVelocityDB.html">AngularVelocityDB</a> *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis)</td></tr>
+<tr class="separator:a4678165e57d774e9bb76405757f5e142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e64dcd4f302378aead964c2861790d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a71e64dcd4f302378aead964c2861790d">acceleration_db_init</a> (<a class="el" href="structAccelerationDB.html">AccelerationDB</a> *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis)</td></tr>
+<tr class="separator:a71e64dcd4f302378aead964c2861790d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c1b80381c5281accf6345dfeee5ce7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a2c1b80381c5281accf6345dfeee5ce7b">humidity_db_init</a> (<a class="el" href="structHumidityDB.html">HumidityDB</a> *b, const uint32_t mission_time, const uint32_t humidity)</td></tr>
+<tr class="separator:a2c1b80381c5281accf6345dfeee5ce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aa0f7d3bde8660c68f0c96dd21da35eec">packet_append_block</a> (<a class="el" href="structPacket.html">Packet</a> *p, const <a class="el" href="structBlock.html">Block</a> b)</td></tr>
 <tr class="separator:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af63f80194e050629b872ff50d81a448d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#af63f80194e050629b872ff50d81a448d">packet_print_hex</a> (FILE *stream, <a class="el" href="structPacket.html">Packet</a> *packet)</td></tr>
@@ -180,8 +174,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ae07814aeca5224dcc15f87a7c08687cd" name="ae07814aeca5224dcc15f87a7c08687cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae07814aeca5224dcc15f87a7c08687cd">&#9670;&nbsp;</a></span>acceleration_db_init()</h2>
+<a id="a71e64dcd4f302378aead964c2861790d" name="a71e64dcd4f302378aead964c2861790d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71e64dcd4f302378aead964c2861790d">&#9670;&nbsp;</a></span>acceleration_db_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,13 +190,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>measurement_time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int8_t&#160;</td>
-          <td class="paramname"><em>full_scale_range</em>, </td>
+          <td class="paramname"><em>mission_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -232,19 +220,18 @@ Functions</h2></td></tr>
 <p >Initializes an acceleration data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The acceleration data block to be initialized. </td></tr>
-    <tr><td class="paramname">measurement_time</td><td>The mission time when the measurement was taken. </td></tr>
-    <tr><td class="paramname">full_scale_range</td><td>The full scale range of the gyroscope in degrees per second. This value represents the maximum and minimum acceleration that can be measured. </td></tr>
-    <tr><td class="paramname">x_axis</td><td>The acceleration measurement for the x axis. </td></tr>
-    <tr><td class="paramname">y_axis</td><td>The acceleration measurement for the y axis. </td></tr>
-    <tr><td class="paramname">z_axis</td><td>The acceleration measurement for the z axis. </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time when the measurement was taken. </td></tr>
+    <tr><td class="paramname">x_axis</td><td>The acceleration measurement for the x axis in centimetres per second squared. </td></tr>
+    <tr><td class="paramname">y_axis</td><td>The acceleration measurement for the y axis in centimetres per second squared. </td></tr>
+    <tr><td class="paramname">z_axis</td><td>The acceleration measurement for the z axis in centimetres per second squared. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ab12cd79378d809441f655438b4a3b831" name="ab12cd79378d809441f655438b4a3b831"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab12cd79378d809441f655438b4a3b831">&#9670;&nbsp;</a></span>altitude_db_init()</h2>
+<a id="a97a74a41c48f2d3d7781f71c950fe601" name="a97a74a41c48f2d3d7781f71c950fe601"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97a74a41c48f2d3d7781f71c950fe601">&#9670;&nbsp;</a></span>altitude_db_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,7 +246,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>measurement_time</em>, </td>
+          <td class="paramname"><em>mission_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -277,16 +264,16 @@ Functions</h2></td></tr>
 <p >Initializes an altitude data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The altitude data to be initialized </td></tr>
-    <tr><td class="paramname">measurement_time</td><td>The mission time at the taking of the measurement </td></tr>
-    <tr><td class="paramname">altitude</td><td>The calculated altitude in units of 1 mm/LSB. </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement </td></tr>
+    <tr><td class="paramname">altitude</td><td>The calculated altitude in units millimetres above/below launch height. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a543359e6301c9ef8dee54ba2a7c61653" name="a543359e6301c9ef8dee54ba2a7c61653"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a543359e6301c9ef8dee54ba2a7c61653">&#9670;&nbsp;</a></span>angular_velocity_db_init()</h2>
+<a id="a4678165e57d774e9bb76405757f5e142" name="a4678165e57d774e9bb76405757f5e142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4678165e57d774e9bb76405757f5e142">&#9670;&nbsp;</a></span>angular_velocity_db_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,13 +288,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>measurement_time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int8_t&#160;</td>
-          <td class="paramname"><em>full_scale_range</em>, </td>
+          <td class="paramname"><em>mission_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -337,11 +318,10 @@ Functions</h2></td></tr>
 <p >Initializes an angular velocity block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The angular velocity block to be initialized. </td></tr>
-    <tr><td class="paramname">measurement_time</td><td>The mission time when the measurement was taken. </td></tr>
-    <tr><td class="paramname">full_scale_range</td><td>The full scale range of the gyroscope in degrees per second. This value represents the maximum and minimum angular velocity that can be measured. </td></tr>
-    <tr><td class="paramname">x_axis</td><td>The angular velocity measurement for the x axis. </td></tr>
-    <tr><td class="paramname">y_axis</td><td>The angular velocity measurement for the y axis. </td></tr>
-    <tr><td class="paramname">z_axis</td><td>The angular velocity measurement for the z axis. </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time when the measurement was taken. </td></tr>
+    <tr><td class="paramname">x_axis</td><td>The angular velocity measurement for the x axis in tenths of degrees per second. </td></tr>
+    <tr><td class="paramname">y_axis</td><td>The angular velocity measurement for the y axis in tenths of degrees per second. </td></tr>
+    <tr><td class="paramname">z_axis</td><td>The angular velocity measurement for the z axis in tenths of degrees per second. </td></tr>
   </table>
   </dd>
 </dl>
@@ -405,120 +385,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a900add4f7036507ea27042eed65b7615" name="a900add4f7036507ea27042eed65b7615"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a900add4f7036507ea27042eed65b7615">&#9670;&nbsp;</a></span>gnss_location_db_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void gnss_location_db_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structGNSSLocationDB.html">GNSSLocationDB</a> *&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>fix_time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int32_t&#160;</td>
-          <td class="paramname"><em>latitude</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int32_t&#160;</td>
-          <td class="paramname"><em>longitude</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>utc_time</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int32_t&#160;</td>
-          <td class="paramname"><em>altitude</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>speed</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>course</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>pdop</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>hdop</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>vdop</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>sats</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>fix</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Initializes a GNSS location data block with the provided information </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">b</td><td>The GNSS location data block to be initialized </td></tr>
-    <tr><td class="paramname">fix_time</td><td>The mission time the fix was recieved </td></tr>
-    <tr><td class="paramname">latitude</td><td>The latitude of the rocket in units of 100 micro-arcminutes per LSB </td></tr>
-    <tr><td class="paramname">longitude</td><td>The longitude of the rocket in units of 100 micro-arcminutes per LSB </td></tr>
-    <tr><td class="paramname">utc_time</td><td>The UTC time when the fix was recieved </td></tr>
-    <tr><td class="paramname">altitude</td><td>The altitude calculated by the GNSS module, in mm </td></tr>
-    <tr><td class="paramname">speed</td><td>The speed over the ground in hundredths of a knot </td></tr>
-    <tr><td class="paramname">course</td><td>The course over ground of the rocket in hundredths of a degree </td></tr>
-    <tr><td class="paramname">pdop</td><td>Position dilution of precision multiplied by 100 </td></tr>
-    <tr><td class="paramname">hdop</td><td>Horizontal dilution of precision multipled by 100 </td></tr>
-    <tr><td class="paramname">vdop</td><td>Vertical dilution of precision multiplied by 100 </td></tr>
-    <tr><td class="paramname">sats</td><td>The number of GNSS satellites used in the fix </td></tr>
-    <tr><td class="paramname">fix</td><td>The fix type, as two bits </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aeebf333f77799b43903411cb1b3a7584" name="aeebf333f77799b43903411cb1b3a7584"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeebf333f77799b43903411cb1b3a7584">&#9670;&nbsp;</a></span>humidity_db_init()</h2>
+<a id="a2c1b80381c5281accf6345dfeee5ce7b" name="a2c1b80381c5281accf6345dfeee5ce7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c1b80381c5281accf6345dfeee5ce7b">&#9670;&nbsp;</a></span>humidity_db_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -533,7 +401,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>measurement_time</em>, </td>
+          <td class="paramname"><em>mission_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -551,7 +419,7 @@ Functions</h2></td></tr>
 <p >Initializes a humidity data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The humidity data block to be initialized. </td></tr>
-    <tr><td class="paramname">measurement_time</td><td>The mission time at the taking of the measurement </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement </td></tr>
     <tr><td class="paramname">humidity</td><td>The calculated humidity in ten thousandths of a percent. </td></tr>
   </table>
   </dd>
@@ -728,8 +596,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5bf100277c9d7c2195015de2a8f93fe5" name="a5bf100277c9d7c2195015de2a8f93fe5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bf100277c9d7c2195015de2a8f93fe5">&#9670;&nbsp;</a></span>pressure_db_init()</h2>
+<a id="a16648799cfecdd04d856398fc91eae3c" name="a16648799cfecdd04d856398fc91eae3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16648799cfecdd04d856398fc91eae3c">&#9670;&nbsp;</a></span>pressure_db_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -744,7 +612,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>measurement_time</em>, </td>
+          <td class="paramname"><em>mission_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -762,7 +630,7 @@ Functions</h2></td></tr>
 <p >Initializes a temperature data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The temperature data block to be initialized. </td></tr>
-    <tr><td class="paramname">measurement_time</td><td>The mission time at the taking of the measurement </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement </td></tr>
     <tr><td class="paramname">pressure</td><td>The calculated pressure in units of Pascals. </td></tr>
   </table>
   </dd>
@@ -770,155 +638,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0b521ef6a3e32e6040a68a6a82d67ada" name="a0b521ef6a3e32e6040a68a6a82d67ada"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b521ef6a3e32e6040a68a6a82d67ada">&#9670;&nbsp;</a></span>signal_report_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void signal_report_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structSignalReportBlock.html">SignalReportBlock</a> *&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int8_t&#160;</td>
-          <td class="paramname"><em>snr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int8_t&#160;</td>
-          <td class="paramname"><em>rssi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>radio</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const int8_t&#160;</td>
-          <td class="paramname"><em>tx_power</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const bool&#160;</td>
-          <td class="paramname"><em>request</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Initializes a signal report block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">b</td><td>The signal report to be initialized </td></tr>
-    <tr><td class="paramname">snr</td><td>The signal to noise ratio, in units of 1dB/LSB </td></tr>
-    <tr><td class="paramname">rssi</td><td>The received signal strength indication, in units of 1dB/LSB </td></tr>
-    <tr><td class="paramname">radio</td><td>The index of the radio that is making a request for the signal report </td></tr>
-    <tr><td class="paramname">tx_power</td><td>The power with which a signal report is sent </td></tr>
-    <tr><td class="paramname">request</td><td>1 if this is a request for a report, 0 if this is a report </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aa32867ba87c9f3ab1dca3b61737969ee" name="aa32867ba87c9f3ab1dca3b61737969ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa32867ba87c9f3ab1dca3b61737969ee">&#9670;&nbsp;</a></span>telemetry_request_block_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void telemetry_request_block_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structTelemetryRequestBlock.html">TelemetryRequestBlock</a> *&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>data_subtype_1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>used_1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>data_subtype_2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>used_2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>data_subtype_3</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>used_3</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>data_subtype_4</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t&#160;</td>
-          <td class="paramname"><em>used_4</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Initializes a telemetry data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">b</td><td>The telemetry request block to be initialized. </td></tr>
-    <tr><td class="paramname">data_subtype_1</td><td>The first requested data type. </td></tr>
-    <tr><td class="paramname">used_1</td><td>A boolean to determine if the first data request is valid. </td></tr>
-    <tr><td class="paramname">data_subtype_2</td><td>The second requested data type. </td></tr>
-    <tr><td class="paramname">used_2</td><td>A boolean to determine if the second data request is valid. </td></tr>
-    <tr><td class="paramname">data_subtype_3</td><td>The third requested data type. </td></tr>
-    <tr><td class="paramname">used_3</td><td>A boolean to determine if the third data request is valid. </td></tr>
-    <tr><td class="paramname">data_subtype_4</td><td>The fourth requested data type. </td></tr>
-    <tr><td class="paramname">used_4</td><td>A boolean to determine if the fourth data request is valid. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a745f8f08a168990e46dc7b46aeda81c7" name="a745f8f08a168990e46dc7b46aeda81c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a745f8f08a168990e46dc7b46aeda81c7">&#9670;&nbsp;</a></span>temperature_db_init()</h2>
+<a id="a6c609baca24197fd0e7404f21573d2d8" name="a6c609baca24197fd0e7404f21573d2d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c609baca24197fd0e7404f21573d2d8">&#9670;&nbsp;</a></span>temperature_db_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -933,7 +654,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint32_t&#160;</td>
-          <td class="paramname"><em>measurement_time</em>, </td>
+          <td class="paramname"><em>mission_time</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -951,7 +672,7 @@ Functions</h2></td></tr>
 <p >Initializes a temperature data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>The temperature data block to be initialized. </td></tr>
-    <tr><td class="paramname">measurement_time</td><td>The mission time at the taking of the measurement </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement </td></tr>
     <tr><td class="paramname">temperature</td><td>The calculated temperature in units of millidegrees Celsius. </td></tr>
   </table>
   </dd>

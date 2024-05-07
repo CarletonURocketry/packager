@@ -97,24 +97,41 @@ $(document).ready(function(){initNavTree('structPressureDB.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a09b8f68b12c0b9642328460709797f66"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPressureDB.html#a09b8f68b12c0b9642328460709797f66">bytes</a> [8]</td></tr>
-<tr class="separator:a09b8f68b12c0b9642328460709797f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa09f271f0c1e2dc34067b83ceebe9fea"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPressureDB.html#aa09f271f0c1e2dc34067b83ceebe9fea">mission_time</a></td></tr>
+<tr class="separator:aa09f271f0c1e2dc34067b83ceebe9fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8b8578c04988820a7ef971e43c37e8b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPressureDB.html#ab8b8578c04988820a7ef971e43c37e8b">pressure</a></td></tr>
+<tr class="separator:ab8b8578c04988820a7ef971e43c37e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A data block containing information about pressure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a09b8f68b12c0b9642328460709797f66" name="a09b8f68b12c0b9642328460709797f66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09b8f68b12c0b9642328460709797f66">&#9670;&nbsp;</a></span>bytes</h2>
+<a id="aa09f271f0c1e2dc34067b83ceebe9fea" name="aa09f271f0c1e2dc34067b83ceebe9fea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa09f271f0c1e2dc34067b83ceebe9fea">&#9670;&nbsp;</a></span>mission_time</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t PressureDB::bytes[8]</td>
+          <td class="memname">uint32_t PressureDB::mission_time</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The pressure data block can be accessed as a bytes array. </p>
+<p >Mission time in milliseconds since launch. </p>
+
+</div>
+</div>
+<a id="ab8b8578c04988820a7ef971e43c37e8b" name="ab8b8578c04988820a7ef971e43c37e8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8b8578c04988820a7ef971e43c37e8b">&#9670;&nbsp;</a></span>pressure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t PressureDB::pressure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Pressure measured in Pascals. </p>
 
 </div>
 </div>

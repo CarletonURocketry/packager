@@ -97,24 +97,41 @@ $(document).ready(function(){initNavTree('structHumidityDB.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5cc31686eb787ae6b9ec46fabe33162b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structHumidityDB.html#a5cc31686eb787ae6b9ec46fabe33162b">bytes</a> [8]</td></tr>
-<tr class="separator:a5cc31686eb787ae6b9ec46fabe33162b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3319f199cef066567b521c3d9452ece"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structHumidityDB.html#aa3319f199cef066567b521c3d9452ece">mission_time</a></td></tr>
+<tr class="separator:aa3319f199cef066567b521c3d9452ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9944f09e26c2ef28e46bd07ce14d282"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structHumidityDB.html#ab9944f09e26c2ef28e46bd07ce14d282">humidity</a></td></tr>
+<tr class="separator:ab9944f09e26c2ef28e46bd07ce14d282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A data block containing information about humidity. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a5cc31686eb787ae6b9ec46fabe33162b" name="a5cc31686eb787ae6b9ec46fabe33162b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cc31686eb787ae6b9ec46fabe33162b">&#9670;&nbsp;</a></span>bytes</h2>
+<a id="ab9944f09e26c2ef28e46bd07ce14d282" name="ab9944f09e26c2ef28e46bd07ce14d282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9944f09e26c2ef28e46bd07ce14d282">&#9670;&nbsp;</a></span>humidity</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t HumidityDB::bytes[8]</td>
+          <td class="memname">uint32_t HumidityDB::humidity</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The humidity data block can be accessed as a bytes array. </p>
+<p >Relative humidity in ten thousandths of a percent. </p>
+
+</div>
+</div>
+<a id="aa3319f199cef066567b521c3d9452ece" name="aa3319f199cef066567b521c3d9452ece"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3319f199cef066567b521c3d9452ece">&#9670;&nbsp;</a></span>mission_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t HumidityDB::mission_time</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Mission time in milliseconds since launch. </p>
 
 </div>
 </div>

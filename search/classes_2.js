@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gnsslocationdb_0',['GNSSLocationDB',['../structGNSSLocationDB.html',1,'']]]
+  ['humiditydb_0',['HumidityDB',['../structHumidityDB.html',1,'']]]
 ];

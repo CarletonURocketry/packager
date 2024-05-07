@@ -97,24 +97,41 @@ $(document).ready(function(){initNavTree('structAltitudeDB.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6b32e6e8af193cce0f923cb5cb428743"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAltitudeDB.html#a6b32e6e8af193cce0f923cb5cb428743">bytes</a> [8]</td></tr>
-<tr class="separator:a6b32e6e8af193cce0f923cb5cb428743"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac87b63ac1c0523a115ffb74826476e24"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAltitudeDB.html#ac87b63ac1c0523a115ffb74826476e24">mission_time</a></td></tr>
+<tr class="separator:ac87b63ac1c0523a115ffb74826476e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f23b41dd1a78ce1f371991ce8a080b0"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAltitudeDB.html#a2f23b41dd1a78ce1f371991ce8a080b0">altitude</a></td></tr>
+<tr class="separator:a2f23b41dd1a78ce1f371991ce8a080b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A data block containing information about altitude. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a6b32e6e8af193cce0f923cb5cb428743" name="a6b32e6e8af193cce0f923cb5cb428743"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b32e6e8af193cce0f923cb5cb428743">&#9670;&nbsp;</a></span>bytes</h2>
+<a id="a2f23b41dd1a78ce1f371991ce8a080b0" name="a2f23b41dd1a78ce1f371991ce8a080b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f23b41dd1a78ce1f371991ce8a080b0">&#9670;&nbsp;</a></span>altitude</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t AltitudeDB::bytes[8]</td>
+          <td class="memname">int32_t AltitudeDB::altitude</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The altitude data block accessed as a bytes array </p>
+<p >Altitude in units of millimetres above/below the launch height. </p>
+
+</div>
+</div>
+<a id="ac87b63ac1c0523a115ffb74826476e24" name="ac87b63ac1c0523a115ffb74826476e24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac87b63ac1c0523a115ffb74826476e24">&#9670;&nbsp;</a></span>mission_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t AltitudeDB::mission_time</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Mission time in milliseconds since launch. </p>
 
 </div>
 </div>

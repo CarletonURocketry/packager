@@ -1,4 +1,5 @@
 var structHumidityDB =
 [
-    [ "bytes", "structHumidityDB.html#a5cc31686eb787ae6b9ec46fabe33162b", null ]
+    [ "humidity", "structHumidityDB.html#ab9944f09e26c2ef28e46bd07ce14d282", null ],
+    [ "mission_time", "structHumidityDB.html#aa3319f199cef066567b521c3d9452ece", null ]
 ];

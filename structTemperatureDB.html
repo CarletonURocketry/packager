@@ -97,24 +97,41 @@ $(document).ready(function(){initNavTree('structTemperatureDB.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a48212cc5025e78ad76c4e1c5ca2c6b79"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTemperatureDB.html#a48212cc5025e78ad76c4e1c5ca2c6b79">bytes</a> [8]</td></tr>
-<tr class="separator:a48212cc5025e78ad76c4e1c5ca2c6b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb957ca27d9336a1c6c7a53907f55a81"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTemperatureDB.html#afb957ca27d9336a1c6c7a53907f55a81">mission_time</a></td></tr>
+<tr class="separator:afb957ca27d9336a1c6c7a53907f55a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c1fbec1146c141afe257905a1a0811"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTemperatureDB.html#ab2c1fbec1146c141afe257905a1a0811">temperature</a></td></tr>
+<tr class="separator:ab2c1fbec1146c141afe257905a1a0811"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A data block containing information about temperature. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a48212cc5025e78ad76c4e1c5ca2c6b79" name="a48212cc5025e78ad76c4e1c5ca2c6b79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48212cc5025e78ad76c4e1c5ca2c6b79">&#9670;&nbsp;</a></span>bytes</h2>
+<a id="afb957ca27d9336a1c6c7a53907f55a81" name="afb957ca27d9336a1c6c7a53907f55a81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb957ca27d9336a1c6c7a53907f55a81">&#9670;&nbsp;</a></span>mission_time</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t TemperatureDB::bytes[8]</td>
+          <td class="memname">uint32_t TemperatureDB::mission_time</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The temperature data block can be accessed as a bytes array. </p>
+<p >Mission time in milliseconds since launch. </p>
+
+</div>
+</div>
+<a id="ab2c1fbec1146c141afe257905a1a0811" name="ab2c1fbec1146c141afe257905a1a0811"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2c1fbec1146c141afe257905a1a0811">&#9670;&nbsp;</a></span>temperature</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t TemperatureDB::temperature</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Temperature in millidegrees Celsius. </p>
 
 </div>
 </div>

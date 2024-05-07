@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['acceleration_5fdb_5finit_0',['acceleration_db_init',['../packet__types_8c.html#ae07814aeca5224dcc15f87a7c08687cd',1,'acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis):&#160;packet_types.c'],['../packet__types_8h.html#ae07814aeca5224dcc15f87a7c08687cd',1,'acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis):&#160;packet_types.c']]],
-  ['accelerationdb_1',['AccelerationDB',['../structAccelerationDB.html',1,'']]],
-  ['altitude_5fdb_5finit_2',['altitude_db_init',['../packet__types_8c.html#ab12cd79378d809441f655438b4a3b831',1,'altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude):&#160;packet_types.c'],['../packet__types_8h.html#ab12cd79378d809441f655438b4a3b831',1,'altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude):&#160;packet_types.c']]],
-  ['altitudedb_3',['AltitudeDB',['../structAltitudeDB.html',1,'']]],
-  ['angular_5fvelocity_5fdb_5finit_4',['angular_velocity_db_init',['../packet__types_8c.html#a543359e6301c9ef8dee54ba2a7c61653',1,'angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis):&#160;packet_types.c'],['../packet__types_8h.html#a543359e6301c9ef8dee54ba2a7c61653',1,'angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range, const int16_t x_axis, const int16_t y_axis, const int16_t z_axis):&#160;packet_types.c']]],
-  ['angularvelocitydb_5',['AngularVelocityDB',['../structAngularVelocityDB.html',1,'']]]
+  ['_5fpadding_0',['_padding',['../structAngularVelocityDB.html#a8240fdd07659dfc7ad7ccccc114cf1a4',1,'AngularVelocityDB::_padding()'],['../structAccelerationDB.html#a87f6d58a831ececb446983295e6c02f8',1,'AccelerationDB::_padding()']]]
 ];

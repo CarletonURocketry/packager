@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['dest_5faddr_0',['dest_addr',['../structBlockHeader.html#ae9c70ded727748326afa72903d612d5f',1,'BlockHeader']]],
-  ['dtypes_1',['DTYPES',['../main_8c.html#aa2c4f57d7fdbe67a651632ab31d49c23',1,'main.c']]]
+  ['block_5fcount_0',['block_count',['../structPacket.html#a2569c200d5f4f99285cd10cc1eeada33',1,'Packet']]],
+  ['blocks_1',['blocks',['../structPacket.html#a66cd071dff59636ec2e9a4b1188c2a1a',1,'Packet']]]
 ];

@@ -97,23 +97,92 @@ $(document).ready(function(){initNavTree('structAccelerationDB.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae288139efda42c9c1b0efabe2ff09c41"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAccelerationDB.html#ae288139efda42c9c1b0efabe2ff09c41">bytes</a> [12]</td></tr>
-<tr class="separator:ae288139efda42c9c1b0efabe2ff09c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5f30277c99683e958d91d2ca4990f99"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAccelerationDB.html#aa5f30277c99683e958d91d2ca4990f99">mission_time</a></td></tr>
+<tr class="separator:aa5f30277c99683e958d91d2ca4990f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4283c60f2312d841801d483022305b8"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAccelerationDB.html#ab4283c60f2312d841801d483022305b8">x</a></td></tr>
+<tr class="separator:ab4283c60f2312d841801d483022305b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58a2216e8788867abdb33a42fee6e159"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAccelerationDB.html#a58a2216e8788867abdb33a42fee6e159">y</a></td></tr>
+<tr class="separator:a58a2216e8788867abdb33a42fee6e159"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a657767ace94700230bbff2cccc9d8987"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAccelerationDB.html#a657767ace94700230bbff2cccc9d8987">z</a></td></tr>
+<tr class="separator:a657767ace94700230bbff2cccc9d8987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87f6d58a831ececb446983295e6c02f8"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAccelerationDB.html#a87f6d58a831ececb446983295e6c02f8">_padding</a></td></tr>
+<tr class="separator:a87f6d58a831ececb446983295e6c02f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A data block containing information about acceleration. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="ae288139efda42c9c1b0efabe2ff09c41" name="ae288139efda42c9c1b0efabe2ff09c41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae288139efda42c9c1b0efabe2ff09c41">&#9670;&nbsp;</a></span>bytes</h2>
+<a id="a87f6d58a831ececb446983295e6c02f8" name="a87f6d58a831ececb446983295e6c02f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87f6d58a831ececb446983295e6c02f8">&#9670;&nbsp;</a></span>_padding</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t AccelerationDB::bytes[12]</td>
+          <td class="memname">int16_t AccelerationDB::_padding</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >0 padding to fill the 4 byte multiple requirement of the packet spec. </p>
+
+</div>
+</div>
+<a id="aa5f30277c99683e958d91d2ca4990f99" name="aa5f30277c99683e958d91d2ca4990f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5f30277c99683e958d91d2ca4990f99">&#9670;&nbsp;</a></span>mission_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t AccelerationDB::mission_time</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Mission time in milliseconds since launch. </p>
+
+</div>
+</div>
+<a id="ab4283c60f2312d841801d483022305b8" name="ab4283c60f2312d841801d483022305b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4283c60f2312d841801d483022305b8">&#9670;&nbsp;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t AccelerationDB::x</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Linear acceleration in the x-axis measured in centimetres per second squared. </p>
+
+</div>
+</div>
+<a id="a58a2216e8788867abdb33a42fee6e159" name="a58a2216e8788867abdb33a42fee6e159"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58a2216e8788867abdb33a42fee6e159">&#9670;&nbsp;</a></span>y</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t AccelerationDB::y</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Linear acceleration in the y-axis measured in centimetres per second squared. </p>
+
+</div>
+</div>
+<a id="a657767ace94700230bbff2cccc9d8987" name="a657767ace94700230bbff2cccc9d8987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a657767ace94700230bbff2cccc9d8987">&#9670;&nbsp;</a></span>z</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t AccelerationDB::z</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Linear acceleration in the z-axis measured in centimetres per second squared. </p>
 
 </div>
 </div>

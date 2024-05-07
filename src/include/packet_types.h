@@ -92,15 +92,6 @@ typedef struct {
 void block_header_init(BlockHeader *b, const uint16_t length, const BlockType type, const BlockSubtype subtype,
                        const DeviceAddress dest);
 
-/** Signal report for the last block that was sent by the block's destination device */
-typedef struct signal_report_block {
-    /** The signal block report accessed as a bytes array */
-    uint8_t bytes[4];
-} SignalReportBlock;
-
-void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
-                        const int8_t tx_power, const bool request);
-
 /** A data block containing information about altitude. */
 typedef struct {
     /** The altitude data block accessed as a bytes array */

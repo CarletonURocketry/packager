@@ -65,24 +65,6 @@ void block_header_init(BlockHeader *b, const uint16_t length, const BlockType ty
 }
 
 /**
- * Initializes a signal report block with the provided information.
- * @param b The signal report to be initialized
- * @param snr The signal to noise ratio, in units of 1dB/LSB
- * @param rssi The received signal strength indication, in units of 1dB/LSB
- * @param radio The index of the radio that is making a request for the signal report
- * @param tx_power The power with which a signal report is sent
- * @param request 1 if this is a request for a report, 0 if this is a report
- */
-void signal_report_init(SignalReportBlock *b, const int8_t snr, const int8_t rssi, const uint8_t radio,
-                        const int8_t tx_power, const bool request) {
-    b->bytes[0] = snr;                         // SNR fills first byte completely
-    b->bytes[1] = rssi;                        // RSSI fills second byte completely
-    b->bytes[2] = (uint8_t)(radio & 0x3) << 6; // Last two bits at start of byte
-    b->bytes[2] |= (uint8_t)(tx_power & 0x3F); // Fill the rest of the six bits
-    b->bytes[3] = (uint8_t)(request & 0x1);    // Set dead space and request indicator
-}
-
-/**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
  * @param measurement_time The mission time at the taking of the measurement

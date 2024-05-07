@@ -122,8 +122,10 @@ void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t
 
 /** A data block containing information about pressure. */
 typedef struct {
-    /** The pressure data block can be accessed as a bytes array. */
-    uint8_t bytes[8];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Pressure measured in Pascals. */
+    uint32_t pressure;
 } PressureDB;
 
 void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure);

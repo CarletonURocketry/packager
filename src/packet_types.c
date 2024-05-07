@@ -93,8 +93,8 @@ void temperature_db_init(TemperatureDB *b, const uint32_t mission_time, const in
  * @param pressure The calculated pressure in units of Pascals.
  */
 void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure) {
-    memcpy(b->bytes, &mission_time, sizeof(mission_time));
-    memcpy(b->bytes + sizeof(mission_time), &pressure, sizeof(pressure));
+    b->mission_time = mission_time;
+    b->pressure = pressure;
 }
 
 /**
@@ -133,10 +133,9 @@ void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const 
     memcpy(b->bytes + sizeof(mission_time), &full_scale_range, sizeof(full_scale_range));
     // One byte of dead space after FSR
     memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
-           sizeof(y_axis));
-    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
-           &z_axis, sizeof(z_axis));
+    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
+    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis), &z_axis,
+           sizeof(z_axis));
 }
 
 /**

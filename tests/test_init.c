@@ -3,8 +3,13 @@
  * @brief Tests the init functions for packet encoding.
  */
 #include "../src/include/packet_types.h"
-#include "harness.h"
 #include <string.h>
+
+// Define appropriate variables for tracking test statistics within macros
+#define TOTAL_COUNT total
+#define FAIL_COUNT failed
+// Include harness
+#include "harness.h"
 
 /**
  * Test that a packet header is initialized properly from provided parameters.
@@ -42,14 +47,76 @@ bool test_block_header_init(void) {
  * Test that an altitude block can be properly initialized using parameters.
  */
 bool test_altitude_block_init(void) {
+
     AltitudeDB b;
     altitude_db_init(&b, 156, 12);
-    // TODO: finish after struct conversion
+
+    LOG_ASSERT(b.mission_time == 156);
+    LOG_ASSERT(b.altitude == 12);
+
+    altitude_db_init(&b, 156, -12);
+    LOG_ASSERT(b.altitude == -12);
+
     return true;
 }
 
+/** Test that a temperature data block can be properly initialized using parameters. */
+bool test_temperature_block_init(void) {
+
+    TemperatureDB b;
+    temperature_db_init(&b, 1500, -2000);
+
+    LOG_ASSERT(b.mission_time == 1500);
+    LOG_ASSERT(b.temperature == -2000);
+
+    temperature_db_init(&b, 1500, 3000);
+    LOG_ASSERT(b.temperature == 3000);
+
+    return true;
+}
+
+/** Test that a pressure data block can be properly initialized using parameters. */
+bool test_pressure_block_init(void) {
+
+    PressureDB b;
+    pressure_db_init(&b, 1001, 55);
+
+    LOG_ASSERT(b.mission_time == 1001);
+    LOG_ASSERT(b.pressure == 55);
+
+    return true;
+}
+
+/** Test that a humidity data block can be properly initialized using parameters. */
+bool test_humidity_block_init(void) {
+
+    HumidityDB b;
+    humidity_db_init(&b, 0, 18);
+    LOG_ASSERT(b.mission_time == 0);
+    LOG_ASSERT(b.humidity == 18);
+
+    humidity_db_init(&b, 0, 10000);
+    LOG_ASSERT(b.humidity == 10000);
+
+    return true;
+}
+
+/** Test that an angular velocity data block can be initialized using parameters. */
+
 int main(void) {
+
+    // Track test statistics
+    size_t total = 0;
+    size_t failed = 0;
+
     RUN_TEST(test_packet_header_init);
     RUN_TEST(test_block_header_init);
-    return true;
+    RUN_TEST(test_altitude_block_init);
+    RUN_TEST(test_temperature_block_init);
+    RUN_TEST(test_pressure_block_init);
+    RUN_TEST(test_humidity_block_init);
+
+    HARNESS_RESULTS();
+
+    return EXIT_SUCCESS;
 }

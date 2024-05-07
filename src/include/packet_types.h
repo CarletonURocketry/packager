@@ -114,8 +114,10 @@ void temperature_db_init(TemperatureDB *b, const uint32_t mission_time, const in
 
 /** A data block containing information about humidity. */
 typedef struct {
-    /** The humidity data block can be accessed as a bytes array. */
-    uint8_t bytes[8];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Relative humidity in ten thousandths of a percent. */
+    uint32_t humidity;
 } HumidityDB;
 
 void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t humidity);

@@ -145,8 +145,8 @@ void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const 
  * @param humidity The calculated humidity in ten thousandths of a percent.
  */
 void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t humidity) {
-    memcpy(b->bytes, &mission_time, sizeof(mission_time));
-    memcpy(b->bytes + sizeof(mission_time), &humidity, sizeof(humidity));
+    b->mission_time = mission_time;
+    b->humidity = humidity;
 }
 
 /**

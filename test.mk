@@ -1,7 +1,7 @@
 ### WARNINGS ###
 WARNINGS += -Wall -Wextra -Wshadow -Wundef -Wformat=2 -Wtrampolines -Wfloat-equal
 WARNINGS += -Wbad-function-cast -Wstrict-prototypes -Wpacked
-WARNINGS += -Wno-aggressive-loop-optimizations -Wmissing-prototypes -Winit-self
+WARNINGS += -Wno-aggressive-loop-optimizations -Winit-self
 WARNINGS += -Wmissing-declarations -Wmissing-format-attribute -Wunreachable-code
 WARNINGS += -Wshift-overflow=2 -Wduplicated-cond -Wpointer-arith -Wwrite-strings
 WARNINGS += -Wnested-externs -Wcast-align -Wredundant-decls
@@ -31,7 +31,7 @@ binaries: $(TESTFILES)
 # Run test file binary
 $(TESTBINS): binaries
 	$(info Running test $@)
-	$@
+	@$@
 
 all: binaries
 

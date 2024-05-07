@@ -101,41 +101,32 @@ void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t 
  * Initializes an angular velocity block with the provided information.
  * @param b The angular velocity block to be initialized.
  * @param mission_time The mission time when the measurement was taken.
- * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
- * maximum and minimum angular velocity that can be measured.
- * @param x_axis The angular velocity measurement for the x axis.
- * @param y_axis The angular velocity measurement for the y axis.
- * @param z_axis The angular velocity measurement for the z axis.
+ * @param x_axis The angular velocity measurement for the x axis in tenths of degrees per second.
+ * @param y_axis The angular velocity measurement for the y axis in tenths of degrees per second.
+ * @param z_axis The angular velocity measurement for the z axis in tenths of degrees per second.
  */
-void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int8_t full_scale_range,
-                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
-    memcpy(b->bytes, &mission_time, sizeof(mission_time));
-    memcpy(b->bytes + sizeof(mission_time), &full_scale_range, sizeof(full_scale_range));
-    memcpy(b->bytes + sizeof(mission_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy(b->bytes + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
-    memcpy(b->bytes + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
-           sizeof(z_axis));
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int16_t x_axis,
+                              const int16_t y_axis, const int16_t z_axis) {
+    b->mission_time = mission_time;
+    b->x = x_axis;
+    b->y = y_axis;
+    b->z = z_axis;
 }
 
 /**
  * Initializes an acceleration data block with the provided information.
  * @param b The acceleration data block to be initialized.
  * @param mission_time The mission time when the measurement was taken.
- * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
- * maximum and minimum acceleration that can be measured.
- * @param x_axis The acceleration measurement for the x axis.
- * @param y_axis The acceleration measurement for the y axis.
- * @param z_axis The acceleration measurement for the z axis.
+ * @param x_axis The acceleration measurement for the x axis in centimetres per second squared.
+ * @param y_axis The acceleration measurement for the y axis in centimetres per second squared.
+ * @param z_axis The acceleration measurement for the z axis in centimetres per second squared.
  * */
-void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int8_t full_scale_range,
-                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
-    memcpy(b->bytes, &mission_time, sizeof(mission_time));
-    memcpy(b->bytes + sizeof(mission_time), &full_scale_range, sizeof(full_scale_range));
-    // One byte of dead space after FSR
-    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
-    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis), &z_axis,
-           sizeof(z_axis));
+void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
+                          const int16_t z_axis) {
+    b->mission_time = mission_time;
+    b->x = x_axis;
+    b->y = y_axis;
+    b->z = z_axis;
 }
 
 /**

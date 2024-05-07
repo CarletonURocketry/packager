@@ -134,20 +134,37 @@ void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t 
 
 /** A data block containing information about angular velocity. */
 typedef struct {
-    /** The angular velocity block accessed as a bytes array */
-    uint8_t bytes[12];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Angular velocity in the x-axis measured in tenths of degrees per second. */
+    int16_t x;
+    /** Angular velocity in the y-axis measured in tenths of degrees per second. */
+    int16_t y;
+    /** Angular velocity in the z-axis measured in tenths of degrees per second. */
+    int16_t z;
+    /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
+    int16_t _padding;
 } AngularVelocityDB;
 
-void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int8_t full_scale_range,
-                              const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int16_t x_axis,
+                              const int16_t y_axis, const int16_t z_axis);
 
 /** A data block containing information about acceleration. */
 typedef struct acceleration_data_block {
-    uint8_t bytes[12];
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Linear acceleration in the x-axis measured in centimetres per second squared. */
+    int16_t x;
+    /** Linear acceleration in the y-axis measured in centimetres per second squared. */
+    int16_t y;
+    /** Linear acceleration in the z-axis measured in centimetres per second squared. */
+    int16_t z;
+    /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
+    int16_t _padding;
 } AccelerationDB;
 
-void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int8_t full_scale_range,
-                          const int16_t x_axis, const int16_t y_axis, const int16_t z_axis);
+void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
+                          const int16_t z_axis);
 
 /** A data block containing location information provided by a GNSS sensor */
 typedef struct gnss_location_data_block {

@@ -38,7 +38,7 @@
 #define HARNESS_RESULTS()                                                                                              \
     do {                                                                                                               \
         if (FAIL_COUNT == 0) {                                                                                         \
-            printf("ALL %lu TESTS PASSED.\n", TOTAL_COUNT);                                                             \
+            printf("ALL %lu TESTS PASSED.\n", TOTAL_COUNT);                                                            \
             exit(EXIT_SUCCESS);                                                                                        \
         } else {                                                                                                       \
             fprintf(stderr, "PASSED: %lu\nFAILED: %lu\n", TOTAL_COUNT - FAIL_COUNT, FAIL_COUNT);                       \

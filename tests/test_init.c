@@ -102,6 +102,34 @@ bool test_humidity_block_init(void) {
 }
 
 /** Test that an angular velocity data block can be initialized using parameters. */
+bool test_angular_velocity_block_init(void) {
+
+    AngularVelocityDB b;
+    angular_velocity_db_init(&b, 1, -1, 2, -3);
+
+    LOG_ASSERT(b.mission_time == 1);
+    LOG_ASSERT(b.x == -1);
+    LOG_ASSERT(b.y == 2);
+    LOG_ASSERT(b.z == -3);
+    LOG_ASSERT(b._padding == 0);
+
+    return true;
+}
+
+/** Test that a acceleration data block can be initialized using parameters. */
+bool test_acceleration_block_init(void) {
+
+    AccelerationDB b;
+    acceleration_db_init(&b, 1, -1, 2, -3);
+
+    LOG_ASSERT(b.mission_time == 1);
+    LOG_ASSERT(b.x == -1);
+    LOG_ASSERT(b.y == 2);
+    LOG_ASSERT(b.z == -3);
+    LOG_ASSERT(b._padding == 0);
+
+    return true;
+}
 
 int main(void) {
 
@@ -115,6 +143,8 @@ int main(void) {
     RUN_TEST(test_temperature_block_init);
     RUN_TEST(test_pressure_block_init);
     RUN_TEST(test_humidity_block_init);
+    RUN_TEST(test_angular_velocity_block_init);
+    RUN_TEST(test_acceleration_block_init);
 
     HARNESS_RESULTS();
 

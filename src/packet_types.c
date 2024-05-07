@@ -67,75 +67,75 @@ void block_header_init(BlockHeader *b, const uint16_t length, const BlockType ty
 /**
  * Initializes an altitude data block with the provided information.
  * @param b The altitude data to be initialized
- * @param measurement_time The mission time at the taking of the measurement
- * @param altitude The calculated altitude in units of 1 mm/LSB.
+ * @param mission_time The mission time at the taking of the measurement
+ * @param altitude The calculated altitude in units millimetres above/below launch height.
  */
-void altitude_db_init(AltitudeDB *b, const uint32_t measurement_time, const int32_t altitude) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &altitude, sizeof(altitude));
+void altitude_db_init(AltitudeDB *b, const uint32_t mission_time, const int32_t altitude) {
+    b->mission_time = mission_time;
+    b->altitude = altitude;
 }
 
 /**
  * Initializes a temperature data block with the provided information.
  * @param b The temperature data block to be initialized.
- * @param measurement_time The mission time at the taking of the measurement
+ * @param mission_time The mission time at the taking of the measurement
  * @param temperature The calculated temperature in units of millidegrees Celsius.
  */
-void temperature_db_init(TemperatureDB *b, const uint32_t measurement_time, const int32_t temperature) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &temperature, sizeof(temperature));
+void temperature_db_init(TemperatureDB *b, const uint32_t mission_time, const int32_t temperature) {
+    b->mission_time = mission_time;
+    b->temperature = temperature;
 }
 
 /**
  * Initializes a temperature data block with the provided information.
  * @param b The temperature data block to be initialized.
- * @param measurement_time The mission time at the taking of the measurement
+ * @param mission_time The mission time at the taking of the measurement
  * @param pressure The calculated pressure in units of Pascals.
  */
-void pressure_db_init(PressureDB *b, const uint32_t measurement_time, const int32_t pressure) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &pressure, sizeof(pressure));
+void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure) {
+    memcpy(b->bytes, &mission_time, sizeof(mission_time));
+    memcpy(b->bytes + sizeof(mission_time), &pressure, sizeof(pressure));
 }
 
 /**
  * Initializes an angular velocity block with the provided information.
  * @param b The angular velocity block to be initialized.
- * @param measurement_time The mission time when the measurement was taken.
+ * @param mission_time The mission time when the measurement was taken.
  * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
  * maximum and minimum angular velocity that can be measured.
  * @param x_axis The angular velocity measurement for the x axis.
  * @param y_axis The angular velocity measurement for the y axis.
  * @param z_axis The angular velocity measurement for the z axis.
  */
-void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int8_t full_scale_range,
                               const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
-    memcpy(b->bytes + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
+    memcpy(b->bytes, &mission_time, sizeof(mission_time));
+    memcpy(b->bytes + sizeof(mission_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy(b->bytes + sizeof(mission_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy(b->bytes + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis, sizeof(y_axis));
+    memcpy(b->bytes + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(y_axis), &z_axis,
            sizeof(z_axis));
 }
 
 /**
  * Initializes an acceleration data block with the provided information.
  * @param b The acceleration data block to be initialized.
- * @param measurement_time The mission time when the measurement was taken.
+ * @param mission_time The mission time when the measurement was taken.
  * @param full_scale_range The full scale range of the gyroscope in degrees per second. This value represents the
  * maximum and minimum acceleration that can be measured.
  * @param x_axis The acceleration measurement for the x axis.
  * @param y_axis The acceleration measurement for the y axis.
  * @param z_axis The acceleration measurement for the z axis.
  * */
-void acceleration_db_init(AccelerationDB *b, const uint32_t measurement_time, const int8_t full_scale_range,
+void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int8_t full_scale_range,
                           const int16_t x_axis, const int16_t y_axis, const int16_t z_axis) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &full_scale_range, sizeof(full_scale_range));
+    memcpy(b->bytes, &mission_time, sizeof(mission_time));
+    memcpy(b->bytes + sizeof(mission_time), &full_scale_range, sizeof(full_scale_range));
     // One byte of dead space after FSR
-    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
-    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
+    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range), &x_axis, sizeof(x_axis));
+    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis), &y_axis,
            sizeof(y_axis));
-    memcpy(b->bytes + 1 + sizeof(measurement_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
+    memcpy(b->bytes + 1 + sizeof(mission_time) + sizeof(full_scale_range) + sizeof(x_axis) + sizeof(z_axis),
            &z_axis, sizeof(z_axis));
 }
 
@@ -168,12 +168,12 @@ void telemetry_request_block_init(TelemetryRequestBlock *b, const uint8_t data_s
 /**
  * Initializes a humidity data block with the provided information.
  * @param b The humidity data block to be initialized.
- * @param measurement_time The mission time at the taking of the measurement
+ * @param mission_time The mission time at the taking of the measurement
  * @param humidity The calculated humidity in ten thousandths of a percent.
  */
-void humidity_db_init(HumidityDB *b, const uint32_t measurement_time, const uint32_t humidity) {
-    memcpy(b->bytes, &measurement_time, sizeof(measurement_time));
-    memcpy(b->bytes + sizeof(measurement_time), &humidity, sizeof(humidity));
+void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t humidity) {
+    memcpy(b->bytes, &mission_time, sizeof(mission_time));
+    memcpy(b->bytes + sizeof(mission_time), &humidity, sizeof(humidity));
 }
 
 /**

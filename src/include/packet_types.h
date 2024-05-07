@@ -166,15 +166,6 @@ typedef struct acceleration_data_block {
 void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
                           const int16_t z_axis);
 
-/** A data block containing location information provided by a GNSS sensor */
-typedef struct gnss_location_data_block {
-    uint8_t bytes[32];
-} GNSSLocationDB;
-
-void gnss_location_db_init(GNSSLocationDB *b, const uint32_t fix_time, const int32_t latitude, const int32_t longitude,
-                           const uint32_t utc_time, const int32_t altitude, int16_t speed, int16_t course,
-                           uint16_t pdop, uint16_t hdop, uint16_t vdop, uint8_t sats, uint8_t fix);
-
 /** Represents a radio packet block with variable length contents. */
 typedef struct {
     /** The block header. Block length is encoded here. */

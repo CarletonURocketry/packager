@@ -141,8 +141,8 @@ void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t
 }
 
 /**
- * Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store
- * the block.
+ * Appends a block to a packet.
+ * WARNING: This function assumes that there is sufficient memory in the packet to store the block.
  * @param p The packet to be appended to.
  * @param b The block to append.
  * @return True if the append succeeded, false if there was no space to append the block.

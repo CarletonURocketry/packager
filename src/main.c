@@ -1,5 +1,7 @@
 #include "packet_types.h"
+#include <errno.h>
 #include <getopt.h>
+#include <mqueue.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,13 +29,15 @@ const char *DTYPES[] = {
 #define BLOCK_LIMIT 4
 /** The version of the packet encoding being used. */
 #define VERSION 1
+/** The name of the message queue for outputting encoded packets. */
+#define OUTPUT_QUEUE "packager-out"
 
 /** Static variable to store the user HAM radio call sign. */
 static char *callsign = NULL;
 /** Static variable to store the file name to read input from instead of stdin. */
 static char *infile = NULL;
-/** Static variable to store the file name to write output to instead of stdout. */
-static char *outfile = NULL;
+/** Whether or not to print the encoded packets to stdout (false by default). */
+static bool print_output = false;
 /** Static buffer for reading input. */
 static char buffer[BUFFER_SIZE] = {0};
 
@@ -52,6 +56,9 @@ static uint16_t pkt_count = 0;
 /** The packet being constructed as input is read. */
 static Packet packet = {.blocks = blocks, .block_count = 0};
 
+/** TODO: Remove this in favour of a different implementation for Packet and Block types. */
+static uint8_t hacky_output_buffer[1024];
+
 void construct_block(Block *block, DataBlockType t, size_t size);
 Dtype dtype_from_str(const char *str);
 
@@ -59,13 +66,13 @@ int main(int argc, char **argv) {
 
     /* Fetch command line arguments. */
     int c;
-    while ((c = getopt(argc, argv, ":i:o:")) != -1) {
+    while ((c = getopt(argc, argv, ":i:p")) != -1) {
         switch (c) {
         case 'i':
             infile = optarg;
             break;
-        case 'o':
-            outfile = optarg;
+        case 'p':
+            print_output = true;
             break;
         case ':':
             fprintf(stderr, "Option -%c requires an argument.\n", optopt);
@@ -96,14 +103,11 @@ int main(int argc, char **argv) {
         }
     }
 
-    /* Open output stream. */
-    FILE *output = stdout;
-    if (outfile != NULL) {
-        output = fopen(outfile, "w");
-        if (input == NULL) {
-            fprintf(stderr, "File '%s' could not be opened for writing.\n", outfile);
-            exit(EXIT_FAILURE);
-        }
+    /** Open message queue. */
+    mqd_t out_q = mq_open(OUTPUT_QUEUE, O_CREAT | O_WRONLY, S_IWOTH, NULL);
+    if (out_q == -1) {
+        fprintf(stderr, "Could not open output queue %s with error %s\n", OUTPUT_QUEUE, strerror(errno));
+        exit(EXIT_FAILURE);
     }
 
     bool no_input = false;
@@ -159,7 +163,25 @@ int main(int argc, char **argv) {
             }
         }
         pkt_count++;
-        packet_print_hex(output, &packet);
+
+        if (print_output) packet_print_hex(stdout, &packet);
+
+        // Send encoded packet over message queue
+        uint8_t *cur = hacky_output_buffer;
+        memcpy(cur, &packet.header, sizeof(packet.header));
+        cur += sizeof(packet.header);
+
+        for (uint8_t i = 0; i < packet.block_count; i++) {
+            memcpy(cur, &packet.blocks[i].header, sizeof(packet.blocks[i].header));
+            cur += sizeof(packet.blocks[i].header);
+            uint16_t content_len = block_header_get_length(&packet.blocks[i].header) - sizeof(packet.blocks[i].header);
+            memcpy(cur, packet.blocks[i].contents, content_len);
+            cur += content_len;
+        }
+
+        if (mq_send(out_q, (char *)hacky_output_buffer, (cur - hacky_output_buffer), 0) == -1) {
+            fprintf(stderr, "Failed to output encoded packet #%u with error: %s\n", pkt_count - 1, strerror(errno));
+        }
     }
     return EXIT_SUCCESS;
 }

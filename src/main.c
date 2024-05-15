@@ -15,12 +15,20 @@ typedef enum {
     DTYPE_HUMIDITY = 3,    /**< Humidity */
     DTYPE_ALTITUDE = 4,    /**< Altitude */
     DTYPE_DNE = 5,         /**< Data type does not exist */
+    DTYPE_ACCELERATON = 6, /**< Linear acceleration*/
+    DTYPE_VELOCITY = 7,    /**< Angular velocity*/
 } Dtype;
 
 /** String representation of the possible data types. */
 const char *DTYPES[] = {
-    [DTYPE_TEMPERATURE] = "Temperature", [DTYPE_TIME] = "Time",         [DTYPE_PRESSURE] = "Pressure", [DTYPE_DNE] = "",
-    [DTYPE_ALTITUDE] = "Altitude",       [DTYPE_HUMIDITY] = "Humidity",
+    [DTYPE_TEMPERATURE] = "Temperature",
+    [DTYPE_TIME] = "Time",
+    [DTYPE_PRESSURE] = "Pressure",
+    [DTYPE_DNE] = "",
+    [DTYPE_ALTITUDE] = "Altitude",
+    [DTYPE_HUMIDITY] = "Humidity",
+    [DTYPE_ACCELERATON] = "Linear acceleration",
+    [DTYPE_VELOCITY] = "Angular velocity",
 };
 
 /** The size of the buffer for reading sensor data input. */
@@ -156,6 +164,28 @@ int main(int argc, char **argv) {
                 just_added_block_size = sizeof(AltitudeDB);
                 add_block_header(DATA_ALT, just_added_block_size);
                 altitude_db_init((AltitudeDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                break;
+
+            case DTYPE_ACCELERATON:
+                // if (!room_for_block(sizeof(AccelerationDB))) {
+                //     continue;
+                // }
+                just_added_block_size = sizeof(AccelerationDB);
+                add_block_header(DATA_ACCEL, just_added_block_size);
+                acceleration_db_init((AccelerationDB *)packet_pos, last_time, strtod(strtok(NULL, ","), NULL) / 100,
+                                     strtod(strtok(NULL, ","), NULL) / 100, strtod(strtok(NULL, ","), NULL) / 100);
+                break;
+
+            case DTYPE_VELOCITY:
+                // if (!room_for_block(sizeof(AngularVelocityDB))) {
+                //     continue;
+                // }
+                just_added_block_size = sizeof(AngularVelocityDB);
+                add_block_header(DATA_ANGULAR_VEL, just_added_block_size);
+                angular_velocity_db_init((AngularVelocityDB *)packet_pos, last_time,
+                                         strtod(strtok(NULL, ","), NULL) / 10, strtod(strtok(NULL, ","), NULL) / 10,
+                                         strtod(strtok(NULL, ","), NULL) / 10);
+                printf("done\n");
                 break;
 
             default:

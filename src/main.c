@@ -1,5 +1,7 @@
 #include "packet_types.h"
+#include <errno.h>
 #include <getopt.h>
+#include <mqueue.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,45 +29,44 @@ const char *DTYPES[] = {
 #define BLOCK_LIMIT 4
 /** The version of the packet encoding being used. */
 #define VERSION 1
+/** The name of the message queue for outputting encoded packets. */
+#define OUTPUT_QUEUE "packager-out"
 
 /** Static variable to store the user HAM radio call sign. */
 static char *callsign = NULL;
 /** Static variable to store the file name to read input from instead of stdin. */
 static char *infile = NULL;
-/** Static variable to store the file name to write output to instead of stdout. */
-static char *outfile = NULL;
+/** Whether or not to print the encoded packets to stdout (false by default). */
+static bool print_output = false;
 /** Static buffer for reading input. */
 static char buffer[BUFFER_SIZE] = {0};
 
 /* --- CONSTRUCTING PACKETS --- */
 
-/** Memory for storing blocks in packet as it is constructed. */
-static Block blocks[BLOCK_LIMIT];
-/** Static buffer for storing the contents of packets as they are being created from input. */
-static uint8_t block_contents[PACKET_MAX_SIZE];
-/** The current position in the block_contents array at which to allocate new contents. */
-static uint8_t *contents_pos = &block_contents[0];
-/** Memory for storing new block headers as they are parsed. */
-static Block block;
 /** Packet count tracker for encoding packets number. */
 static uint16_t pkt_count = 0;
-/** The packet being constructed as input is read. */
-static Packet packet = {.blocks = blocks, .block_count = 0};
 
-void construct_block(Block *block, DataBlockType t, size_t size);
+/** A buffer for constructing the current packet. */
+static uint8_t packet[PACKET_MAX_SIZE];
+
+/** The current position within the packet buffer. */
+static uint8_t *packet_pos = packet;
+
+void add_block_header(DataBlockType t, size_t size);
 Dtype dtype_from_str(const char *str);
+bool room_for_block(size_t b_len);
 
 int main(int argc, char **argv) {
 
     /* Fetch command line arguments. */
     int c;
-    while ((c = getopt(argc, argv, ":i:o:")) != -1) {
+    while ((c = getopt(argc, argv, ":i:p")) != -1) {
         switch (c) {
         case 'i':
             infile = optarg;
             break;
-        case 'o':
-            outfile = optarg;
+        case 'p':
+            print_output = true;
             break;
         case ':':
             fprintf(stderr, "Option -%c requires an argument.\n", optopt);
@@ -96,25 +97,22 @@ int main(int argc, char **argv) {
         }
     }
 
-    /* Open output stream. */
-    FILE *output = stdout;
-    if (outfile != NULL) {
-        output = fopen(outfile, "w");
-        if (input == NULL) {
-            fprintf(stderr, "File '%s' could not be opened for writing.\n", outfile);
-            exit(EXIT_FAILURE);
-        }
+    /** Open message queue. */
+    mqd_t out_q = mq_open(OUTPUT_QUEUE, O_CREAT | O_WRONLY, S_IWOTH, NULL);
+    if (out_q == -1) {
+        fprintf(stderr, "Could not open output queue %s with error %s\n", OUTPUT_QUEUE, strerror(errno));
+        exit(EXIT_FAILURE);
     }
 
     bool no_input = false;
     uint32_t last_time = 0;
     while (!no_input) {
-        // Construct packet out of BLOCK_LIMIT blocks
-        packet.block_count = 0;
-        packet_header_init(&packet.header, callsign, 0, VERSION, ROCKET, pkt_count);
+        packet_header_init((PacketHeader *)packet, callsign, 0, VERSION, ROCKET, pkt_count);
+        packet_pos += sizeof(PacketHeader); // We just added a packet header
 
-        contents_pos = &block_contents[0];
-        while (packet.block_count < BLOCK_LIMIT) {
+        // TODO: need a better condition for ending packet construction that still maximizes buffer use
+        // WARNING: Currently assumes largest possible block is AngularVelocityDB
+        while (room_for_block(sizeof(AngularVelocityDB))) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
             if (fgets(buffer, BUFFER_SIZE, input) == NULL) {
@@ -125,41 +123,60 @@ int main(int argc, char **argv) {
             // Decide what contents to add to the block
             char *dtype_str = strtok(buffer, ":");
             Dtype dtype = dtype_from_str(dtype_str);
+            size_t just_added_block_size;
 
             switch (dtype) {
             case DTYPE_TIME:
                 // Update with most recent time measurement to use as measurement time for other packets
                 last_time = strtoul(strtok(NULL, ":"), NULL, 10);
                 break;
+
             case DTYPE_TEMPERATURE:
-                temperature_db_init((TemperatureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_TEMP, sizeof(TemperatureDB));
+                if (!room_for_block(sizeof(TemperatureDB))) {
+                    continue;
+                }
+                just_added_block_size = sizeof(TemperatureDB);
+                add_block_header(DATA_TEMP, just_added_block_size);
+                temperature_db_init((TemperatureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
                 break;
+
             case DTYPE_PRESSURE:
-                pressure_db_init((PressureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_PRESSURE, sizeof(PressureDB));
+                just_added_block_size = sizeof(PressureDB);
+                add_block_header(DATA_PRESSURE, just_added_block_size);
+                pressure_db_init((PressureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
                 break;
+
             case DTYPE_HUMIDITY:
-                humidity_db_init((HumidityDB *)contents_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_HUMIDITY, sizeof(HumidityDB));
+                just_added_block_size = sizeof(HumidityDB);
+                add_block_header(DATA_HUMIDITY, just_added_block_size);
+                humidity_db_init((HumidityDB *)packet_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
                 break;
+
             case DTYPE_ALTITUDE:
-                altitude_db_init((AltitudeDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_ALT, sizeof(AltitudeDB));
+                just_added_block_size = sizeof(AltitudeDB);
+                add_block_header(DATA_ALT, just_added_block_size);
+                altitude_db_init((AltitudeDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
                 break;
+
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);
                 continue; // Skip to next iteration without storing block
             }
 
-            // Copy the newly made block into the packet and handle insufficient space
-            if (!packet_append_block(&packet, block)) {
-                fprintf(stderr, "Packet size exceeded before block limit exceeded! Sending packet.\n");
-                break;
-            }
+            // Increment position in packet buffer to match most recently added block type
+            packet_pos += just_added_block_size;
+            packet_header_inc_length((PacketHeader *)packet, just_added_block_size);
         }
-        pkt_count++;
-        packet_print_hex(output, &packet);
+
+        pkt_count++; // One more packet constructed
+
+        if (mq_send(out_q, (char *)packet, (packet_pos - packet), 0) == -1) {
+            fprintf(stderr, "Failed to output encoded packet #%u with error: %s\n", pkt_count - 1, strerror(errno));
+        }
+
+        if (print_output) packet_print_hex(stdout, packet);
+
+        packet_pos = packet; // Reset position to overwrite with next packet
     }
     return EXIT_SUCCESS;
 }
@@ -177,13 +194,27 @@ Dtype dtype_from_str(const char *str) {
 }
 
 /**
- * Updates a block with the required information for allocating a new data block.
- * @param b The block to be updated.
+ * Adds a block header to the global packet buffer.
  * @param t The type of the data block.
- * @param size The size of the data block that will be stored in this block.
+ * @param size The size of the data block (in bytes) that will be stored in this block, not including its header.
  */
-void construct_block(Block *b, DataBlockType t, size_t size) {
-    block_header_init(&b->header, size, TYPE_DATA, t, GROUNDSTATION);
-    b->contents = contents_pos;
-    contents_pos += size;
+void add_block_header(DataBlockType t, size_t size) {
+    block_header_init((BlockHeader *)packet_pos, size, TYPE_DATA, t, GROUNDSTATION);
+    packet_pos += sizeof(BlockHeader); // We just added a block header
+
+    // Update packet header length to include just added block header
+    packet_header_inc_length((PacketHeader *)packet, sizeof(BlockHeader));
+}
+
+/**
+ * Checks if there is room for a block in the global packet buffer.
+ * @param b_len The size of the block (not including its header) to append to the packet buffer.
+ * @return True if the append succeeded, false if there was no space to append the block.
+ */
+bool room_for_block(size_t b_len) {
+    const uint16_t p_len = packet_header_get_length((PacketHeader *)packet);
+
+    // Ensure that there is enough space for the block to be added to the packet
+    if (p_len + b_len + sizeof(BlockHeader) > PACKET_MAX_SIZE) return false;
+    return true;
 }

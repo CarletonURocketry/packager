@@ -166,26 +166,7 @@ typedef struct acceleration_data_block {
 void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
                           const int16_t z_axis);
 
-/** Represents a radio packet block with variable length contents. */
-typedef struct {
-    /** The block header. Block length is encoded here. */
-    BlockHeader header;
-    /** The block contents up to a length of 128 bytes. */
-    uint8_t *contents;
-} Block;
-
-/** Represents a packet with a variable number of blocks. Maximum of 256 bytes. */
-typedef struct {
-    /** The packet header. Packet length is encoded here. */
-    PacketHeader header;
-    /** Packet contents in blocks, up to 256 bytes long. */
-    Block *blocks;
-    /** The number of blocks in this packet. */
-    uint8_t block_count;
-} Packet;
-
-bool packet_append_block(Packet *p, const Block b);
-void packet_print_hex(FILE *stream, Packet *packet);
+void packet_print_hex(FILE *stream, uint8_t *packet);
 
 /**
  * Sets the length of the packet the header is associated with.
@@ -202,6 +183,15 @@ static inline void packet_header_set_length(PacketHeader *p, const uint16_t leng
  * @return The length of the packet header in bytes, including itself.
  */
 static inline uint16_t packet_header_get_length(const PacketHeader *p) { return (p->len + 1) * 4; }
+
+/**
+ * Increments the length of the packet header.
+ * @param p The packet header change the length of.
+ * @param l The additional length (in bytes) to add to the packet length.
+ */
+static inline void packet_header_inc_length(PacketHeader *p, const uint16_t l) {
+    packet_header_set_length(p, packet_header_get_length(p) + l - sizeof(PacketHeader));
+}
 
 /**
  * Sets the length of the block the block header is associated with.

@@ -141,30 +141,6 @@ void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t
 }
 
 /**
- * Appends a block to a packet.
- * WARNING: This function assumes that there is sufficient memory in the packet to store the block.
- * @param p The packet to be appended to.
- * @param b The block to append.
- * @return True if the append succeeded, false if there was no space to append the block.
- */
-bool packet_append_block(uint8_t *p, const BlockHeader bh) {
-
-    const uint16_t p_len = packet_header_get_length((PacketHeader *)p);
-    const uint16_t b_len = block_header_get_length(&bh);
-
-    // Ensure that there is enough space for the block to be added to the packet
-    if (p_len + b_len > PACKET_MAX_SIZE) return false;
-
-    // Add the block at the end of the packet
-    *(BlockHeader *)(p + p_len) = bh;
-
-    // Update packet length
-    packet_header_set_length((PacketHeader *)p, p_len + b_len);
-
-    return true;
-}
-
-/**
  * Prints a packet to the output stream in hexadecimal representation.
  * @param stream The output stream to which the packet should be printed.
  * @param packet The packet to be printed.

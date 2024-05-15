@@ -72,7 +72,7 @@ typedef struct {
     uint8_t src_addr;
     /** Which number this packet is in the stream of sent packets. */
     uint32_t packet_num;
-} TIGHTLY_PACKED PacketHeader;
+} PacketHeader;
 
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint32_t packet_number);
@@ -98,7 +98,7 @@ typedef struct {
     uint32_t mission_time;
     /** Altitude in units of millimetres above/below the launch height. */
     int32_t altitude;
-} TIGHTLY_PACKED AltitudeDB;
+} AltitudeDB;
 
 void altitude_db_init(AltitudeDB *b, const uint32_t mission_time, const int32_t altitude);
 
@@ -108,7 +108,7 @@ typedef struct {
     uint32_t mission_time;
     /** Temperature in millidegrees Celsius. */
     int32_t temperature;
-} TIGHTLY_PACKED TemperatureDB;
+} TemperatureDB;
 
 void temperature_db_init(TemperatureDB *b, const uint32_t mission_time, const int32_t temperature);
 
@@ -118,7 +118,7 @@ typedef struct {
     uint32_t mission_time;
     /** Relative humidity in ten thousandths of a percent. */
     uint32_t humidity;
-} TIGHTLY_PACKED HumidityDB;
+} HumidityDB;
 
 void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t humidity);
 
@@ -128,7 +128,7 @@ typedef struct {
     uint32_t mission_time;
     /** Pressure measured in Pascals. */
     uint32_t pressure;
-} TIGHTLY_PACKED PressureDB;
+} PressureDB;
 
 void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure);
 
@@ -144,7 +144,7 @@ typedef struct {
     int16_t z;
     /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
     int16_t _padding;
-} TIGHTLY_PACKED AngularVelocityDB;
+} AngularVelocityDB;
 
 void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int16_t x_axis,
                               const int16_t y_axis, const int16_t z_axis);
@@ -161,12 +161,11 @@ typedef struct acceleration_data_block {
     int16_t z;
     /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
     int16_t _padding;
-} TIGHTLY_PACKED AccelerationDB;
+} AccelerationDB;
 
 void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
                           const int16_t z_axis);
 
-bool packet_append_block(uint8_t *p, const BlockHeader bh);
 void packet_print_hex(FILE *stream, uint8_t *packet);
 
 /**
@@ -184,6 +183,15 @@ static inline void packet_header_set_length(PacketHeader *p, const uint16_t leng
  * @return The length of the packet header in bytes, including itself.
  */
 static inline uint16_t packet_header_get_length(const PacketHeader *p) { return (p->len + 1) * 4; }
+
+/**
+ * Increments the length of the packet header.
+ * @param p The packet header change the length of.
+ * @param l The additional length (in bytes) to add to the packet length.
+ */
+static inline void packet_header_inc_length(PacketHeader *p, const uint16_t l) {
+    packet_header_set_length(p, packet_header_get_length(p) + l - sizeof(PacketHeader));
+}
 
 /**
  * Sets the length of the block the block header is associated with.

@@ -52,8 +52,9 @@ static uint8_t packet[PACKET_MAX_SIZE];
 /** The current position within the packet buffer. */
 static uint8_t *packet_pos = packet;
 
-void construct_block(DataBlockType t, size_t size);
+void add_block_header(DataBlockType t, size_t size);
 Dtype dtype_from_str(const char *str);
+bool room_for_block(size_t b_len);
 
 int main(int argc, char **argv) {
 
@@ -109,8 +110,9 @@ int main(int argc, char **argv) {
         packet_header_init((PacketHeader *)packet, callsign, 0, VERSION, ROCKET, pkt_count);
         packet_pos += sizeof(PacketHeader); // We just added a packet header
 
-        // TODO: need a better condition for ending packet construction
-        while (packet_pos - packet < PACKET_MAX_SIZE) {
+        // TODO: need a better condition for ending packet construction that still maximizes buffer use
+        // WARNING: Currently assumes largest possible block is AngularVelocityDB
+        while (room_for_block(sizeof(AngularVelocityDB))) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
             if (fgets(buffer, BUFFER_SIZE, input) == NULL) {
@@ -121,36 +123,49 @@ int main(int argc, char **argv) {
             // Decide what contents to add to the block
             char *dtype_str = strtok(buffer, ":");
             Dtype dtype = dtype_from_str(dtype_str);
+            size_t just_added_block_size;
 
             switch (dtype) {
             case DTYPE_TIME:
                 // Update with most recent time measurement to use as measurement time for other packets
                 last_time = strtoul(strtok(NULL, ":"), NULL, 10);
                 break;
+
             case DTYPE_TEMPERATURE:
-                construct_block(DATA_TEMP, sizeof(TemperatureDB));
+                if (!room_for_block(sizeof(TemperatureDB))) {
+                    continue;
+                }
+                just_added_block_size = sizeof(TemperatureDB);
+                add_block_header(DATA_TEMP, just_added_block_size);
                 temperature_db_init((TemperatureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                packet_pos += sizeof(TemperatureDB);
                 break;
+
             case DTYPE_PRESSURE:
-                construct_block(DATA_PRESSURE, sizeof(PressureDB));
+                just_added_block_size = sizeof(PressureDB);
+                add_block_header(DATA_PRESSURE, just_added_block_size);
                 pressure_db_init((PressureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                packet_pos += sizeof(PressureDB);
                 break;
+
             case DTYPE_HUMIDITY:
-                construct_block(DATA_HUMIDITY, sizeof(HumidityDB));
+                just_added_block_size = sizeof(HumidityDB);
+                add_block_header(DATA_HUMIDITY, just_added_block_size);
                 humidity_db_init((HumidityDB *)packet_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
-                packet_pos += sizeof(HumidityDB);
                 break;
+
             case DTYPE_ALTITUDE:
-                construct_block(DATA_ALT, sizeof(AltitudeDB));
+                just_added_block_size = sizeof(AltitudeDB);
+                add_block_header(DATA_ALT, just_added_block_size);
                 altitude_db_init((AltitudeDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                packet_pos += sizeof(AltitudeDB);
                 break;
+
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);
                 continue; // Skip to next iteration without storing block
             }
+
+            // Increment position in packet buffer to match most recently added block type
+            packet_pos += just_added_block_size;
+            packet_header_inc_length((PacketHeader *)packet, just_added_block_size);
         }
 
         pkt_count++; // One more packet constructed
@@ -179,12 +194,27 @@ Dtype dtype_from_str(const char *str) {
 }
 
 /**
- * Updates a block with the required information for allocating a new data block.
- * @param b The block to be updated.
+ * Adds a block header to the global packet buffer.
  * @param t The type of the data block.
- * @param size The size of the data block that will be stored in this block.
+ * @param size The size of the data block (in bytes) that will be stored in this block, not including its header.
  */
-void construct_block(DataBlockType t, size_t size) {
+void add_block_header(DataBlockType t, size_t size) {
     block_header_init((BlockHeader *)packet_pos, size, TYPE_DATA, t, GROUNDSTATION);
     packet_pos += sizeof(BlockHeader); // We just added a block header
+
+    // Update packet header length to include just added block header
+    packet_header_inc_length((PacketHeader *)packet, sizeof(BlockHeader));
+}
+
+/**
+ * Checks if there is room for a block in the global packet buffer.
+ * @param b_len The size of the block (not including its header) to append to the packet buffer.
+ * @return True if the append succeeded, false if there was no space to append the block.
+ */
+bool room_for_block(size_t b_len) {
+    const uint16_t p_len = packet_header_get_length((PacketHeader *)packet);
+
+    // Ensure that there is enough space for the block to be added to the packet
+    if (p_len + b_len + sizeof(BlockHeader) > PACKET_MAX_SIZE) return false;
+    return true;
 }

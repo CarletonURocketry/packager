@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['construct_5fblock_0',['construct_block',['../main_8c.html#a713c69d2f51ab25c371869453860e41c',1,'main.c']]]
+  ['dtype_5ffrom_5fstr_0',['dtype_from_str',['../main_8c.html#a91f926104a6829eb0dec01215c63c2f4',1,'main.c']]]
 ];

@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['packet_5fappend_5fblock_0',['packet_append_block',['../packet__types_8c.html#aa0f7d3bde8660c68f0c96dd21da35eec',1,'packet_append_block(Packet *p, const Block b):&#160;packet_types.c'],['../packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec',1,'packet_append_block(Packet *p, const Block b):&#160;packet_types.c']]],
-  ['packet_5fheader_5finit_1',['packet_header_init',['../packet__types_8c.html#a048dbf1eece020fd3c685c5228eab595',1,'packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version, const DeviceAddress source, const uint32_t packet_number):&#160;packet_types.c'],['../packet__types_8h.html#a048dbf1eece020fd3c685c5228eab595',1,'packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version, const DeviceAddress source, const uint32_t packet_number):&#160;packet_types.c']]],
-  ['packet_5fprint_5fhex_2',['packet_print_hex',['../packet__types_8c.html#af63f80194e050629b872ff50d81a448d',1,'packet_print_hex(FILE *stream, Packet *packet):&#160;packet_types.c'],['../packet__types_8h.html#af63f80194e050629b872ff50d81a448d',1,'packet_print_hex(FILE *stream, Packet *packet):&#160;packet_types.c']]],
-  ['pressure_5fdb_5finit_3',['pressure_db_init',['../packet__types_8c.html#a16648799cfecdd04d856398fc91eae3c',1,'pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure):&#160;packet_types.c'],['../packet__types_8h.html#a16648799cfecdd04d856398fc91eae3c',1,'pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure):&#160;packet_types.c']]]
+  ['room_5ffor_5fblock_0',['room_for_block',['../main_8c.html#ac33ab921c6d7072d732932193c1c638c',1,'main.c']]]
 ];

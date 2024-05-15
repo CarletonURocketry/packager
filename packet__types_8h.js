@@ -8,8 +8,6 @@ var packet__types_8h =
     [ "PressureDB", "structPressureDB.html", "structPressureDB" ],
     [ "AngularVelocityDB", "structAngularVelocityDB.html", "structAngularVelocityDB" ],
     [ "AccelerationDB", "structAccelerationDB.html", "structAccelerationDB" ],
-    [ "Block", "structBlock.html", "structBlock" ],
-    [ "Packet", "structPacket.html", "structPacket" ],
     [ "BLOCK_MAX_SIZE", "packet__types_8h.html#a3ca3b65f4c18d3bd57fd3f42a72bbafc", null ],
     [ "PACKET_MAX_SIZE", "packet__types_8h.html#a35627e27a13bf2b36a3a9cc3e395a312", null ],
     [ "TIGHTLY_PACKED", "packet__types_8h.html#a89837ed22f4c4f6dfdbac0cdbc5de57d", null ],
@@ -39,9 +37,8 @@ var packet__types_8h =
     [ "block_header_init", "packet__types_8h.html#ad35a255e9842ac122fd31e13a6691694", null ],
     [ "humidity_db_init", "packet__types_8h.html#a2c1b80381c5281accf6345dfeee5ce7b", null ],
     [ "memcpy_be", "packet__types_8h.html#aba679592b86f02a1e165463d32f103f8", null ],
-    [ "packet_append_block", "packet__types_8h.html#aa0f7d3bde8660c68f0c96dd21da35eec", null ],
     [ "packet_header_init", "packet__types_8h.html#a048dbf1eece020fd3c685c5228eab595", null ],
-    [ "packet_print_hex", "packet__types_8h.html#af63f80194e050629b872ff50d81a448d", null ],
+    [ "packet_print_hex", "packet__types_8h.html#af2b1c1928669500e81bbf180bea55336", null ],
     [ "pressure_db_init", "packet__types_8h.html#a16648799cfecdd04d856398fc91eae3c", null ],
     [ "temperature_db_init", "packet__types_8h.html#a6c609baca24197fd0e7404f21573d2d8", null ]
 ];

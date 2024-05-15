@@ -88,7 +88,6 @@ $(document).ready(function(){initNavTree('packet__types_8c.html',''); initResiza
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">packet_types.c File Reference</div></div>
 </div><!--header-->
@@ -102,11 +101,6 @@ $(document).ready(function(){initNavTree('packet__types_8c.html',''); initResiza
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a4490f530bc6a4166d48e513247bf3d8d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a4490f530bc6a4166d48e513247bf3d8d">write_bytes_sized</a>(stream,  bytes,  size)</td></tr>
-<tr class="separator:a4490f530bc6a4166d48e513247bf3d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aba679592b86f02a1e165463d32f103f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aba679592b86f02a1e165463d32f103f8">memcpy_be</a> (void *dest, const void *src, unsigned long n_bytes)</td></tr>
@@ -127,53 +121,13 @@ Functions</h2></td></tr>
 <tr class="separator:a71e64dcd4f302378aead964c2861790d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c1b80381c5281accf6345dfeee5ce7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a2c1b80381c5281accf6345dfeee5ce7b">humidity_db_init</a> (<a class="el" href="structHumidityDB.html">HumidityDB</a> *b, const uint32_t mission_time, const uint32_t humidity)</td></tr>
 <tr class="separator:a2c1b80381c5281accf6345dfeee5ce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#aa0f7d3bde8660c68f0c96dd21da35eec">packet_append_block</a> (<a class="el" href="structPacket.html">Packet</a> *p, const <a class="el" href="structBlock.html">Block</a> b)</td></tr>
-<tr class="separator:aa0f7d3bde8660c68f0c96dd21da35eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af63f80194e050629b872ff50d81a448d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#af63f80194e050629b872ff50d81a448d">packet_print_hex</a> (FILE *stream, <a class="el" href="structPacket.html">Packet</a> *packet)</td></tr>
-<tr class="separator:af63f80194e050629b872ff50d81a448d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2b1c1928669500e81bbf180bea55336"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#af2b1c1928669500e81bbf180bea55336">packet_print_hex</a> (FILE *stream, uint8_t *packet)</td></tr>
+<tr class="separator:af2b1c1928669500e81bbf180bea55336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains the definitions for all functions required to create and manipulate packet types. </p>
-<p ><a class="el" href="structPacket.html">Packet</a> types should be created using their initialization functions. </p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a4490f530bc6a4166d48e513247bf3d8d" name="a4490f530bc6a4166d48e513247bf3d8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4490f530bc6a4166d48e513247bf3d8d">&#9670;&nbsp;</a></span>write_bytes_sized</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define write_bytes_sized</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">stream, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">bytes, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">size&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> hjkl = 0; hjkl &lt; size; hjkl++) {                                                                       \</div>
-<div class="line">        fprintf(stream, <span class="stringliteral">&quot;%02x&quot;</span>, bytes[hjkl]);                                                                          \</div>
-<div class="line">    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+<p >Packet types should be created using their initialization functions. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a71e64dcd4f302378aead964c2861790d" name="a71e64dcd4f302378aead964c2861790d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a71e64dcd4f302378aead964c2861790d">&#9670;&nbsp;</a></span>acceleration_db_init()</h2>
 
@@ -461,42 +415,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa0f7d3bde8660c68f0c96dd21da35eec" name="aa0f7d3bde8660c68f0c96dd21da35eec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0f7d3bde8660c68f0c96dd21da35eec">&#9670;&nbsp;</a></span>packet_append_block()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool packet_append_block </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structPacket.html">Packet</a> *&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structBlock.html">Block</a>&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Appends a block to a packet. WARNING: This function assumes that there is sufficient memory in the packet to store the block. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p</td><td>The packet to be appended to. </td></tr>
-    <tr><td class="paramname">b</td><td>The block to append. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the append succeeded, false if there was no space to append the block. </dd></dl>
-
-</div>
-</div>
 <a id="a048dbf1eece020fd3c685c5228eab595" name="a048dbf1eece020fd3c685c5228eab595"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a048dbf1eece020fd3c685c5228eab595">&#9670;&nbsp;</a></span>packet_header_init()</h2>
 
@@ -561,8 +479,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af63f80194e050629b872ff50d81a448d" name="af63f80194e050629b872ff50d81a448d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af63f80194e050629b872ff50d81a448d">&#9670;&nbsp;</a></span>packet_print_hex()</h2>
+<a id="af2b1c1928669500e81bbf180bea55336" name="af2b1c1928669500e81bbf180bea55336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2b1c1928669500e81bbf180bea55336">&#9670;&nbsp;</a></span>packet_print_hex()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -576,7 +494,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structPacket.html">Packet</a> *&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>packet</em>&#160;</td>
         </tr>
         <tr>

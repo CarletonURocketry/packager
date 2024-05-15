@@ -185,7 +185,6 @@ int main(int argc, char **argv) {
                 angular_velocity_db_init((AngularVelocityDB *)packet_pos, last_time,
                                          strtod(strtok(NULL, ","), NULL) / 10, strtod(strtok(NULL, ","), NULL) / 10,
                                          strtod(strtok(NULL, ","), NULL) / 10);
-                printf("done\n");
                 break;
 
             default:

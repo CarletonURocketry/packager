@@ -147,54 +147,31 @@ void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t
  * @param b The block to append.
  * @return True if the append succeeded, false if there was no space to append the block.
  */
-bool packet_append_block(Packet *p, const Block b) {
+bool packet_append_block(uint8_t *p, const BlockHeader bh) {
 
-    const uint16_t p_len = packet_header_get_length(&p->header);
-    const uint16_t b_len = block_header_get_length(&b.header);
+    const uint16_t p_len = packet_header_get_length((PacketHeader *)p);
+    const uint16_t b_len = block_header_get_length(&bh);
 
     // Ensure that there is enough space for the block to be added to the packet
     if (p_len + b_len > PACKET_MAX_SIZE) return false;
 
-    // If packet is just a header, first block goes in slot 0
-    if (p_len == sizeof(PacketHeader)) {
-        p->blocks[0] = b;
-        packet_header_set_length(&p->header, b_len); // The packet is now the length of the first block
-        p->block_count++;
-        return true;
-    }
+    // Add the block at the end of the packet
+    *(BlockHeader *)(p + p_len) = bh;
 
-    uint16_t remaining_len = p_len;
-    remaining_len -= sizeof(PacketHeader);                          // Subtract packet header length
-    remaining_len -= block_header_get_length(&p->blocks[0].header); // Subtract length of first block
+    // Update packet length
+    packet_header_set_length((PacketHeader *)p, p_len + b_len);
 
-    // While there is still content left in the packet, get the next block
-    uint16_t i = 1;
-    for (; remaining_len > 0; i++) {
-        remaining_len -= block_header_get_length(&p->blocks[i].header);
-    }
-    p->blocks[i] = b; // Add block at correct spot
-    // Packet length is now equal to its previous length + the new block
-    packet_header_set_length(&p->header, p_len - sizeof(PacketHeader) + b_len);
-    p->block_count++;
     return true;
 }
-
-#define write_bytes_sized(stream, bytes, size)                                                                         \
-    for (size_t hjkl = 0; hjkl < size; hjkl++) {                                                                       \
-        fprintf(stream, "%02x", bytes[hjkl]);                                                                          \
-    }
 
 /**
  * Prints a packet to the output stream in hexadecimal representation.
  * @param stream The output stream to which the packet should be printed.
  * @param packet The packet to be printed.
  */
-void packet_print_hex(FILE *stream, Packet *packet) {
-    write_bytes_sized(stream, ((uint8_t *)(&packet->header)), sizeof(packet->header));
-    for (uint8_t i = 0; i < packet->block_count; i++) {
-        write_bytes_sized(stream, ((uint8_t *)(&packet->blocks[i].header)), sizeof(packet->blocks[i].header));
-        uint16_t content_len = block_header_get_length(&packet->blocks[i].header) - sizeof(packet->blocks[i].header);
-        write_bytes_sized(stream, packet->blocks[i].contents, content_len);
+void packet_print_hex(FILE *stream, uint8_t *packet) {
+    for (uint32_t i = 0; i < packet_header_get_length((PacketHeader *)(packet)); i++) {
+        fprintf(stream, "%02x", packet[i]);
     }
     fputc('\n', stream);
 }

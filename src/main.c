@@ -43,23 +43,16 @@ static char buffer[BUFFER_SIZE] = {0};
 
 /* --- CONSTRUCTING PACKETS --- */
 
-/** Memory for storing blocks in packet as it is constructed. */
-static Block blocks[BLOCK_LIMIT];
-/** Static buffer for storing the contents of packets as they are being created from input. */
-static uint8_t block_contents[PACKET_MAX_SIZE];
-/** The current position in the block_contents array at which to allocate new contents. */
-static uint8_t *contents_pos = &block_contents[0];
-/** Memory for storing new block headers as they are parsed. */
-static Block block;
 /** Packet count tracker for encoding packets number. */
 static uint16_t pkt_count = 0;
-/** The packet being constructed as input is read. */
-static Packet packet = {.blocks = blocks, .block_count = 0};
 
-/** TODO: Remove this in favour of a different implementation for Packet and Block types. */
-static uint8_t hacky_output_buffer[1024];
+/** A buffer for constructing the current packet. */
+static uint8_t packet[PACKET_MAX_SIZE];
 
-void construct_block(Block *block, DataBlockType t, size_t size);
+/** The current position within the packet buffer. */
+static uint8_t *packet_pos = packet;
+
+void construct_block(DataBlockType t, size_t size);
 Dtype dtype_from_str(const char *str);
 
 int main(int argc, char **argv) {
@@ -113,12 +106,11 @@ int main(int argc, char **argv) {
     bool no_input = false;
     uint32_t last_time = 0;
     while (!no_input) {
-        // Construct packet out of BLOCK_LIMIT blocks
-        packet.block_count = 0;
-        packet_header_init(&packet.header, callsign, 0, VERSION, ROCKET, pkt_count);
+        packet_header_init((PacketHeader *)packet, callsign, 0, VERSION, ROCKET, pkt_count);
+        packet_pos += sizeof(PacketHeader); // We just added a packet header
 
-        contents_pos = &block_contents[0];
-        while (packet.block_count < BLOCK_LIMIT) {
+        // TODO: need a better condition for ending packet construction
+        while (packet_pos - packet < PACKET_MAX_SIZE) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
             if (fgets(buffer, BUFFER_SIZE, input) == NULL) {
@@ -136,52 +128,40 @@ int main(int argc, char **argv) {
                 last_time = strtoul(strtok(NULL, ":"), NULL, 10);
                 break;
             case DTYPE_TEMPERATURE:
-                temperature_db_init((TemperatureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_TEMP, sizeof(TemperatureDB));
+                construct_block(DATA_TEMP, sizeof(TemperatureDB));
+                temperature_db_init((TemperatureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                packet_pos += sizeof(TemperatureDB);
                 break;
             case DTYPE_PRESSURE:
-                pressure_db_init((PressureDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_PRESSURE, sizeof(PressureDB));
+                construct_block(DATA_PRESSURE, sizeof(PressureDB));
+                pressure_db_init((PressureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                packet_pos += sizeof(PressureDB);
                 break;
             case DTYPE_HUMIDITY:
-                humidity_db_init((HumidityDB *)contents_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_HUMIDITY, sizeof(HumidityDB));
+                construct_block(DATA_HUMIDITY, sizeof(HumidityDB));
+                humidity_db_init((HumidityDB *)packet_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
+                packet_pos += sizeof(HumidityDB);
                 break;
             case DTYPE_ALTITUDE:
-                altitude_db_init((AltitudeDB *)contents_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
-                construct_block(&block, DATA_ALT, sizeof(AltitudeDB));
+                construct_block(DATA_ALT, sizeof(AltitudeDB));
+                altitude_db_init((AltitudeDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                packet_pos += sizeof(AltitudeDB);
                 break;
             default:
                 fprintf(stderr, "Unknown input data type: %s\n", dtype_str);
                 continue; // Skip to next iteration without storing block
             }
-
-            // Copy the newly made block into the packet and handle insufficient space
-            if (!packet_append_block(&packet, block)) {
-                fprintf(stderr, "Packet size exceeded before block limit exceeded! Sending packet.\n");
-                break;
-            }
-        }
-        pkt_count++;
-
-        if (print_output) packet_print_hex(stdout, &packet);
-
-        // Send encoded packet over message queue
-        uint8_t *cur = hacky_output_buffer;
-        memcpy(cur, &packet.header, sizeof(packet.header));
-        cur += sizeof(packet.header);
-
-        for (uint8_t i = 0; i < packet.block_count; i++) {
-            memcpy(cur, &packet.blocks[i].header, sizeof(packet.blocks[i].header));
-            cur += sizeof(packet.blocks[i].header);
-            uint16_t content_len = block_header_get_length(&packet.blocks[i].header) - sizeof(packet.blocks[i].header);
-            memcpy(cur, packet.blocks[i].contents, content_len);
-            cur += content_len;
         }
 
-        if (mq_send(out_q, (char *)hacky_output_buffer, (cur - hacky_output_buffer), 0) == -1) {
+        pkt_count++; // One more packet constructed
+
+        if (mq_send(out_q, (char *)packet, (packet_pos - packet), 0) == -1) {
             fprintf(stderr, "Failed to output encoded packet #%u with error: %s\n", pkt_count - 1, strerror(errno));
         }
+
+        if (print_output) packet_print_hex(stdout, packet);
+
+        packet_pos = packet; // Reset position to overwrite with next packet
     }
     return EXIT_SUCCESS;
 }
@@ -204,8 +184,7 @@ Dtype dtype_from_str(const char *str) {
  * @param t The type of the data block.
  * @param size The size of the data block that will be stored in this block.
  */
-void construct_block(Block *b, DataBlockType t, size_t size) {
-    block_header_init(&b->header, size, TYPE_DATA, t, GROUNDSTATION);
-    b->contents = contents_pos;
-    contents_pos += size;
+void construct_block(DataBlockType t, size_t size) {
+    block_header_init((BlockHeader *)packet_pos, size, TYPE_DATA, t, GROUNDSTATION);
+    packet_pos += sizeof(BlockHeader); // We just added a block header
 }

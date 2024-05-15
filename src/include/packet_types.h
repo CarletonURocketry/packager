@@ -72,7 +72,7 @@ typedef struct {
     uint8_t src_addr;
     /** Which number this packet is in the stream of sent packets. */
     uint32_t packet_num;
-} PacketHeader;
+} TIGHTLY_PACKED PacketHeader;
 
 void packet_header_init(PacketHeader *p, const char *callsign, const uint16_t length, const uint8_t version,
                         const DeviceAddress source, const uint32_t packet_number);
@@ -98,7 +98,7 @@ typedef struct {
     uint32_t mission_time;
     /** Altitude in units of millimetres above/below the launch height. */
     int32_t altitude;
-} AltitudeDB;
+} TIGHTLY_PACKED AltitudeDB;
 
 void altitude_db_init(AltitudeDB *b, const uint32_t mission_time, const int32_t altitude);
 
@@ -108,7 +108,7 @@ typedef struct {
     uint32_t mission_time;
     /** Temperature in millidegrees Celsius. */
     int32_t temperature;
-} TemperatureDB;
+} TIGHTLY_PACKED TemperatureDB;
 
 void temperature_db_init(TemperatureDB *b, const uint32_t mission_time, const int32_t temperature);
 
@@ -118,7 +118,7 @@ typedef struct {
     uint32_t mission_time;
     /** Relative humidity in ten thousandths of a percent. */
     uint32_t humidity;
-} HumidityDB;
+} TIGHTLY_PACKED HumidityDB;
 
 void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t humidity);
 
@@ -128,7 +128,7 @@ typedef struct {
     uint32_t mission_time;
     /** Pressure measured in Pascals. */
     uint32_t pressure;
-} PressureDB;
+} TIGHTLY_PACKED PressureDB;
 
 void pressure_db_init(PressureDB *b, const uint32_t mission_time, const int32_t pressure);
 
@@ -144,7 +144,7 @@ typedef struct {
     int16_t z;
     /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
     int16_t _padding;
-} AngularVelocityDB;
+} TIGHTLY_PACKED AngularVelocityDB;
 
 void angular_velocity_db_init(AngularVelocityDB *b, const uint32_t mission_time, const int16_t x_axis,
                               const int16_t y_axis, const int16_t z_axis);
@@ -161,31 +161,13 @@ typedef struct acceleration_data_block {
     int16_t z;
     /** 0 padding to fill the 4 byte multiple requirement of the packet spec. */
     int16_t _padding;
-} AccelerationDB;
+} TIGHTLY_PACKED AccelerationDB;
 
 void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
                           const int16_t z_axis);
 
-/** Represents a radio packet block with variable length contents. */
-typedef struct {
-    /** The block header. Block length is encoded here. */
-    BlockHeader header;
-    /** The block contents up to a length of 128 bytes. */
-    uint8_t *contents;
-} Block;
-
-/** Represents a packet with a variable number of blocks. Maximum of 256 bytes. */
-typedef struct {
-    /** The packet header. Packet length is encoded here. */
-    PacketHeader header;
-    /** Packet contents in blocks, up to 256 bytes long. */
-    Block *blocks;
-    /** The number of blocks in this packet. */
-    uint8_t block_count;
-} Packet;
-
-bool packet_append_block(Packet *p, const Block b);
-void packet_print_hex(FILE *stream, Packet *packet);
+bool packet_append_block(uint8_t *p, const BlockHeader bh);
+void packet_print_hex(FILE *stream, uint8_t *packet);
 
 /**
  * Sets the length of the packet the header is associated with.

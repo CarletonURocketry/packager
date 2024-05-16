@@ -98,7 +98,15 @@ int main(int argc, char **argv) {
     }
 
     /** Open message queue. */
-    mqd_t out_q = mq_open(OUTPUT_QUEUE, O_CREAT | O_WRONLY, S_IWOTH, NULL);
+    struct mq_attr q_attributes = {
+        .mq_flags = 0,
+        .mq_maxmsg = 15, // 15 packets is probably enough
+        .mq_msgsize = PACKET_MAX_SIZE,
+        .mq_curmsgs = 0,
+        .mq_recvwait = 1,
+        .mq_sendwait = 1,
+    };
+    mqd_t out_q = mq_open(OUTPUT_QUEUE, O_CREAT | O_WRONLY, S_IWOTH, &q_attributes);
     if (out_q == -1) {
         fprintf(stderr, "Could not open output queue %s with error %s\n", OUTPUT_QUEUE, strerror(errno));
         exit(EXIT_FAILURE);
@@ -169,7 +177,7 @@ int main(int argc, char **argv) {
 
         pkt_count++; // One more packet constructed
 
-        if (mq_send(out_q, (char *)packet, (packet_pos - packet), 0) == -1) {
+        if (mq_send(out_q, (char *)packet, packet_header_get_length((PacketHeader *)packet), 0) == -1) {
             fprintf(stderr, "Failed to output encoded packet #%u with error: %s\n", pkt_count - 1, strerror(errno));
         }
 

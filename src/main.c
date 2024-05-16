@@ -111,7 +111,8 @@ int main(int argc, char **argv) {
         packet_pos += sizeof(PacketHeader); // We just added a packet header
 
         // TODO: need a better condition for ending packet construction that still maximizes buffer use
-        // WARNING: Currently assumes largest possible block is AngularVelocityDB
+        // WARNING: Assumes AngularVelocityDB as largest possible block size
+        uint8_t block_num = 0;
         while (room_for_block(sizeof(AngularVelocityDB))) {
 
             /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
@@ -123,7 +124,7 @@ int main(int argc, char **argv) {
             // Decide what contents to add to the block
             char *dtype_str = strtok(buffer, ":");
             Dtype dtype = dtype_from_str(dtype_str);
-            size_t just_added_block_size;
+            size_t just_added_block_size = 0;
 
             switch (dtype) {
             case DTYPE_TIME:
@@ -132,9 +133,6 @@ int main(int argc, char **argv) {
                 break;
 
             case DTYPE_TEMPERATURE:
-                if (!room_for_block(sizeof(TemperatureDB))) {
-                    continue;
-                }
                 just_added_block_size = sizeof(TemperatureDB);
                 add_block_header(DATA_TEMP, just_added_block_size);
                 temperature_db_init((TemperatureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
@@ -165,6 +163,7 @@ int main(int argc, char **argv) {
 
             // Increment position in packet buffer to match most recently added block type
             packet_pos += just_added_block_size;
+            block_num++;
             packet_header_inc_length((PacketHeader *)packet, just_added_block_size);
         }
 

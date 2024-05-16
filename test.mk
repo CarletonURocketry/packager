@@ -11,7 +11,7 @@ WARNINGS += -Wunsuffixed-float-constants -Wmissing-include-dirs -Wnormalized
 WARNINGS += -Wdisabled-optimization -Wsuggest-attribute=const
 
 STD = gnu11
-CFLAGS = -std=$(STD) $(WARNINGS) -D__DOXYGEN__=0
+CFLAGS = -std=$(STD) -D__DOXYGEN__=0
 
 ### INFORMATION FOR LINTING ###
 PROJECT_ROOT = $(abspath .)
@@ -25,17 +25,13 @@ TESTBINS = $(patsubst %.c,%,$(TESTFILES))
 INCLUDE_DIRS += $(PROJECT_ROOT)/src/include
 INCLUDE = $(patsubst %,-I%,$(INCLUDE_DIRS))
 
-binaries: $(TESTFILES)
-	@gcc $(CFLAGS) $(INCLUDE) $(SRCFILES) $< -o $(patsubst %.c,%,$<)
+test: WARNINGS = 
 
-# Run test file binary
-$(TESTBINS): binaries
-	$(info Running test $@)
-	@$@
+$(TESTBINS):
+	@gcc $(CFLAGS) $(INCLUDE) $(WARNINGS) $(SRCFILES) $@.c -o $@
+	$@
 
-all: binaries
-
-test: $(TESTBINS) clean
+test: $(TESTBINS)
 
 clean:
 	@rm $(TESTBINS)

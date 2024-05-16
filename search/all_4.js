@@ -13,12 +13,14 @@ var searchData=
   ['dest_5faddr_10',['dest_addr',['../structBlockHeader.html#ae9c70ded727748326afa72903d612d5f',1,'BlockHeader']]],
   ['deviceaddress_11',['DeviceAddress',['../packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630',1,'packet_types.h']]],
   ['dtype_12',['Dtype',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192',1,'main.c']]],
-  ['dtype_5faltitude_13',['DTYPE_ALTITUDE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b',1,'main.c']]],
-  ['dtype_5fdne_14',['DTYPE_DNE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957',1,'main.c']]],
-  ['dtype_5ffrom_5fstr_15',['dtype_from_str',['../main_8c.html#a91f926104a6829eb0dec01215c63c2f4',1,'main.c']]],
-  ['dtype_5fhumidity_16',['DTYPE_HUMIDITY',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578',1,'main.c']]],
-  ['dtype_5fpressure_17',['DTYPE_PRESSURE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf',1,'main.c']]],
-  ['dtype_5ftemperature_18',['DTYPE_TEMPERATURE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc',1,'main.c']]],
-  ['dtype_5ftime_19',['DTYPE_TIME',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2',1,'main.c']]],
-  ['dtypes_20',['DTYPES',['../main_8c.html#aa2c4f57d7fdbe67a651632ab31d49c23',1,'main.c']]]
+  ['dtype_5facceleraton_13',['DTYPE_ACCELERATON',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c',1,'main.c']]],
+  ['dtype_5faltitude_14',['DTYPE_ALTITUDE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b',1,'main.c']]],
+  ['dtype_5fdne_15',['DTYPE_DNE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957',1,'main.c']]],
+  ['dtype_5ffrom_5fstr_16',['dtype_from_str',['../main_8c.html#a91f926104a6829eb0dec01215c63c2f4',1,'main.c']]],
+  ['dtype_5fhumidity_17',['DTYPE_HUMIDITY',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578',1,'main.c']]],
+  ['dtype_5fpressure_18',['DTYPE_PRESSURE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf',1,'main.c']]],
+  ['dtype_5ftemperature_19',['DTYPE_TEMPERATURE',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc',1,'main.c']]],
+  ['dtype_5ftime_20',['DTYPE_TIME',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2',1,'main.c']]],
+  ['dtype_5fvelocity_21',['DTYPE_VELOCITY',['../main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9',1,'main.c']]],
+  ['dtypes_22',['DTYPES',['../main_8c.html#aa2c4f57d7fdbe67a651632ab31d49c23',1,'main.c']]]
 ];

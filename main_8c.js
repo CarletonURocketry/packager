@@ -10,7 +10,9 @@ var main_8c =
       [ "DTYPE_PRESSURE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf", null ],
       [ "DTYPE_HUMIDITY", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578", null ],
       [ "DTYPE_ALTITUDE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b", null ],
-      [ "DTYPE_DNE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957", null ]
+      [ "DTYPE_DNE", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957", null ],
+      [ "DTYPE_ACCELERATON", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c", null ],
+      [ "DTYPE_VELOCITY", "main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9", null ]
     ] ],
     [ "add_block_header", "main_8c.html#a7fa2f2cd8bffdaf222bb537b9abdf6c6", null ],
     [ "dtype_from_str", "main_8c.html#a91f926104a6829eb0dec01215c63c2f4", null ],

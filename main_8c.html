@@ -89,13 +89,12 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">main.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="packet__types_8h_source.html">packet_types.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="intypes_8h_source.html">intypes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="packet__types_8h_source.html">packet_types.h</a>&quot;</code><br />
 <code>#include &lt;errno.h&gt;</code><br />
 <code>#include &lt;getopt.h&gt;</code><br />
 <code>#include &lt;mqueue.h&gt;</code><br />
@@ -103,9 +102,12 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a8324fffbb5d135ca2e6c6198563e7aaa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a8324fffbb5d135ca2e6c6198563e7aaa">dref_cast</a>(dtype,  ptr)&#160;&#160;&#160;(*((dtype *)(ptr)))</td></tr>
+<tr class="separator:a8324fffbb5d135ca2e6c6198563e7aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b20d41d6252e9871430c242cb1a56e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>&#160;&#160;&#160;150</td></tr>
 <tr class="separator:a6b20d41d6252e9871430c242cb1a56e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6d3e1aa5bc8db863f50759b6e5ae085"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa6d3e1aa5bc8db863f50759b6e5ae085">BLOCK_LIMIT</a>&#160;&#160;&#160;4</td></tr>
@@ -114,38 +116,17 @@ Macros</h2></td></tr>
 <tr class="separator:a1c6d5de492ac61ad29aec7aa9a436bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c7ff418c79c76c2839a5b59b9529c7c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a3c7ff418c79c76c2839a5b59b9529c7c">OUTPUT_QUEUE</a>&#160;&#160;&#160;&quot;packager-out&quot;</td></tr>
 <tr class="separator:a3c7ff418c79c76c2839a5b59b9529c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a5ef564db68b3fc6fe44cde6fdcc25192"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a> { <br />
-&#160;&#160;<a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a> = 0
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a> = 1
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a> = 2
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578">DTYPE_HUMIDITY</a> = 3
-, <br />
-&#160;&#160;<a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b">DTYPE_ALTITUDE</a> = 4
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a> = 5
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c">DTYPE_ACCELERATON</a> = 6
-, <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9">DTYPE_VELOCITY</a> = 7
-<br />
- }</td></tr>
-<tr class="separator:a5ef564db68b3fc6fe44cde6fdcc25192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab7a99d6001dc1435570cd282d03c8d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aab7a99d6001dc1435570cd282d03c8d6">INPUT_QUEUE</a>&#160;&#160;&#160;&quot;fetcher/sensors&quot;</td></tr>
+<tr class="separator:aab7a99d6001dc1435570cd282d03c8d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a7fa2f2cd8bffdaf222bb537b9abdf6c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a7fa2f2cd8bffdaf222bb537b9abdf6c6">add_block_header</a> (<a class="el" href="packet__types_8h.html#aa2cdad06147808bbec52b49736391d3f">DataBlockType</a> t, size_t size)</td></tr>
 <tr class="separator:a7fa2f2cd8bffdaf222bb537b9abdf6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91f926104a6829eb0dec01215c63c2f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a91f926104a6829eb0dec01215c63c2f4">dtype_from_str</a> (const char *str)</td></tr>
-<tr class="separator:a91f926104a6829eb0dec01215c63c2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac33ab921c6d7072d732932193c1c638c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ac33ab921c6d7072d732932193c1c638c">room_for_block</a> (size_t b_len)</td></tr>
 <tr class="separator:ac33ab921c6d7072d732932193c1c638c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aa2c4f57d7fdbe67a651632ab31d49c23"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa2c4f57d7fdbe67a651632ab31d49c23">DTYPES</a> []</td></tr>
-<tr class="separator:aa2c4f57d7fdbe67a651632ab31d49c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="aa6d3e1aa5bc8db863f50759b6e5ae085" name="aa6d3e1aa5bc8db863f50759b6e5ae085"></a>
@@ -178,6 +159,50 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a8324fffbb5d135ca2e6c6198563e7aaa" name="a8324fffbb5d135ca2e6c6198563e7aaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8324fffbb5d135ca2e6c6198563e7aaa">&#9670;&nbsp;</a></span>dref_cast</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define dref_cast</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">dtype, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ptr&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(*((dtype *)(ptr)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Macro for easily de-referencing a pointer into a specific type. </p>
+
+</div>
+</div>
+<a id="aab7a99d6001dc1435570cd282d03c8d6" name="aab7a99d6001dc1435570cd282d03c8d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab7a99d6001dc1435570cd282d03c8d6">&#9670;&nbsp;</a></span>INPUT_QUEUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INPUT_QUEUE&#160;&#160;&#160;&quot;fetcher/sensors&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >The name of the message queue for input sensor data. </p>
+
+</div>
+</div>
 <a id="a3c7ff418c79c76c2839a5b59b9529c7c" name="a3c7ff418c79c76c2839a5b59b9529c7c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c7ff418c79c76c2839a5b59b9529c7c">&#9670;&nbsp;</a></span>OUTPUT_QUEUE</h2>
 
@@ -205,40 +230,6 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >The version of the packet encoding being used. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a5ef564db68b3fc6fe44cde6fdcc25192" name="a5ef564db68b3fc6fe44cde6fdcc25192"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ef564db68b3fc6fe44cde6fdcc25192">&#9670;&nbsp;</a></span>Dtype</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Represents the different sensor data types that can be interpreted by packager. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc" name="a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc"></a>DTYPE_TEMPERATURE&#160;</td><td class="fielddoc"><p >Temperature </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2" name="a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2"></a>DTYPE_TIME&#160;</td><td class="fielddoc"><p >Time </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf" name="a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf"></a>DTYPE_PRESSURE&#160;</td><td class="fielddoc"><p >Pressure </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578" name="a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578"></a>DTYPE_HUMIDITY&#160;</td><td class="fielddoc"><p >Humidity </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b" name="a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b"></a>DTYPE_ALTITUDE&#160;</td><td class="fielddoc"><p >Altitude </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957" name="a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957"></a>DTYPE_DNE&#160;</td><td class="fielddoc"><p >Data type does not exist </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c" name="a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c"></a>DTYPE_ACCELERATON&#160;</td><td class="fielddoc"><p >Linear acceleration </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9" name="a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9"></a>DTYPE_VELOCITY&#160;</td><td class="fielddoc"><p >Angular velocity </p>
-</td></tr>
-</table>
 
 </div>
 </div>
@@ -278,31 +269,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a91f926104a6829eb0dec01215c63c2f4" name="a91f926104a6829eb0dec01215c63c2f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91f926104a6829eb0dec01215c63c2f4">&#9670;&nbsp;</a></span>dtype_from_str()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192">Dtype</a> dtype_from_str </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Converts a string to a data type enumeration value. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>The string to match with an enumeration value. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The data type matching the string value. </dd></dl>
-
-</div>
-</div>
 <a id="a3c04138a5bfe5d72780bb7e82a18e627" name="a3c04138a5bfe5d72780bb7e82a18e627"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">&#9670;&nbsp;</a></span>main()</h2>
 
@@ -328,7 +294,6 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Open message queue.</p>
 
 </div>
 </div>
@@ -354,40 +319,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the append succeeded, false if there was no space to append the block. </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="aa2c4f57d7fdbe67a651632ab31d49c23" name="aa2c4f57d7fdbe67a651632ab31d49c23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2c4f57d7fdbe67a651632ab31d49c23">&#9670;&nbsp;</a></span>DTYPES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char* DTYPES[]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a>] = <span class="stringliteral">&quot;Temperature&quot;</span>,</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a>] = <span class="stringliteral">&quot;Time&quot;</span>,</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a>] = <span class="stringliteral">&quot;Pressure&quot;</span>,</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a>] = <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b">DTYPE_ALTITUDE</a>] = <span class="stringliteral">&quot;Altitude&quot;</span>,</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578">DTYPE_HUMIDITY</a>] = <span class="stringliteral">&quot;Humidity&quot;</span>,</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c">DTYPE_ACCELERATON</a>] = <span class="stringliteral">&quot;Linear acceleration&quot;</span>,</div>
-<div class="line">    [<a class="code hl_enumvalue" href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9">DTYPE_VELOCITY</a>] = <span class="stringliteral">&quot;Angular velocity&quot;</span>,</div>
-<div class="line">}</div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0ccded9807d850a2526b590d47a849f2">DTYPE_TIME</a></div><div class="ttdeci">@ DTYPE_TIME</div><div class="ttdef"><b>Definition:</b> main.c:13</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a0f9b69d75db3009220bb475e66edade9">DTYPE_VELOCITY</a></div><div class="ttdeci">@ DTYPE_VELOCITY</div><div class="ttdef"><b>Definition:</b> main.c:19</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a2b7535e2fd85989829f2f52fba4af957">DTYPE_DNE</a></div><div class="ttdeci">@ DTYPE_DNE</div><div class="ttdef"><b>Definition:</b> main.c:17</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a63285efa63c340fbac5b99fe113d4578">DTYPE_HUMIDITY</a></div><div class="ttdeci">@ DTYPE_HUMIDITY</div><div class="ttdef"><b>Definition:</b> main.c:15</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a669e6643d4e5631d215830eee6c09bdf">DTYPE_PRESSURE</a></div><div class="ttdeci">@ DTYPE_PRESSURE</div><div class="ttdef"><b>Definition:</b> main.c:14</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192a70122c2b59fe84058ff46f2c140ca52c">DTYPE_ACCELERATON</a></div><div class="ttdeci">@ DTYPE_ACCELERATON</div><div class="ttdef"><b>Definition:</b> main.c:18</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192abfc3c02555a83fd2ec25fa6afe51ee1b">DTYPE_ALTITUDE</a></div><div class="ttdeci">@ DTYPE_ALTITUDE</div><div class="ttdef"><b>Definition:</b> main.c:16</div></div>
-<div class="ttc" id="amain_8c_html_a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc"><div class="ttname"><a href="main_8c.html#a5ef564db68b3fc6fe44cde6fdcc25192ac289b82ac23f78d8d0441184c1c41adc">DTYPE_TEMPERATURE</a></div><div class="ttdeci">@ DTYPE_TEMPERATURE</div><div class="ttdef"><b>Definition:</b> main.c:12</div></div>
-</div><!-- fragment --><p >String representation of the possible data types. </p>
 
 </div>
 </div>

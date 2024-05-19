@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['packet_5fmax_5fsize_0',['PACKET_MAX_SIZE',['../packet__types_8h.html#a35627e27a13bf2b36a3a9cc3e395a312',1,'packet_types.h']]]
+  ['input_5fqueue_0',['INPUT_QUEUE',['../main_8c.html#aab7a99d6001dc1435570cd282d03c8d6',1,'main.c']]]
 ];

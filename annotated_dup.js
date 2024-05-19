@@ -7,5 +7,6 @@ var annotated_dup =
     [ "HumidityDB", "structHumidityDB.html", "structHumidityDB" ],
     [ "PacketHeader", "structPacketHeader.html", "structPacketHeader" ],
     [ "PressureDB", "structPressureDB.html", "structPressureDB" ],
-    [ "TemperatureDB", "structTemperatureDB.html", "structTemperatureDB" ]
+    [ "TemperatureDB", "structTemperatureDB.html", "structTemperatureDB" ],
+    [ "vec3d_t", "structvec3d__t.html", "structvec3d__t" ]
 ];

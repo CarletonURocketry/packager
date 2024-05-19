@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['version_0',['VERSION',['../main_8c.html#a1c6d5de492ac61ad29aec7aa9a436bbf',1,'main.c']]]
+  ['packet_5fmax_5fsize_0',['PACKET_MAX_SIZE',['../packet__types_8h.html#a35627e27a13bf2b36a3a9cc3e395a312',1,'packet_types.h']]]
 ];

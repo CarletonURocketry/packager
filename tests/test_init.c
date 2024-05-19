@@ -34,11 +34,11 @@ bool test_packet_header_init(void) {
 bool test_block_header_init(void) {
 
     BlockHeader b;
-    block_header_init(&b, 16, TYPE_DATA, DATA_ALT, GROUNDSTATION);
+    block_header_init(&b, 16, TYPE_DATA, DATA_ALT_SEA, GROUNDSTATION);
 
     LOG_ASSERT(block_header_get_length(&b) == 16 + sizeof(b));
     LOG_ASSERT(b.type == TYPE_DATA);
-    LOG_ASSERT(b.subtype == DATA_ALT);
+    LOG_ASSERT(b.subtype == DATA_ALT_SEA);
     LOG_ASSERT(b.dest_addr == GROUNDSTATION);
     return true;
 }

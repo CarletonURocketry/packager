@@ -151,14 +151,15 @@ int main(int argc, char **argv) {
             case TAG_ALTITUDE_REL:
             case TAG_ALTITUDE_SEA:
                 just_added_block_size = sizeof(AltitudeDB);
-                add_block_header(DATA_ALT, just_added_block_size);
+                add_block_header(buffer[0] == TAG_ALTITUDE_SEA ? DATA_ALT_SEA : DATA_ALT_LAUNCH, just_added_block_size);
                 altitude_db_init((AltitudeDB *)packet_pos, last_time, 1000 * dref_cast(float, data));
                 break;
 
             case TAG_LINEAR_ACCEL_ABS:
             case TAG_LINEAR_ACCEL_REL:
                 just_added_block_size = sizeof(AccelerationDB);
-                add_block_header(DATA_ACCEL, just_added_block_size);
+                add_block_header(buffer[0] == TAG_LINEAR_ACCEL_REL ? DATA_ACCEL_REL : DATA_ACCEL_ABS,
+                                 just_added_block_size);
                 acceleration_db_init((AccelerationDB *)packet_pos, last_time, dref_cast(vec3d_t, data).x * 100,
                                      dref_cast(vec3d_t, data).y * 100, dref_cast(vec3d_t, data).z * 100);
                 break;

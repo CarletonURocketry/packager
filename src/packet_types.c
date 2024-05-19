@@ -141,6 +141,19 @@ void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t
 }
 
 /**
+ * Initializes a humidity data block with the provided information.
+ * @param b The humidity data block to be initialized.
+ * @param mission_time The mission time at the taking of the measurement.
+ * @param lat The latitude coordinate component in degrees/LSB.
+ * @param long The longitude coordinate component in degrees/LSB.
+ */
+void coordinate_db_init(CoordinateDB *b, const uint32_t mission_time, const int32_t lat, const int32_t lon) {
+    b->mission_time = mission_time;
+    b->latitude = lat;
+    b->longitude = lon;
+}
+
+/**
  * Prints a packet to the output stream in hexadecimal representation.
  * @param stream The output stream to which the packet should be printed.
  * @param packet The packet to be printed.

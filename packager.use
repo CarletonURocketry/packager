@@ -9,11 +9,11 @@ DESCRIPTION:
     A command line utility for packaging sensor data into radio format.
 
 SYNTAX:
-    packager [-i file -p] callsign
+    packager [-p] callsign
+
+ARGUMENTS:
+    callsign        An amateur radio call sign for signing all packets with.
 
 OPTIONS:
-    -i file         The file or pipe to read sensor data from. If none is 
-                    provided, data will be read from stdin.
-
     -p              If this flag is passed, packets will be printed to stdout in
                     hex format.

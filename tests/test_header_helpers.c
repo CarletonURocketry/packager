@@ -2,7 +2,7 @@
  * @file test_header_helpers.c
  * @brief Tests the helper functions for modifying/reading header structures.
  */
-#include "../src/include/packet_types.h"
+#include "../src/packet_types.h"
 #include <string.h>
 
 // Define appropriate variables for tracking test statistics within macros

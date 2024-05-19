@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>packager: Data Structure Index</title>
+<title>packager: CoordinateDB Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,7 +68,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classes.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structCoordinateDB.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -87,33 +87,74 @@ $(document).ready(function(){initNavTree('classes.html',''); initResizable(); })
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Data Structure Index</div></div>
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">CoordinateDB Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="qindex"><a class="qindex" href="#letter_A">A</a>&#160;|&#160;<a class="qindex" href="#letter_B">B</a>&#160;|&#160;<a class="qindex" href="#letter_C">C</a>&#160;|&#160;<a class="qindex" href="#letter_H">H</a>&#160;|&#160;<a class="qindex" href="#letter_P">P</a>&#160;|&#160;<a class="qindex" href="#letter_T">T</a>&#160;|&#160;<a class="qindex" href="#letter_V">V</a></div>
-<div class="classindex">
-<dl class="classindex even">
-<dt class="alphachar"><a id="letter_A" name="letter_A">A</a></dt>
-<dd><a class="el" href="structAccelerationDB.html">AccelerationDB</a></dd><dd><a class="el" href="structAltitudeDB.html">AltitudeDB</a></dd><dd><a class="el" href="structAngularVelocityDB.html">AngularVelocityDB</a></dd></dl>
-<dl class="classindex odd">
-<dt class="alphachar"><a id="letter_B" name="letter_B">B</a></dt>
-<dd><a class="el" href="structBlockHeader.html">BlockHeader</a></dd></dl>
-<dl class="classindex even">
-<dt class="alphachar"><a id="letter_C" name="letter_C">C</a></dt>
-<dd><a class="el" href="structCoordinateDB.html">CoordinateDB</a></dd></dl>
-<dl class="classindex odd">
-<dt class="alphachar"><a id="letter_H" name="letter_H">H</a></dt>
-<dd><a class="el" href="structHumidityDB.html">HumidityDB</a></dd></dl>
-<dl class="classindex even">
-<dt class="alphachar"><a id="letter_P" name="letter_P">P</a></dt>
-<dd><a class="el" href="structPacketHeader.html">PacketHeader</a></dd><dd><a class="el" href="structPressureDB.html">PressureDB</a></dd></dl>
-<dl class="classindex odd">
-<dt class="alphachar"><a id="letter_T" name="letter_T">T</a></dt>
-<dd><a class="el" href="structTemperatureDB.html">TemperatureDB</a></dd></dl>
-<dl class="classindex even">
-<dt class="alphachar"><a id="letter_V" name="letter_V">V</a></dt>
-<dd><a class="el" href="structvec3d__t.html">vec3d_t</a></dd></dl>
+
+<p><code>#include &lt;<a class="el" href="packet__types_8h_source.html">packet_types.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a29bc3da6d0fcd671cfd0cf8cfbceff4c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCoordinateDB.html#a29bc3da6d0fcd671cfd0cf8cfbceff4c">mission_time</a></td></tr>
+<tr class="separator:a29bc3da6d0fcd671cfd0cf8cfbceff4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72d13317de12b0da1b84ffcf76d26d9b"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCoordinateDB.html#a72d13317de12b0da1b84ffcf76d26d9b">latitude</a></td></tr>
+<tr class="separator:a72d13317de12b0da1b84ffcf76d26d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad380e44316e198b5179789ab91123af7"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCoordinateDB.html#ad380e44316e198b5179789ab91123af7">longitude</a></td></tr>
+<tr class="separator:ad380e44316e198b5179789ab91123af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >A data block containing latitude and longitude coordinates. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a72d13317de12b0da1b84ffcf76d26d9b" name="a72d13317de12b0da1b84ffcf76d26d9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72d13317de12b0da1b84ffcf76d26d9b">&#9670;&nbsp;</a></span>latitude</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t CoordinateDB::latitude</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Latitude in degrees/LSB. </p>
+
 </div>
+</div>
+<a id="ad380e44316e198b5179789ab91123af7" name="ad380e44316e198b5179789ab91123af7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad380e44316e198b5179789ab91123af7">&#9670;&nbsp;</a></span>longitude</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t CoordinateDB::longitude</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Longitude in degrees/LSB. </p>
+
+</div>
+</div>
+<a id="a29bc3da6d0fcd671cfd0cf8cfbceff4c" name="a29bc3da6d0fcd671cfd0cf8cfbceff4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29bc3da6d0fcd671cfd0cf8cfbceff4c">&#9670;&nbsp;</a></span>mission_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CoordinateDB::mission_time</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Mission time in milliseconds since launch. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>src/<a class="el" href="packet__types_8h_source.html">packet_types.h</a></li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!--Not sure if this works, but we shall see-->

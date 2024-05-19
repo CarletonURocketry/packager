@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['humiditydb_0',['HumidityDB',['../structHumidityDB.html',1,'']]]
+  ['coordinatedb_0',['CoordinateDB',['../structCoordinateDB.html',1,'']]]
 ];

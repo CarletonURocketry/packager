@@ -8,6 +8,7 @@ var packet__types_8h =
     [ "PressureDB", "structPressureDB.html", "structPressureDB" ],
     [ "AngularVelocityDB", "structAngularVelocityDB.html", "structAngularVelocityDB" ],
     [ "AccelerationDB", "structAccelerationDB.html", "structAccelerationDB" ],
+    [ "CoordinateDB", "structCoordinateDB.html", "structCoordinateDB" ],
     [ "BLOCK_MAX_SIZE", "packet__types_8h.html#a3ca3b65f4c18d3bd57fd3f42a72bbafc", null ],
     [ "PACKET_MAX_SIZE", "packet__types_8h.html#a35627e27a13bf2b36a3a9cc3e395a312", null ],
     [ "TIGHTLY_PACKED", "packet__types_8h.html#a89837ed22f4c4f6dfdbac0cdbc5de57d", null ],
@@ -17,14 +18,15 @@ var packet__types_8h =
     ] ],
     [ "DataBlockType", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3f", [
       [ "DATA_DBG_MSG", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fac672ecfbfe918efc6cbbe74f220542fe", null ],
-      [ "DATA_ALT", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3faacf6096387d07c89e56487b091d83010", null ],
+      [ "DATA_ALT_SEA", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa21f1cf1131052062fd09c0de5cca5f86", null ],
+      [ "DATA_ALT_LAUNCH", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa940bb9754bd2d87e3a4a31b91101475e", null ],
       [ "DATA_TEMP", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa64e6755af0f1208f6470bfa4f937832f", null ],
       [ "DATA_PRESSURE", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa2ded6705e57448adceeb30478f1360b4", null ],
-      [ "DATA_ACCEL", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa599fafe621581ddbd0e7a8bddac5a168", null ],
+      [ "DATA_ACCEL_REL", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fac8641fc48eb86ef263a2b2f6f2ffd3f2", null ],
+      [ "DATA_ACCEL_ABS", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3faca3e1180175a391c268b611d4a953a95", null ],
       [ "DATA_ANGULAR_VEL", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa164d2895a374e02e5d1663a48f2679de", null ],
-      [ "DATA_GNSS_LOC", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa8508368d05295d04be62133d7bff0288", null ],
-      [ "DATA_GNSS_META", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa413e07c416faf5a3ebb4a456776a73de", null ],
-      [ "DATA_HUMIDITY", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fafd1dd55fdb796ce89401c6cbbe3fea04", null ]
+      [ "DATA_HUMIDITY", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fafd1dd55fdb796ce89401c6cbbe3fea04", null ],
+      [ "DATA_LAT_LONG", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa9842f554afee2d8b58215cb6c946ddb9", null ]
     ] ],
     [ "DeviceAddress", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630", [
       [ "GROUNDSTATION", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a5e56eb1cf5d04bea91f1bfa04b1b1868", null ],
@@ -35,6 +37,7 @@ var packet__types_8h =
     [ "altitude_db_init", "packet__types_8h.html#a97a74a41c48f2d3d7781f71c950fe601", null ],
     [ "angular_velocity_db_init", "packet__types_8h.html#a4678165e57d774e9bb76405757f5e142", null ],
     [ "block_header_init", "packet__types_8h.html#ad35a255e9842ac122fd31e13a6691694", null ],
+    [ "coordinate_db_init", "packet__types_8h.html#a82066575be2b49b4b472e5e9edeb588c", null ],
     [ "humidity_db_init", "packet__types_8h.html#a2c1b80381c5281accf6345dfeee5ce7b", null ],
     [ "memcpy_be", "packet__types_8h.html#aba679592b86f02a1e165463d32f103f8", null ],
     [ "packet_header_init", "packet__types_8h.html#a048dbf1eece020fd3c685c5228eab595", null ],

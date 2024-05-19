@@ -121,6 +121,8 @@ Functions</h2></td></tr>
 <tr class="separator:a71e64dcd4f302378aead964c2861790d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c1b80381c5281accf6345dfeee5ce7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a2c1b80381c5281accf6345dfeee5ce7b">humidity_db_init</a> (<a class="el" href="structHumidityDB.html">HumidityDB</a> *b, const uint32_t mission_time, const uint32_t humidity)</td></tr>
 <tr class="separator:a2c1b80381c5281accf6345dfeee5ce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82066575be2b49b4b472e5e9edeb588c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a82066575be2b49b4b472e5e9edeb588c">coordinate_db_init</a> (<a class="el" href="structCoordinateDB.html">CoordinateDB</a> *b, const uint32_t mission_time, const int32_t lat, const int32_t lon)</td></tr>
+<tr class="separator:a82066575be2b49b4b472e5e9edeb588c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2b1c1928669500e81bbf180bea55336"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#af2b1c1928669500e81bbf180bea55336">packet_print_hex</a> (FILE *stream, uint8_t *packet)</td></tr>
 <tr class="separator:af2b1c1928669500e81bbf180bea55336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -333,6 +335,55 @@ Functions</h2></td></tr>
     <tr><td class="paramname">type</td><td>The type of the block to follow the header </td></tr>
     <tr><td class="paramname">subtype</td><td>The sub type of the block to follow the header </td></tr>
     <tr><td class="paramname">dest</td><td>The device address of the destination device </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a82066575be2b49b4b472e5e9edeb588c" name="a82066575be2b49b4b472e5e9edeb588c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82066575be2b49b4b472e5e9edeb588c">&#9670;&nbsp;</a></span>coordinate_db_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void coordinate_db_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structCoordinateDB.html">CoordinateDB</a> *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>mission_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>lat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>lon</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Initializes a humidity data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The humidity data block to be initialized. </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement. </td></tr>
+    <tr><td class="paramname">lat</td><td>The latitude coordinate component in degrees/LSB. </td></tr>
+    <tr><td class="paramname">long</td><td>The longitude coordinate component in degrees/LSB. </td></tr>
   </table>
   </dd>
 </dl>

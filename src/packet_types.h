@@ -47,14 +47,15 @@ typedef enum block_type {
 /** Possible sub-types of data blocks that can be sent. */
 typedef enum data_block_type {
     DATA_DBG_MSG = 0x0,     /**< Debug message */
-    DATA_ALT = 0x1,         /**< Altitude data */
-    DATA_TEMP = 0x2,        /**< Temperature data */
-    DATA_PRESSURE = 0x3,    /**< Pressure data */
-    DATA_ACCEL = 0x4,       /**< Acceleration data */
-    DATA_ANGULAR_VEL = 0x5, /**< Angular velocity data */
-    DATA_GNSS_LOC = 0x6,    /**< GNSS location data */
-    DATA_GNSS_META = 0x7,   /**< GNSS metadata */
+    DATA_ALT_SEA = 0x1,     /**< Altitude above sea level */
+    DATA_ALT_LAUNCH = 0x2,  /**< Altitude above launch level */
+    DATA_TEMP = 0x3,        /**< Temperature data */
+    DATA_PRESSURE = 0x4,    /**< Pressure data */
+    DATA_ACCEL_REL = 0x5,   /**< Relative linear acceleration data */
+    DATA_ACCEL_ABS = 0x6,   /**< Absolute linear acceleration data (relative to ground) */
+    DATA_ANGULAR_VEL = 0x7, /**< Angular velocity data */
     DATA_HUMIDITY = 0x8,    /**< Humidity data */
+    DATA_LAT_LONG = 0x9,    /**< Latitude and longitude coordinates */
 } DataBlockType;
 
 /** Any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
@@ -165,6 +166,18 @@ typedef struct acceleration_data_block {
 
 void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const int16_t x_axis, const int16_t y_axis,
                           const int16_t z_axis);
+
+/** A data block containing latitude and longitude coordinates. */
+typedef struct {
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Latitude in degrees/LSB. */
+    int32_t latitude;
+    /** Longitude in degrees/LSB. */
+    int32_t longitude;
+} CoordinateDB;
+
+void coordinate_db_init(CoordinateDB *b, const uint32_t mission_time, const int32_t lat, const int32_t lon);
 
 void packet_print_hex(FILE *stream, uint8_t *packet);
 

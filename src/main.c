@@ -9,6 +9,7 @@
 #include <string.h>
 #include <time.h>
 
+/** Macro for easily de-referencing a pointer into a specific type. */
 #define dref_cast(dtype, ptr) (*((dtype *)(ptr)))
 
 /** The size of the buffer for reading sensor data input. */

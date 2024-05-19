@@ -1,3 +1,4 @@
+#include "intypes.h"
 #include "packet_types.h"
 #include <errno.h>
 #include <getopt.h>
@@ -6,30 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-/** Represents the different sensor data types that can be interpreted by packager. */
-typedef enum {
-    DTYPE_TEMPERATURE = 0, /**< Temperature */
-    DTYPE_TIME = 1,        /**< Time */
-    DTYPE_PRESSURE = 2,    /**< Pressure */
-    DTYPE_HUMIDITY = 3,    /**< Humidity */
-    DTYPE_ALTITUDE = 4,    /**< Altitude */
-    DTYPE_DNE = 5,         /**< Data type does not exist */
-    DTYPE_ACCELERATON = 6, /**< Linear acceleration*/
-    DTYPE_VELOCITY = 7,    /**< Angular velocity*/
-} Dtype;
-
-/** String representation of the possible data types. */
-const char *DTYPES[] = {
-    [DTYPE_TEMPERATURE] = "Temperature",
-    [DTYPE_TIME] = "Time",
-    [DTYPE_PRESSURE] = "Pressure",
-    [DTYPE_DNE] = "",
-    [DTYPE_ALTITUDE] = "Altitude",
-    [DTYPE_HUMIDITY] = "Humidity",
-    [DTYPE_ACCELERATON] = "Linear acceleration",
-    [DTYPE_VELOCITY] = "Angular velocity",
-};
+#define dref_cast(dtype, ptr) (*((dtype *)(ptr)))
 
 /** The size of the buffer for reading sensor data input. */
 #define BUFFER_SIZE 150
@@ -39,6 +19,8 @@ const char *DTYPES[] = {
 #define VERSION 1
 /** The name of the message queue for outputting encoded packets. */
 #define OUTPUT_QUEUE "packager-out"
+/** The name of the message queue for input sensor data. */
+#define INPUT_QUEUE "fetcher/sensors"
 
 /** Static variable to store the user HAM radio call sign. */
 static char *callsign = NULL;
@@ -47,7 +29,7 @@ static char *infile = NULL;
 /** Whether or not to print the encoded packets to stdout (false by default). */
 static bool print_output = false;
 /** Static buffer for reading input. */
-static char buffer[BUFFER_SIZE] = {0};
+static uint8_t buffer[BUFFER_SIZE] = {0};
 
 /* --- CONSTRUCTING PACKETS --- */
 
@@ -61,7 +43,6 @@ static uint8_t packet[PACKET_MAX_SIZE];
 static uint8_t *packet_pos = packet;
 
 void add_block_header(DataBlockType t, size_t size);
-Dtype dtype_from_str(const char *str);
 bool room_for_block(size_t b_len);
 
 int main(int argc, char **argv) {
@@ -105,7 +86,14 @@ int main(int argc, char **argv) {
         }
     }
 
-    /** Open message queue. */
+    /* Open input message queue. */
+    mqd_t in_q = mq_open(INPUT_QUEUE, O_RDONLY);
+    if (in_q == -1) {
+        fprintf(stderr, "Could not open input message queue %s with error %s\n", INPUT_QUEUE, strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+
+    /* Open output message queue. */
     struct mq_attr q_attributes = {
         .mq_flags = 0,
         .mq_maxmsg = 15, // 15 packets is probably enough
@@ -120,81 +108,77 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
 
-    bool no_input = false;
     uint32_t last_time = 0;
-    while (!no_input) {
+    size_t just_added_block_size = 0;
+    void *data = &buffer[1];
+    while (1) {
         packet_header_init((PacketHeader *)packet, callsign, 0, VERSION, ROCKET, pkt_count);
         packet_pos += sizeof(PacketHeader); // We just added a packet header
 
         // TODO: need a better condition for ending packet construction that still maximizes buffer use
         // WARNING: Assumes AngularVelocityDB as largest possible block size
-        uint8_t block_num = 0;
         while (room_for_block(sizeof(AngularVelocityDB))) {
 
-            /* Read input data. WARNING: No error handling for when text read is longer than buffer. */
-            if (fgets(buffer, BUFFER_SIZE, input) == NULL) {
-                no_input = true; // No more data
-                break;           // Send the partially constructed packet before exiting
+            /* Read input data. */
+            if (mq_receive(in_q, (char *)buffer, sizeof(buffer), NULL) == -1) {
+                fprintf(stderr, "Could not read message from queue %s with error %s\n", INPUT_QUEUE, strerror(errno));
+                continue;
             }
 
-            // Decide what contents to add to the block
-            char *dtype_str = strtok(buffer, ":");
-            Dtype dtype = dtype_from_str(dtype_str);
-            size_t just_added_block_size = 0;
-
-            switch (dtype) {
-            case DTYPE_TIME:
+            just_added_block_size = 0;
+            switch (buffer[0]) {
+            case TAG_TIME:
                 // Update with most recent time measurement to use as measurement time for other packets
-                last_time = strtoul(strtok(NULL, ":"), NULL, 10);
+                last_time = *(uint32_t *)(data);
                 break;
 
-            case DTYPE_TEMPERATURE:
+            case TAG_TEMPERATURE:
                 just_added_block_size = sizeof(TemperatureDB);
                 add_block_header(DATA_TEMP, just_added_block_size);
-                temperature_db_init((TemperatureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                temperature_db_init((TemperatureDB *)packet_pos, last_time, 1000 * dref_cast(float, data));
                 break;
 
-            case DTYPE_PRESSURE:
+            case TAG_PRESSURE:
                 just_added_block_size = sizeof(PressureDB);
                 add_block_header(DATA_PRESSURE, just_added_block_size);
-                pressure_db_init((PressureDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                pressure_db_init((PressureDB *)packet_pos, last_time, 1000 * dref_cast(float, data));
                 break;
 
-            case DTYPE_HUMIDITY:
+            case TAG_HUMIDITY:
                 just_added_block_size = sizeof(HumidityDB);
                 add_block_header(DATA_HUMIDITY, just_added_block_size);
-                humidity_db_init((HumidityDB *)packet_pos, last_time, 100 * strtod(strtok(NULL, ":"), NULL));
+                humidity_db_init((HumidityDB *)packet_pos, last_time, 100 * dref_cast(float, data));
                 break;
 
-            case DTYPE_ALTITUDE:
+            case TAG_ALTITUDE_REL:
+            case TAG_ALTITUDE_SEA:
                 just_added_block_size = sizeof(AltitudeDB);
                 add_block_header(DATA_ALT, just_added_block_size);
-                altitude_db_init((AltitudeDB *)packet_pos, last_time, 1000 * strtod(strtok(NULL, ":"), NULL));
+                altitude_db_init((AltitudeDB *)packet_pos, last_time, 1000 * dref_cast(float, data));
                 break;
 
-            case DTYPE_ACCELERATON:
+            case TAG_LINEAR_ACCEL_ABS:
+            case TAG_LINEAR_ACCEL_REL:
                 just_added_block_size = sizeof(AccelerationDB);
                 add_block_header(DATA_ACCEL, just_added_block_size);
-                acceleration_db_init((AccelerationDB *)packet_pos, last_time, strtod(strtok(NULL, ","), NULL) * 100,
-                                     strtod(strtok(NULL, ","), NULL) * 100, strtod(strtok(NULL, ","), NULL) * 100);
+                acceleration_db_init((AccelerationDB *)packet_pos, last_time, dref_cast(vec3d_t, data).x * 100,
+                                     dref_cast(vec3d_t, data).y * 100, dref_cast(vec3d_t, data).z * 100);
                 break;
 
-            case DTYPE_VELOCITY:
+            case TAG_ANGULAR_VEL:
                 just_added_block_size = sizeof(AngularVelocityDB);
                 add_block_header(DATA_ANGULAR_VEL, just_added_block_size);
-                angular_velocity_db_init((AngularVelocityDB *)packet_pos, last_time,
-                                         strtod(strtok(NULL, ","), NULL) * 10, strtod(strtok(NULL, ","), NULL) * 10,
-                                         strtod(strtok(NULL, ","), NULL) * 10);
+                angular_velocity_db_init((AngularVelocityDB *)packet_pos, last_time, dref_cast(vec3d_t, data).x * 10,
+                                         dref_cast(vec3d_t, data).y * 10, dref_cast(vec3d_t, data).z * 10);
                 break;
 
             default:
-                fprintf(stderr, "Unknown input data type: %s\n", dtype_str);
+                fprintf(stderr, "Unknown input data type: %u\n", buffer[0]);
                 continue; // Skip to next iteration without storing block
             }
 
             // Increment position in packet buffer to match most recently added block type
             packet_pos += just_added_block_size;
-            block_num++;
             packet_header_inc_length((PacketHeader *)packet, just_added_block_size);
         }
 
@@ -208,19 +192,8 @@ int main(int argc, char **argv) {
 
         packet_pos = packet; // Reset position to overwrite with next packet
     }
-    return EXIT_SUCCESS;
-}
 
-/**
- * Converts a string to a data type enumeration value.
- * @param str The string to match with an enumeration value.
- * @return The data type matching the string value.
- */
-Dtype dtype_from_str(const char *str) {
-    for (uint8_t i = 0; i < sizeof(DTYPES) / sizeof(DTYPES[0]); i++) {
-        if (!strcmp(str, DTYPES[i])) return i;
-    }
-    return DTYPE_DNE;
+    return EXIT_SUCCESS;
 }
 
 /**

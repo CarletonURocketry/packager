@@ -99,9 +99,6 @@ int main(int argc, char **argv) {
         .mq_flags = 0,
         .mq_maxmsg = 15, // 15 packets is probably enough
         .mq_msgsize = PACKET_MAX_SIZE,
-        .mq_curmsgs = 0,
-        .mq_recvwait = 1,
-        .mq_sendwait = 1,
     };
     mqd_t out_q = mq_open(OUTPUT_QUEUE, O_CREAT | O_WRONLY, S_IWOTH, &q_attributes);
     if (out_q == -1) {

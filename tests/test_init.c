@@ -2,7 +2,7 @@
  * @file test_init.c
  * @brief Tests the init functions for packet encoding.
  */
-#include "../src/include/packet_types.h"
+#include "../src/packet_types.h"
 #include <string.h>
 
 // Define appropriate variables for tracking test statistics within macros

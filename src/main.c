@@ -171,6 +171,13 @@ int main(int argc, char **argv) {
                                          dref_cast(vec3d_t, data).y * 10, dref_cast(vec3d_t, data).z * 10);
                 break;
 
+            case TAG_COORDS:
+                just_added_block_size = sizeof(CoordinateDB);
+                add_block_header(DATA_LAT_LONG, just_added_block_size);
+                coordinate_db_init((CoordinateDB *)packet_pos, last_time, dref_cast(vec2d_t, data).x,
+                                   dref_cast(vec2d_t, data).y);
+                break;
+
             default:
                 fprintf(stderr, "Unknown input data type: %u\n", buffer[0]);
                 continue; // Skip to next iteration without storing block

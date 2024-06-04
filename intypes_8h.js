@@ -12,6 +12,7 @@ var intypes_8h =
       [ "TAG_ANGULAR_VEL", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a9e65523ce44fc3e7de9689d2d589cdc9", null ],
       [ "TAG_LINEAR_ACCEL_REL", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a645b0324d1b00b8effbc7e26b2d24191", null ],
       [ "TAG_LINEAR_ACCEL_ABS", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a79b8f12f28f3fb66e4960905ca94f9b2", null ],
-      [ "TAG_COORDS", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627aa54c2ba8d0bfb82522594ef5eed90ccb", null ]
+      [ "TAG_COORDS", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627aa54c2ba8d0bfb82522594ef5eed90ccb", null ],
+      [ "TAG_VOLTAGE", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a3ed6481c9c2d6a9ef0a5b38b17be8033", null ]
     ] ]
 ];

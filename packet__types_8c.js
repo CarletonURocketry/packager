@@ -10,5 +10,6 @@ var packet__types_8c =
     [ "packet_header_init", "packet__types_8c.html#a048dbf1eece020fd3c685c5228eab595", null ],
     [ "packet_print_hex", "packet__types_8c.html#af2b1c1928669500e81bbf180bea55336", null ],
     [ "pressure_db_init", "packet__types_8c.html#a16648799cfecdd04d856398fc91eae3c", null ],
-    [ "temperature_db_init", "packet__types_8c.html#a6c609baca24197fd0e7404f21573d2d8", null ]
+    [ "temperature_db_init", "packet__types_8c.html#a6c609baca24197fd0e7404f21573d2d8", null ],
+    [ "voltage_db_init", "packet__types_8c.html#ab9f4f8ec80eb01d622b7c0a32d79ac55", null ]
 ];

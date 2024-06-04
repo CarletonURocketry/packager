@@ -123,6 +123,8 @@ Functions</h2></td></tr>
 <tr class="separator:a2c1b80381c5281accf6345dfeee5ce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82066575be2b49b4b472e5e9edeb588c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#a82066575be2b49b4b472e5e9edeb588c">coordinate_db_init</a> (<a class="el" href="structCoordinateDB.html">CoordinateDB</a> *b, const uint32_t mission_time, const int32_t lat, const int32_t lon)</td></tr>
 <tr class="separator:a82066575be2b49b4b472e5e9edeb588c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9f4f8ec80eb01d622b7c0a32d79ac55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#ab9f4f8ec80eb01d622b7c0a32d79ac55">voltage_db_init</a> (<a class="el" href="structVoltageDB.html">VoltageDB</a> *b, const uint32_t mission_time, const uint16_t id, const int16_t voltage)</td></tr>
+<tr class="separator:ab9f4f8ec80eb01d622b7c0a32d79ac55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2b1c1928669500e81bbf180bea55336"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="packet__types_8c.html#af2b1c1928669500e81bbf180bea55336">packet_print_hex</a> (FILE *stream, uint8_t *packet)</td></tr>
 <tr class="separator:af2b1c1928669500e81bbf180bea55336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -378,9 +380,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Initializes a humidity data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Initializes a coordinate data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b</td><td>The humidity data block to be initialized. </td></tr>
+    <tr><td class="paramname">b</td><td>The coordinate data block to be initialized. </td></tr>
     <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement. </td></tr>
     <tr><td class="paramname">lat</td><td>The latitude coordinate component in degrees/LSB. </td></tr>
     <tr><td class="paramname">long</td><td>The longitude coordinate component in degrees/LSB. </td></tr>
@@ -643,6 +645,55 @@ Functions</h2></td></tr>
     <tr><td class="paramname">b</td><td>The temperature data block to be initialized. </td></tr>
     <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement </td></tr>
     <tr><td class="paramname">temperature</td><td>The calculated temperature in units of millidegrees Celsius. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab9f4f8ec80eb01d622b7c0a32d79ac55" name="ab9f4f8ec80eb01d622b7c0a32d79ac55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9f4f8ec80eb01d622b7c0a32d79ac55">&#9670;&nbsp;</a></span>voltage_db_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void voltage_db_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structVoltageDB.html">VoltageDB</a> *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>mission_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int16_t&#160;</td>
+          <td class="paramname"><em>voltage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Initializes a voltage data block with the provided information. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The voltage data block to be initialized. </td></tr>
+    <tr><td class="paramname">mission_time</td><td>The mission time at the taking of the measurement. </td></tr>
+    <tr><td class="paramname">id</td><td>The unique numerical sensor ID associated with the sensor that took the measurement. </td></tr>
+    <tr><td class="paramname">voltage</td><td>The voltage measurement in millivolts. </td></tr>
   </table>
   </dd>
 </dl>

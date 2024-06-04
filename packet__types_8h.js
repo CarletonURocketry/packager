@@ -9,6 +9,7 @@ var packet__types_8h =
     [ "AngularVelocityDB", "structAngularVelocityDB.html", "structAngularVelocityDB" ],
     [ "AccelerationDB", "structAccelerationDB.html", "structAccelerationDB" ],
     [ "CoordinateDB", "structCoordinateDB.html", "structCoordinateDB" ],
+    [ "VoltageDB", "structVoltageDB.html", "structVoltageDB" ],
     [ "BLOCK_MAX_SIZE", "packet__types_8h.html#a3ca3b65f4c18d3bd57fd3f42a72bbafc", null ],
     [ "PACKET_MAX_SIZE", "packet__types_8h.html#a35627e27a13bf2b36a3a9cc3e395a312", null ],
     [ "TIGHTLY_PACKED", "packet__types_8h.html#a89837ed22f4c4f6dfdbac0cdbc5de57d", null ],
@@ -26,7 +27,8 @@ var packet__types_8h =
       [ "DATA_ACCEL_ABS", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3faca3e1180175a391c268b611d4a953a95", null ],
       [ "DATA_ANGULAR_VEL", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa164d2895a374e02e5d1663a48f2679de", null ],
       [ "DATA_HUMIDITY", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fafd1dd55fdb796ce89401c6cbbe3fea04", null ],
-      [ "DATA_LAT_LONG", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa9842f554afee2d8b58215cb6c946ddb9", null ]
+      [ "DATA_LAT_LONG", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa9842f554afee2d8b58215cb6c946ddb9", null ],
+      [ "DATA_VOLTAGE", "packet__types_8h.html#aa2cdad06147808bbec52b49736391d3fa2ca371d2e0d1ad3ac5b2b50adfafd9e1", null ]
     ] ],
     [ "DeviceAddress", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630", [
       [ "GROUNDSTATION", "packet__types_8h.html#a342f5a9f74cdec1043dd88e774c4c630a5e56eb1cf5d04bea91f1bfa04b1b1868", null ],
@@ -43,5 +45,6 @@ var packet__types_8h =
     [ "packet_header_init", "packet__types_8h.html#a048dbf1eece020fd3c685c5228eab595", null ],
     [ "packet_print_hex", "packet__types_8h.html#af2b1c1928669500e81bbf180bea55336", null ],
     [ "pressure_db_init", "packet__types_8h.html#a16648799cfecdd04d856398fc91eae3c", null ],
-    [ "temperature_db_init", "packet__types_8h.html#a6c609baca24197fd0e7404f21573d2d8", null ]
+    [ "temperature_db_init", "packet__types_8h.html#a6c609baca24197fd0e7404f21573d2d8", null ],
+    [ "voltage_db_init", "packet__types_8h.html#ab9f4f8ec80eb01d622b7c0a32d79ac55", null ]
 ];

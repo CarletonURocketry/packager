@@ -10,5 +10,6 @@ var searchData=
   ['tag_5fpressure_7',['TAG_PRESSURE',['../intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627abf9f2746271f7514ff45127e1f3fde13',1,'intypes.h']]],
   ['tag_5ftemperature_8',['TAG_TEMPERATURE',['../intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a355a6c724a8aa8d6723fa5eb957aec08',1,'intypes.h']]],
   ['tag_5ftime_9',['TAG_TIME',['../intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a9d3e825e50062dac129ce8a3889a86ba',1,'intypes.h']]],
-  ['type_5fdata_10',['TYPE_DATA',['../packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15',1,'packet_types.h']]]
+  ['tag_5fvoltage_10',['TAG_VOLTAGE',['../intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a3ed6481c9c2d6a9ef0a5b38b17be8033',1,'intypes.h']]],
+  ['type_5fdata_11',['TYPE_DATA',['../packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3ac731049dbbf7536acbb7f99f6d702b15',1,'packet_types.h']]]
 ];

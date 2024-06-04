@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>packager: Globals</title>
+<title>packager: VoltageDB Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,7 +68,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('globals_func.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structVoltageDB.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -86,23 +86,74 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 </iframe>
 </div>
 
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">VoltageDB Struct Reference</div></div>
+</div><!--header-->
 <div class="contents">
-&#160;<ul>
-<li>acceleration_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a71e64dcd4f302378aead964c2861790d">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a71e64dcd4f302378aead964c2861790d">packet_types.h</a></li>
-<li>add_block_header()&#160;:&#160;<a class="el" href="main_8c.html#a7fa2f2cd8bffdaf222bb537b9abdf6c6">main.c</a></li>
-<li>altitude_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a97a74a41c48f2d3d7781f71c950fe601">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a97a74a41c48f2d3d7781f71c950fe601">packet_types.h</a></li>
-<li>angular_velocity_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a4678165e57d774e9bb76405757f5e142">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a4678165e57d774e9bb76405757f5e142">packet_types.h</a></li>
-<li>block_header_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#ad35a255e9842ac122fd31e13a6691694">packet_types.c</a>, <a class="el" href="packet__types_8h.html#ad35a255e9842ac122fd31e13a6691694">packet_types.h</a></li>
-<li>coordinate_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a82066575be2b49b4b472e5e9edeb588c">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a82066575be2b49b4b472e5e9edeb588c">packet_types.h</a></li>
-<li>humidity_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a2c1b80381c5281accf6345dfeee5ce7b">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a2c1b80381c5281accf6345dfeee5ce7b">packet_types.h</a></li>
-<li>main()&#160;:&#160;<a class="el" href="main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627">main.c</a></li>
-<li>memcpy_be()&#160;:&#160;<a class="el" href="packet__types_8c.html#aba679592b86f02a1e165463d32f103f8">packet_types.c</a>, <a class="el" href="packet__types_8h.html#aba679592b86f02a1e165463d32f103f8">packet_types.h</a></li>
-<li>packet_header_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a048dbf1eece020fd3c685c5228eab595">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a048dbf1eece020fd3c685c5228eab595">packet_types.h</a></li>
-<li>packet_print_hex()&#160;:&#160;<a class="el" href="packet__types_8c.html#af2b1c1928669500e81bbf180bea55336">packet_types.c</a>, <a class="el" href="packet__types_8h.html#af2b1c1928669500e81bbf180bea55336">packet_types.h</a></li>
-<li>pressure_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a16648799cfecdd04d856398fc91eae3c">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a16648799cfecdd04d856398fc91eae3c">packet_types.h</a></li>
-<li>room_for_block()&#160;:&#160;<a class="el" href="main_8c.html#ac33ab921c6d7072d732932193c1c638c">main.c</a></li>
-<li>temperature_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#a6c609baca24197fd0e7404f21573d2d8">packet_types.c</a>, <a class="el" href="packet__types_8h.html#a6c609baca24197fd0e7404f21573d2d8">packet_types.h</a></li>
-<li>voltage_db_init()&#160;:&#160;<a class="el" href="packet__types_8c.html#ab9f4f8ec80eb01d622b7c0a32d79ac55">packet_types.c</a>, <a class="el" href="packet__types_8h.html#ab9f4f8ec80eb01d622b7c0a32d79ac55">packet_types.h</a></li>
+
+<p><code>#include &lt;<a class="el" href="packet__types_8h_source.html">packet_types.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:add76d798f1d7f6274bab0dba731e75ae"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVoltageDB.html#add76d798f1d7f6274bab0dba731e75ae">mission_time</a></td></tr>
+<tr class="separator:add76d798f1d7f6274bab0dba731e75ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa3056658014a7f1001dcd6c9f1e419b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVoltageDB.html#aaa3056658014a7f1001dcd6c9f1e419b">id</a></td></tr>
+<tr class="separator:aaa3056658014a7f1001dcd6c9f1e419b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb6cd8acecd87721b0974cdee61c01a8"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVoltageDB.html#abb6cd8acecd87721b0974cdee61c01a8">voltage</a></td></tr>
+<tr class="separator:abb6cd8acecd87721b0974cdee61c01a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >A data block containing voltage measurements and an ID for the sensor with the associated voltage. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="aaa3056658014a7f1001dcd6c9f1e419b" name="aaa3056658014a7f1001dcd6c9f1e419b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa3056658014a7f1001dcd6c9f1e419b">&#9670;&nbsp;</a></span>id</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t VoltageDB::id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Unique sensor ID. </p>
+
+</div>
+</div>
+<a id="add76d798f1d7f6274bab0dba731e75ae" name="add76d798f1d7f6274bab0dba731e75ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add76d798f1d7f6274bab0dba731e75ae">&#9670;&nbsp;</a></span>mission_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t VoltageDB::mission_time</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Mission time in milliseconds since launch. </p>
+
+</div>
+</div>
+<a id="abb6cd8acecd87721b0974cdee61c01a8" name="abb6cd8acecd87721b0974cdee61c01a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb6cd8acecd87721b0974cdee61c01a8">&#9670;&nbsp;</a></span>voltage</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t VoltageDB::voltage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Voltage in millivolts. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>src/<a class="el" href="packet__types_8h_source.html">packet_types.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -56,6 +56,7 @@ typedef enum data_block_type {
     DATA_ANGULAR_VEL = 0x7, /**< Angular velocity data */
     DATA_HUMIDITY = 0x8,    /**< Humidity data */
     DATA_LAT_LONG = 0x9,    /**< Latitude and longitude coordinates */
+    DATA_VOLTAGE = 0xA,     /**< Voltage in millivolts with a unique ID. */
 } DataBlockType;
 
 /** Any block sub-type from DataBlockType, CtrlBlockType or CmdBlockType. */
@@ -178,6 +179,18 @@ typedef struct {
 } CoordinateDB;
 
 void coordinate_db_init(CoordinateDB *b, const uint32_t mission_time, const int32_t lat, const int32_t lon);
+
+/** A data block containing voltage measurements and an ID for the sensor with the associated voltage. */
+typedef struct {
+    /** Mission time in milliseconds since launch. */
+    uint32_t mission_time;
+    /** Unique sensor ID. */
+    uint16_t id;
+    /** Voltage in millivolts. */
+    int16_t voltage;
+} VoltageDB;
+
+void voltage_db_init(VoltageDB *b, const uint32_t mission_time, const uint16_t id, const int16_t voltage);
 
 void packet_print_hex(FILE *stream, uint8_t *packet);
 

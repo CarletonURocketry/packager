@@ -141,8 +141,8 @@ void humidity_db_init(HumidityDB *b, const uint32_t mission_time, const uint32_t
 }
 
 /**
- * Initializes a humidity data block with the provided information.
- * @param b The humidity data block to be initialized.
+ * Initializes a coordinate data block with the provided information.
+ * @param b The coordinate data block to be initialized.
  * @param mission_time The mission time at the taking of the measurement.
  * @param lat The latitude coordinate component in degrees/LSB.
  * @param long The longitude coordinate component in degrees/LSB.
@@ -151,6 +151,19 @@ void coordinate_db_init(CoordinateDB *b, const uint32_t mission_time, const int3
     b->mission_time = mission_time;
     b->latitude = lat;
     b->longitude = lon;
+}
+
+/**
+ * Initializes a voltage data block with the provided information.
+ * @param b The voltage data block to be initialized.
+ * @param mission_time The mission time at the taking of the measurement.
+ * @param id The unique numerical sensor ID associated with the sensor that took the measurement.
+ * @param voltage The voltage measurement in millivolts.
+ */
+void voltage_db_init(VoltageDB *b, const uint32_t mission_time, const uint16_t id, const int16_t voltage) {
+    b->mission_time = mission_time;
+    b->id = id;
+    b->voltage = voltage;
 }
 
 /**

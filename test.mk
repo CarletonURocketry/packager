@@ -22,13 +22,10 @@ TESTDIR += $(PROJECT_ROOT)/tests
 TESTFILES += $(wildcard $(TESTDIR)/*.c)
 TESTBINS = $(patsubst %.c,%,$(TESTFILES))
 
-INCLUDE_DIRS += $(PROJECT_ROOT)/src/include
-INCLUDE = $(patsubst %,-I%,$(INCLUDE_DIRS))
-
 test: WARNINGS = 
 
 $(TESTBINS):
-	@gcc $(CFLAGS) $(INCLUDE) $(WARNINGS) $(SRCFILES) $@.c -o $@
+	@gcc $(CFLAGS) $(WARNINGS) $(SRCFILES) $@.c -o $@
 	$@
 
 test: $(TESTBINS)

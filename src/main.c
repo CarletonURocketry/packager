@@ -178,6 +178,13 @@ int main(int argc, char **argv) {
                                    dref_cast(vec2d_t, data).y);
                 break;
 
+            case TAG_VOLTAGE:
+                just_added_block_size = sizeof(VoltageDB);
+                add_block_header(DATA_VOLTAGE, just_added_block_size);
+                voltage_db_init((VoltageDB *)packet_pos, last_time, dref_cast(uint8_t, data),
+                                dref_cast(int16_t, (uint8_t *)(data) + 1));
+                break;
+
             default:
                 fprintf(stderr, "Unknown input data type: %u\n", buffer[0]);
                 continue; // Skip to next iteration without storing block

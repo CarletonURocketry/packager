@@ -116,7 +116,7 @@ bool test_angular_velocity_block_init(void) {
     return true;
 }
 
-/** Test that a acceleration data block can be initialized using parameters. */
+/** Test that an acceleration data block can be initialized using parameters. */
 bool test_acceleration_block_init(void) {
 
     AccelerationDB b;
@@ -127,6 +127,42 @@ bool test_acceleration_block_init(void) {
     LOG_ASSERT(b.y == 2);
     LOG_ASSERT(b.z == -3);
     LOG_ASSERT(b._padding == 0);
+
+    return true;
+}
+
+/** Test that a coordinate data block can be initialized using parameters. */
+bool test_coordinate_block_init(void) {
+
+    CoordinateDB b;
+    coordinate_db_init(&b, 1200, 2, 1500);
+
+    LOG_ASSERT(b.mission_time == 1200);
+    LOG_ASSERT(b.latitude == 2);
+    LOG_ASSERT(b.longitude == 1500);
+
+    coordinate_db_init(&b, 1, -24, -3300);
+    LOG_ASSERT(b.mission_time == 1);
+    LOG_ASSERT(b.latitude == -24);
+    LOG_ASSERT(b.longitude == -3300);
+
+    return true;
+}
+
+/** Test that a voltage data block can be initialized using parameters. */
+bool test_voltage_block_init(void) {
+
+    VoltageDB b;
+    voltage_db_init(&b, 1200, 2, 1500);
+
+    LOG_ASSERT(b.mission_time == 1200);
+    LOG_ASSERT(b.id == 2);
+    LOG_ASSERT(b.voltage == 1500);
+
+    voltage_db_init(&b, 1, 24, -3300);
+    LOG_ASSERT(b.mission_time == 1);
+    LOG_ASSERT(b.id == 24);
+    LOG_ASSERT(b.voltage == -3300);
 
     return true;
 }
@@ -145,6 +181,8 @@ int main(void) {
     RUN_TEST(test_humidity_block_init);
     RUN_TEST(test_angular_velocity_block_init);
     RUN_TEST(test_acceleration_block_init);
+    RUN_TEST(test_voltage_block_init);
+    RUN_TEST(test_coordinate_block_init);
 
     HARNESS_RESULTS();
 

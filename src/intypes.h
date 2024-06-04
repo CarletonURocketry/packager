@@ -6,6 +6,8 @@
 #ifndef _INTYPES_H_
 #define _INTYPES_H_
 
+#include <stdint.h>
+
 /** Type for a 2 dimensional vector with x, y components. */
 typedef struct {
     /** X component. */
@@ -38,5 +40,21 @@ typedef enum {
     TAG_COORDS = 0x9,           /**< Latitude and longitude in degrees */
     TAG_VOLTAGE = 0x10,         /**< Voltage in volts with a unique ID. */
 } SensorTag;
+
+/** Describes a message that can be sent on a message queue and recognized by both fetcher and packager */
+typedef struct {
+    uint8_t type; /**< Measurement type */
+    union {
+        float FLOAT;
+        uint32_t U32;
+        uint16_t U16;
+        uint8_t U8;
+        int32_t I32;
+        int16_t I16;
+        int8_t I8;
+        vec3d_t VEC3D;
+        vec2d_t VEC2D;
+    } data; /**< The way the contents of this struct should be interpreted */
+} common_t;
 
 #endif // _INTYPES_H_

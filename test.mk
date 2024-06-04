@@ -22,13 +22,15 @@ TESTDIR += $(PROJECT_ROOT)/tests
 TESTFILES += $(wildcard $(TESTDIR)/*.c)
 TESTBINS = $(patsubst %.c,%,$(TESTFILES))
 
+.PHONY: $(TESTBINS)
+
 test: WARNINGS = 
+
+test: $(TESTBINS)
 
 $(TESTBINS):
 	@gcc $(CFLAGS) $(WARNINGS) $(SRCFILES) $@.c -o $@
 	$@
-
-test: $(TESTBINS)
 
 clean:
 	@rm $(TESTBINS)

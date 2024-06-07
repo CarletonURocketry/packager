@@ -1,7 +1,9 @@
 var intypes_8h =
 [
     [ "vec2d_t", "structvec2d__t.html", "structvec2d__t" ],
+    [ "vec2d_i32_t", "structvec2d__i32__t.html", "structvec2d__i32__t" ],
     [ "vec3d_t", "structvec3d__t.html", "structvec3d__t" ],
+    [ "common_t", "structcommon__t.html", "structcommon__t" ],
     [ "SensorTag", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627", [
       [ "TAG_TEMPERATURE", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a355a6c724a8aa8d6723fa5eb957aec08", null ],
       [ "TAG_PRESSURE", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627abf9f2746271f7514ff45127e1f3fde13", null ],
@@ -13,6 +15,7 @@ var intypes_8h =
       [ "TAG_LINEAR_ACCEL_REL", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a645b0324d1b00b8effbc7e26b2d24191", null ],
       [ "TAG_LINEAR_ACCEL_ABS", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a79b8f12f28f3fb66e4960905ca94f9b2", null ],
       [ "TAG_COORDS", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627aa54c2ba8d0bfb82522594ef5eed90ccb", null ],
-      [ "TAG_VOLTAGE", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a3ed6481c9c2d6a9ef0a5b38b17be8033", null ]
+      [ "TAG_VOLTAGE", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a3ed6481c9c2d6a9ef0a5b38b17be8033", null ],
+      [ "TAG_FIX", "intypes_8h.html#af3e5add5316f07be5e3f2f32afe68627a9a0f9527e0be0c2a836e8da1a53528e2", null ]
     ] ]
 ];

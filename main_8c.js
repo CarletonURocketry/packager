@@ -1,7 +1,6 @@
 var main_8c =
 [
     [ "BLOCK_LIMIT", "main_8c.html#aa6d3e1aa5bc8db863f50759b6e5ae085", null ],
-    [ "BUFFER_SIZE", "main_8c.html#a6b20d41d6252e9871430c242cb1a56e7", null ],
     [ "dref_cast", "main_8c.html#a8324fffbb5d135ca2e6c6198563e7aaa", null ],
     [ "INPUT_QUEUE", "main_8c.html#aab7a99d6001dc1435570cd282d03c8d6", null ],
     [ "OUTPUT_QUEUE", "main_8c.html#a3c7ff418c79c76c2839a5b59b9529c7c", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['humidity_0',['humidity',['../structHumidityDB.html#ab9944f09e26c2ef28e46bd07ce14d282',1,'HumidityDB']]]
+  ['float_0',['FLOAT',['../structcommon__t.html#aef78daf93109323309a67da9becde31f',1,'common_t']]]
 ];

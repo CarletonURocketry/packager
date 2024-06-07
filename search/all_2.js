@@ -5,6 +5,5 @@ var searchData=
   ['block_5fmax_5fsize_2',['BLOCK_MAX_SIZE',['../packet__types_8h.html#a3ca3b65f4c18d3bd57fd3f42a72bbafc',1,'packet_types.h']]],
   ['blockheader_3',['BlockHeader',['../structBlockHeader.html',1,'']]],
   ['blocksubtype_4',['BlockSubtype',['../packet__types_8h.html#a7c66e316cf9c5bc29a1f8cb8ac599c97',1,'packet_types.h']]],
-  ['blocktype_5',['BlockType',['../packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3',1,'packet_types.h']]],
-  ['buffer_5fsize_6',['BUFFER_SIZE',['../main_8c.html#a6b20d41d6252e9871430c242cb1a56e7',1,'main.c']]]
+  ['blocktype_5',['BlockType',['../packet__types_8h.html#a54420623f26ab6bb61042b41cccf37a3',1,'packet_types.h']]]
 ];

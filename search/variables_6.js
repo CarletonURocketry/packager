@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['latitude_0',['latitude',['../structCoordinateDB.html#a72d13317de12b0da1b84ffcf76d26d9b',1,'CoordinateDB']]],
-  ['len_1',['len',['../structPacketHeader.html#a149935e8872389c71aad441e047d3fd0',1,'PacketHeader::len()'],['../structBlockHeader.html#afa047139b7a76c524a42a26fe6c75f51',1,'BlockHeader::len()']]],
-  ['longitude_2',['longitude',['../structCoordinateDB.html#ad380e44316e198b5179789ab91123af7',1,'CoordinateDB']]]
+  ['i16_0',['I16',['../structcommon__t.html#af396be7dec09cc00989143dc96b86a1c',1,'common_t']]],
+  ['i32_1',['I32',['../structcommon__t.html#a7f279afd6527ec806c8ad3030fbc4b2b',1,'common_t']]],
+  ['i8_2',['I8',['../structcommon__t.html#a5be70917161ba212da7f2f90a8c858c3',1,'common_t']]],
+  ['id_3',['id',['../structcommon__t.html#ac98285c3ba75324d8254e0601de6432f',1,'common_t::id()'],['../structVoltageDB.html#aaa3056658014a7f1001dcd6c9f1e419b',1,'VoltageDB::id()']]]
 ];

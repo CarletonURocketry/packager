@@ -176,7 +176,8 @@ int main(int argc, char **argv) {
             case TAG_COORDS:
                 just_added_block_size = sizeof(CoordinateDB);
                 add_block_header(DATA_LAT_LONG, just_added_block_size);
-                coordinate_db_init((CoordinateDB *)packet_pos, last_time, recv_msg.data.VEC2D.x, recv_msg.data.VEC2D.y);
+                coordinate_db_init((CoordinateDB *)packet_pos, last_time, recv_msg.data.VEC2D_I32.x,
+                                   recv_msg.data.VEC2D_I32.y);
                 break;
 
             case TAG_VOLTAGE:
@@ -186,6 +187,9 @@ int main(int argc, char **argv) {
                                 dref_cast(int16_t, (uint8_t *)(&recv_msg.data) + 1));
                 break;
 
+            case TAG_FIX:
+                // Ignore this data for now, currently useful as debug output
+                break;
             default:
                 fprintf(stderr, "Unknown input data type: %u\n", recv_msg.type);
                 continue; // Skip to next iteration without storing block

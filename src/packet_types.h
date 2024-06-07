@@ -172,9 +172,9 @@ void acceleration_db_init(AccelerationDB *b, const uint32_t mission_time, const 
 typedef struct {
     /** Mission time in milliseconds since launch. */
     uint32_t mission_time;
-    /** Latitude in degrees/LSB. */
+    /** Latitude in 0.1 microdegrees/LSB. */
     int32_t latitude;
-    /** Longitude in degrees/LSB. */
+    /** Longitude in 0.1 microdegrees/LSB. */
     int32_t longitude;
 } CoordinateDB;
 

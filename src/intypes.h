@@ -53,6 +53,7 @@ typedef enum {
 /** Describes a message that can be sent on a message queue and recognized by both fetcher and packager */
 typedef struct {
     uint8_t type; /**< Measurement type */
+    uint8_t id;   /**< Sensor ID */
     union {
         float FLOAT;
         uint32_t U32;

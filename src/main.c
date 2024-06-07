@@ -119,7 +119,7 @@ int main(int argc, char **argv) {
         while (room_for_block(sizeof(AngularVelocityDB))) {
 
             /* Read input data. */
-            if (mq_receive(in_q, (char *)recv_msg, sizeof(recv_msg), NULL) == -1) {
+            if (mq_receive(in_q, (char *)&recv_msg, sizeof(recv_msg), NULL) == -1) {
                 fprintf(stderr, "Could not read message from queue %s with error %s\n", INPUT_QUEUE, strerror(errno));
                 continue;
             }
@@ -183,8 +183,7 @@ int main(int argc, char **argv) {
             case TAG_VOLTAGE:
                 just_added_block_size = sizeof(VoltageDB);
                 add_block_header(DATA_VOLTAGE, just_added_block_size);
-                voltage_db_init((VoltageDB *)packet_pos, last_time, dref_cast(uint16_t, (uint8_t *)&recv_msg.data),
-                                dref_cast(int16_t, (uint8_t *)(&recv_msg.data) + 1));
+                voltage_db_init((VoltageDB *)packet_pos, last_time, recv_msg.id, recv_msg.data.I16);
                 break;
 
             case TAG_FIX:

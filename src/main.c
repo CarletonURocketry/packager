@@ -213,7 +213,6 @@ int main(int argc, char **argv) {
         }
 
         if (print_output) packet_print_hex(stdout, packet);
-        printf("Packet priority: %u\n", highest_priority);
 
         packet_pos = packet; // Reset position to overwrite with next packet
     }

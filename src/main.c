@@ -110,7 +110,10 @@ int main(int argc, char **argv) {
 
     uint32_t last_time = 0;
     size_t just_added_block_size = 0;
+    unsigned int highest_priority = 0;
+    unsigned int last_priority;
     while (1) {
+        highest_priority = 0; // Reset priority to 0 for each packet
         packet_header_init((PacketHeader *)packet, callsign, 0, VERSION, ROCKET, pkt_count);
         packet_pos += sizeof(PacketHeader); // We just added a packet header
 
@@ -119,10 +122,13 @@ int main(int argc, char **argv) {
         while (room_for_block(sizeof(AngularVelocityDB))) {
 
             /* Read input data. */
-            if (mq_receive(in_q, (char *)&recv_msg, sizeof(recv_msg), NULL) == -1) {
+            if (mq_receive(in_q, (char *)&recv_msg, sizeof(recv_msg), &last_priority) == -1) {
                 fprintf(stderr, "Could not read message from queue %s with error %s\n", INPUT_QUEUE, strerror(errno));
                 continue;
             }
+
+            // Take record the highest priority packet received so far
+            highest_priority = last_priority > highest_priority ? last_priority : highest_priority;
 
             just_added_block_size = 0;
             switch (recv_msg.type) {
@@ -201,11 +207,13 @@ int main(int argc, char **argv) {
 
         pkt_count++; // One more packet constructed
 
-        if (mq_send(out_q, (char *)packet, packet_header_get_length((PacketHeader *)packet), 0) == -1) {
+        // Send packet with the priority matching the highest priority data received
+        if (mq_send(out_q, (char *)packet, packet_header_get_length((PacketHeader *)packet), highest_priority) == -1) {
             fprintf(stderr, "Failed to output encoded packet #%u with error: %s\n", pkt_count - 1, strerror(errno));
         }
 
         if (print_output) packet_print_hex(stdout, packet);
+        printf("Packet priority: %u\n", highest_priority);
 
         packet_pos = packet; // Reset position to overwrite with next packet
     }

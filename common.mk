@@ -33,10 +33,14 @@ WARNINGS += -Wdisabled-optimization -Wsuggest-attribute=const
 ### UPDATE CFLAGS ###
 CCFLAGS += -std=$(CSTD) $(WARNINGS)
 
+# Program name for logging
+CCFLAGS += -DPROGNAME=$(NAME)
+
 #### PROJECT SPECIFIC ####
 
 ### SOURCE FILES ###
 EXTRA_SRCVPATH += $(PROJECT_ROOT)/src
+EXTRA_SRCVPATH += $(PROJECT_ROOT)/../logging-utils
 
 include $(MKFILES_ROOT)/qtargets.mk
 

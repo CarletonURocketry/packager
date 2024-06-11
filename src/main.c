@@ -1,3 +1,4 @@
+#include "../logging-utils/logging.h"
 #include "intypes.h"
 #include "packet_types.h"
 #include <errno.h>
@@ -80,7 +81,7 @@ int main(int argc, char **argv) {
     if (infile != NULL) {
         input = fopen(infile, "r");
         if (input == NULL) {
-            fprintf(stderr, "File '%s' could not be opened for reading.\n", infile);
+            log_print(stderr, LOG_ERROR, "File '%s' could not be opened for reading.\n", infile);
             exit(EXIT_FAILURE);
         }
     }
@@ -92,7 +93,8 @@ int main(int argc, char **argv) {
     /* Open input message queue. */
     mqd_t in_q = mq_open(INPUT_QUEUE, O_RDONLY, &in_q_attr);
     if (in_q == -1) {
-        fprintf(stderr, "Could not open input message queue %s with error %s\n", INPUT_QUEUE, strerror(errno));
+        log_print(stderr, LOG_ERROR, "Could not open input message queue %s with error %s\n", INPUT_QUEUE,
+                  strerror(errno));
         exit(EXIT_FAILURE);
     }
 
@@ -104,7 +106,7 @@ int main(int argc, char **argv) {
     };
     mqd_t out_q = mq_open(OUTPUT_QUEUE, O_CREAT | O_WRONLY, S_IWOTH, &q_attributes);
     if (out_q == -1) {
-        fprintf(stderr, "Could not open output queue %s with error %s\n", OUTPUT_QUEUE, strerror(errno));
+        log_print(stderr, LOG_ERROR, "Could not open output queue %s with error %s\n", OUTPUT_QUEUE, strerror(errno));
         exit(EXIT_FAILURE);
     }
 
@@ -123,7 +125,8 @@ int main(int argc, char **argv) {
 
             /* Read input data. */
             if (mq_receive(in_q, (char *)&recv_msg, sizeof(recv_msg), &last_priority) == -1) {
-                fprintf(stderr, "Could not read message from queue %s with error %s\n", INPUT_QUEUE, strerror(errno));
+                log_print(stderr, LOG_ERROR, "Could not read message from queue %s with error %s\n", INPUT_QUEUE,
+                          strerror(errno));
                 continue;
             }
 
@@ -196,7 +199,7 @@ int main(int argc, char **argv) {
                 // Ignore this data for now, currently useful as debug output
                 break;
             default:
-                fprintf(stderr, "Unknown input data type: %u\n", recv_msg.type);
+                log_print(stderr, LOG_ERROR, "Unknown input data type: %u\n", recv_msg.type);
                 continue; // Skip to next iteration without storing block
             }
 
@@ -209,7 +212,8 @@ int main(int argc, char **argv) {
 
         // Send packet with the priority matching the highest priority data received
         if (mq_send(out_q, (char *)packet, packet_header_get_length((PacketHeader *)packet), highest_priority) == -1) {
-            fprintf(stderr, "Failed to output encoded packet #%u with error: %s\n", pkt_count - 1, strerror(errno));
+            log_print(stderr, LOG_ERROR, "Failed to output encoded packet #%u with error: %s\n", pkt_count - 1,
+                      strerror(errno));
         }
 
         if (print_output) packet_print_hex(stdout, packet);
